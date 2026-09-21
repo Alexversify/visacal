@@ -13,7 +13,7 @@ analytics:
 
 adsense:
   # AdSense 승인 후 발급되는 ca-pub-0000000000000000 형식의 값
-  client_id: "ca-pub-5767106189668297"
+  client_id: "ca-pub-1964223951103950"
   slots:
     result_side: ""
     page_bottom: ""
