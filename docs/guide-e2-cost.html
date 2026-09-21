@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-2 비자 관납료, 한국 진행과 미국 내 신분변경 비교 · VisaCal</title>
+<meta name="description" content="같은 E-2인데 한국 대사관에서 받는 경우와 미국 안에서 신분을 바꾸는 경우 납부액이 크게 다릅니다. 항목별로 나눠 봅니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+
+<style>
+:root{
+  --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
+  --rule:#d8dee7; --hair:#e8ecf1; --ground:#eef1f5; --paper:#fff;
+  --warn:#9b2226; --pend:#8a6d1f; --ok:#1f6b45;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;
+  font-size:15px;line-height:1.6}
+.wrap{max-width:1020px;margin:0 auto;padding:28px 20px 64px}
+a{color:var(--ink)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:9px;letter-spacing:0}
+nav{display:flex;gap:16px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
+.stamp{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums;margin-top:10px}
+.ad{margin:22px 0;min-height:1px}
+.ad-side{margin:18px 0 0}
+.cta{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+.cta a{display:block;text-align:center;text-decoration:none;padding:11px 14px;
+  border:1px solid var(--ink);font-size:14px;font-weight:600;border-radius:2px;margin-bottom:8px}
+.cta a.solid{background:var(--ink);color:#fff}
+.cta .p{font-size:12.5px;color:var(--faint);text-align:center}
+footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--rule);
+  color:var(--faint);font-size:12.5px;line-height:1.7}
+footer a{color:var(--muted)}
+.lead-form{background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--ink);
+  padding:20px 22px;margin:34px 0 0;border-radius:2px}
+.lead-form h3{font-size:15px;margin:0 0 4px}
+.lead-form .sd{font-size:13px;color:var(--faint);margin-bottom:14px}
+.lead-form .g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lead-form input,.lead-form select,.lead-form textarea{width:100%;border:1px solid var(--rule);
+  padding:9px 10px;font:inherit;font-size:14px;border-radius:2px;background:var(--paper);color:var(--ink)}
+.lead-form textarea{min-height:82px;resize:vertical;margin-top:10px}
+.lead-form button{margin-top:12px;width:100%;background:var(--ink);color:#fff;border:0;
+  padding:12px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px}
+.lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
+@media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
+footer .disc{max-width:74ch;margin-bottom:10px}
+
+.art{max-width:72ch;margin-top:26px}
+.art .kicker{font-size:12.5px;color:var(--faint);margin-bottom:6px}
+.art h1{font-size:26px;line-height:1.3;letter-spacing:-.025em;margin:0 0 12px}
+.art .sum{font-size:15px;color:var(--muted);padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.art h2{font-size:17px;margin:32px 0 10px;letter-spacing:-.01em}
+.art h3{font-size:15px;margin:22px 0 6px}
+.art p{margin:0 0 13px}
+.art ul,.art ol{padding-left:20px;margin:0 0 13px}
+.art li{margin-bottom:5px}
+.art table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0 18px;background:var(--paper)}
+.art th{text-align:left;font-size:12.5px;color:var(--faint);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--rule)}
+.art td{padding:8px 10px;border-bottom:1px solid var(--hair)}
+.art td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.art blockquote{margin:16px 0;padding:12px 16px;background:var(--paper);
+  border-left:3px solid var(--ink);font-size:14px;color:var(--muted)}
+.art .tool{display:block;margin:20px 0;padding:14px 16px;background:var(--paper);
+  border:1px solid var(--rule);text-decoration:none;border-radius:2px}
+.art .tool b{display:block;font-size:14.5px}
+.art .tool span{font-size:13px;color:var(--faint)}
+.list{margin-top:26px;max-width:74ch}
+.list a{display:block;padding:18px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.list a:first-child{border-top:1px solid var(--rule)}
+.list b{display:block;font-size:16px;margin-bottom:4px;letter-spacing:-.01em}
+.list span{font-size:13.5px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<div class="top">
+  <a class="brand" href="index.html">VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
+  <nav><a href="index.html">관납료</a><a href="cspa.html">CSPA 나이</a><a href="guides.html" aria-current="page">가이드</a><a href="changes.html">원장과 이력</a></nav>
+</div>
+
+<article class="art">
+  <div class="kicker">E-2</div>
+  <h1>E-2 비자 관납료, 한국 진행과 미국 내 신분변경 비교</h1>
+  <div class="sum">같은 E-2인데 한국 대사관에서 받는 경우와 미국 안에서 신분을 바꾸는 경우 납부액이 크게 다릅니다. 항목별로 나눠 봅니다.</div>
+  
+<p>E-2는 진행 방식이 두 가지입니다. 한국에서 주한미국대사관 인터뷰를 거쳐 비자를 받는 방법과,
+이미 미국에 합법 체류 중인 상태에서 신분을 E-2로 변경하는 방법입니다. 절차가 다르니 납부처와 금액도 다릅니다.</p>
+
+<h2>한국에서 진행하는 경우</h2>
+<p>국무부 소관입니다. E-2는 조약투자자 비자로 상호주의가 적용되어 국적별로 금액이 다르고,
+한국 국적자는 <strong>315달러</strong>입니다. 동반가족은 1인당 같은 금액이 붙습니다.</p>
+<table>
+<tr><th>항목</th><th>납부처</th><th style="text-align:right">금액</th></tr>
+<tr><td>비이민 신청 수수료</td><td>국무부</td><td class="n">$315</td></tr>
+<tr><td>동반가족, 1인당</td><td>국무부</td><td class="n">$315</td></tr>
+<tr><td>여권 택배 수령</td><td>배송업체</td><td class="n">22,000원</td></tr>
+</table>
+<p>4인 가족이라면 신청 수수료만 1,260달러입니다. 상담에서 이 부분을 빼놓으면 나중에 금액이 어긋납니다.</p>
+
+<h2>미국 내에서 신분변경하는 경우</h2>
+<p>이민국 소관이고 구조가 더 복잡합니다. 청원 수수료에 망명 프로그램 수수료가 따로 붙고,
+사업장 규모에 따라 금액이 나뉩니다. 소규모 사업장은 감액된 금액이 적용됩니다.</p>
+<table>
+<tr><th>항목</th><th>소형 사업장</th><th>일반 사업장</th></tr>
+<tr><td>청원 신청 수수료</td><td class="n">$510</td><td class="n">$1,015</td></tr>
+<tr><td>망명 프로그램 수수료</td><td class="n">$300</td><td class="n">$600</td></tr>
+<tr><td>합계</td><td class="n">$810</td><td class="n">$1,615</td></tr>
+</table>
+<p>동반가족은 별도 양식으로 신청하며 가족 단위로 <strong>470달러</strong>가 붙습니다.
+한국 진행이 1인당 과금인 것과 달리 여기서는 가족 그룹 단위라, 가족이 많을수록 미국 내 진행이 유리해지는 구간이 생깁니다.</p>
+
+<h2>급행 처리</h2>
+<p>미국 내 진행에서만 선택할 수 있습니다. 추가로 <strong>2,965달러</strong>를 내면 심사 기간이 크게 단축됩니다.
+사업 일정이 걸려 있는 사건에서는 사실상 필수 비용으로 봐야 합니다.</p>
+
+<h2>사업장 규모 판정을 먼저 하십시오</h2>
+<p>소형과 일반의 차이가 800달러를 넘습니다. 직원 수와 비영리 여부에 따라 갈리므로
+견적을 내기 전에 이 판정을 확정해야 합니다. 여기가 어긋나면 견적 전체가 틀립니다.</p>
+
+<p>위 금액은 관납료만입니다. 법무 수임료, 사업계획서 작성, 번역과 공증은 별도입니다.</p>
+<a class="tool" href="index.html"><b>비자별 관납료 계산기</b>
+<span>진행 경로와 동반가족 수를 반영해 납부 총액을 계산합니다</span></a>
+</article>
+<div class="lead-form">
+<h3>사건 검토 요청</h3>
+<div class="sd">계산 결과가 경계선에 가깝거나 판단이 갈리는 경우, 실제 서류를 보고 확인해야 합니다.</div>
+<a href="mailto:alex@lawhanmi.com?subject=[VisaCal] E-2 비용 검토 요청" style="display:block;text-align:center;
+  background:#14243c;color:#fff;text-decoration:none;padding:12px;font-weight:600;border-radius:2px">메일로 문의</a>
+<div class="fine">법무법인 한미 · 회신까지 영업일 기준 1일에서 2일 걸립니다.</div>
+</div>
+
+<footer>
+<div class="disc">이 사이트의 계산 결과는 공개된 정부 자료를 근거로 한 참고용 추정이며 법률 자문이 아닙니다.
+실제 신청 전에는 반드시 담당 변호사의 검토를 받으십시오. 계산 결과로 발생한 손해에 대해 책임지지 않습니다.</div>
+<div>법무법인 한미 · alex@lawhanmi.com · <a href="privacy.html">개인정보처리방침</a></div>
+</footer>
+</div></body></html>

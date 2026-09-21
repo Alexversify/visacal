@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>수수료 원장과 변경 이력 · VisaCal</title>
+<meta name="description" content="미국 비자 관납료와 CSPA 나이 계산">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+
+<style>
+:root{
+  --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
+  --rule:#d8dee7; --hair:#e8ecf1; --ground:#eef1f5; --paper:#fff;
+  --warn:#9b2226; --pend:#8a6d1f; --ok:#1f6b45;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;
+  font-size:15px;line-height:1.6}
+.wrap{max-width:1020px;margin:0 auto;padding:28px 20px 64px}
+a{color:var(--ink)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:12px}
+.brand{font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:9px;letter-spacing:0}
+nav{display:flex;gap:16px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
+.stamp{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums;margin-top:10px}
+.ad{margin:22px 0;min-height:1px}
+.ad-side{margin:18px 0 0}
+.cta{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+.cta a{display:block;text-align:center;text-decoration:none;padding:11px 14px;
+  border:1px solid var(--ink);font-size:14px;font-weight:600;border-radius:2px;margin-bottom:8px}
+.cta a.solid{background:var(--ink);color:#fff}
+.cta .p{font-size:12.5px;color:var(--faint);text-align:center}
+footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--rule);
+  color:var(--faint);font-size:12.5px;line-height:1.7}
+footer a{color:var(--muted)}
+.lead-form{background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--ink);
+  padding:20px 22px;margin:34px 0 0;border-radius:2px}
+.lead-form h3{font-size:15px;margin:0 0 4px}
+.lead-form .sd{font-size:13px;color:var(--faint);margin-bottom:14px}
+.lead-form .g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lead-form input,.lead-form select,.lead-form textarea{width:100%;border:1px solid var(--rule);
+  padding:9px 10px;font:inherit;font-size:14px;border-radius:2px;background:var(--paper);color:var(--ink)}
+.lead-form textarea{min-height:82px;resize:vertical;margin-top:10px}
+.lead-form button{margin-top:12px;width:100%;background:var(--ink);color:#fff;border:0;
+  padding:12px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:2px}
+.lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
+@media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
+footer .disc{max-width:74ch;margin-bottom:10px}
+
+h3{font-size:13px;font-weight:600;color:var(--muted);margin:34px 0 10px;
+  padding-bottom:7px;border-bottom:1px solid var(--rule)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper)}
+th{text-align:left;font-weight:600;color:var(--faint);font-size:12px;padding:9px 10px;border-bottom:1px solid var(--rule)}
+td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
+.amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.st b{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.who{color:var(--faint);font-size:12.5px}
+.pend{background:#fdf9ee;border:1px solid #ecdcb4;padding:8px 10px;font-size:12.5px;margin-top:5px}
+.log{border-left:2px solid var(--rule);padding-left:18px;margin-top:12px}
+.entry{margin-bottom:24px;position:relative}
+.entry:before{content:"";position:absolute;left:-23px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.entry .d{font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.entry .h{font-weight:650;margin:2px 0 5px}
+.entry p{margin:0 0 6px;color:var(--muted);max-width:74ch}
+@media (max-width:640px){td:first-child,th:first-child{display:none}}
+</style></head><body><div class="wrap">
+<div class="top">
+  <a class="brand" href="index.html">VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
+  <nav><a href="index.html">관납료</a><a href="cspa.html">CSPA 나이</a><a href="guides.html">가이드</a><a href="changes.html" aria-current="page">원장과 이력</a></nav>
+</div>
+<div class="stamp">확인 기록 없음</div>
+<h3>원장</h3>
+<table><thead><tr><th>ID</th><th>비자</th><th>납부처</th><th>항목</th>
+<th style="text-align:right">금액</th><th>상태</th></tr></thead>
+<tbody><tr><td class="who">DOS-MRV-PETITION</td><td>H·L·O·P·Q</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">비이민 신청 수수료, 청원 기반</a></td><td class="amt">$205</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">DOS-MRV-PETITION-DEP</td><td>H·L·O·P·Q</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">동반가족 신청 수수료, 1인당</a></td><td class="amt">$205</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">DOS-FRAUD-L-BLANKET</td><td>L-1 Blanket</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">Fraud Prevention and Detection Fee</a></td><td class="amt">$500</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">PL-114-113-L</td><td>L-1</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">Covered employer 추가 수수료, 50인 이상 및 비자 비중 50% 초과</a></td><td class="amt">$4,500</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-9-11-BIOMETRIC-L</td><td>H-1B·L-1</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">9-11 Response &amp; Biometric Entry-Exit Fee</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">DOS-MRV-E2</td><td>E-2</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html">비이민 신청 수수료, 상호주의 적용</a></td><td class="amt">$315</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">DOS-MRV-E2-DEP</td><td>E-2</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html">동반가족 신청 수수료, 1인당</a></td><td class="amt">$315</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-I129-E-SMALL</td><td>E-2</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">신분변경·연장 신청 수수료, 소형 사업장</a></td><td class="amt">$510</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-I129-E-GENERAL</td><td>E-2</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">신분변경·연장 신청 수수료, 일반 사업장</a></td><td class="amt">$1,015</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-ASYLUM-SMALL</td><td>공통</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">Asylum Program Fee, 소형 사업장</a></td><td class="amt">$300</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-ASYLUM-GENERAL</td><td>공통</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">Asylum Program Fee, 일반 사업장</a></td><td class="amt">$600</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-I539-DEP</td><td>공통</td><td class="who">USCIS · I-539</td><td><a href="https://www.uscis.gov/g-1055">동반가족 신분변경·연장, 가족 1그룹</a></td><td class="amt">$470</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-I907-I129</td><td>공통</td><td class="who">USCIS · I-907</td><td><a href="https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing">Premium Processing, I-129</a></td><td class="amt">$2,965</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">USCIS-I907-I140</td><td>취업이민</td><td class="who">USCIS · I-907</td><td><a href="https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing">Premium Processing, I-140</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">DOS-MRV-B</td><td>B·F·J·M 등</td><td class="who">DOS · DS-160</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">비이민 신청 수수료, 비청원 카테고리</a></td><td class="amt">$185</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr><tr><td class="who">SEVIS-I901-F</td><td>F-1</td><td class="who">ICE · I-901</td><td><a href="https://www.fmjfee.com/">SEVIS 등록 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I129-H</td><td>H-1B</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">청원 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-ACWIA</td><td>H-1B</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">ACWIA 교육·훈련 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-FRAUD-I129-H</td><td>H-1B</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">Fraud Prevention and Detection Fee</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I129-L</td><td>L-1</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">청원 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-FRAUD-I129-L</td><td>L-1</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">Fraud Prevention and Detection Fee</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I129-O</td><td>O-1</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">청원 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">H1B-100K</td><td>H-1B</td><td class="who">USCIS · I-129</td><td><a href="https://www.uscis.gov/g-1055">$100,000 지급 요건</a></td><td class="amt">$100,000</td><td class="st"><b style="background:#9b2226"></b>집행정지</td></tr><tr><td class="who">USCIS-I140</td><td>취업이민</td><td class="who">USCIS · I-140</td><td><a href="https://www.uscis.gov/g-1055">이민청원 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I526E</td><td>EB-5</td><td class="who">USCIS · I-526E</td><td><a href="https://www.uscis.gov/g-1055">투자이민 청원 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I829</td><td>EB-5</td><td class="who">USCIS · I-829</td><td><a href="https://www.uscis.gov/g-1055">조건해제 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I130</td><td>가족초청</td><td class="who">USCIS · I-130</td><td><a href="https://www.uscis.gov/g-1055">친족초청 청원 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-I485</td><td>이민 공통</td><td class="who">USCIS · I-485</td><td><a href="https://www.uscis.gov/g-1055">신분조정 신청 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">DOS-IV-DS260</td><td>이민 공통</td><td class="who">DOS · DS-260</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">이민비자 신청 수수료, 1인당</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">DOS-AOS-REVIEW</td><td>이민 공통</td><td class="who">DOS · I-864</td><td><a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">재정보증 심사 수수료</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">USCIS-IMMIGRANT-FEE</td><td>이민 공통</td><td class="who">USCIS · -</td><td><a href="https://www.uscis.gov/g-1055">USCIS Immigrant Fee, 입국 후 영주증 발급</a></td><td class="amt">확인 필요</td><td class="st"><b style="background:#6b7688"></b>검토필요</td></tr><tr><td class="who">KR-COURIER</td><td>한국 공통</td><td class="who">기타 · -</td><td>여권 택배 수령</td><td class="amt">22,000원</td><td class="st"><b style="background:#1f6b45"></b>시행중</td></tr></tbody></table>
+<h3>변경 이력</h3>
+<div class="log"><div class="entry"><div class="d">기록 없음</div><p>감시 시작 이후 감지된 변경이 없습니다.</p></div></div>
+<footer>
+<div class="disc">이 사이트의 계산 결과는 공개된 정부 자료를 근거로 한 참고용 추정이며 법률 자문이 아닙니다.
+실제 신청 전에는 반드시 담당 변호사의 검토를 받으십시오. 계산 결과로 발생한 손해에 대해 책임지지 않습니다.</div>
+<div>법무법인 한미 · alex@lawhanmi.com · <a href="privacy.html">개인정보처리방침</a></div>
+</footer>
+</div></body></html>

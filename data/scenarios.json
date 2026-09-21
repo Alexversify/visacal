@@ -1,0 +1,224 @@
+{
+  "note": "비자 x 진행경로 x 옵션 조합. lines는 필수 항목, options는 선택 항목. fee_id는 data/fees.json을 참조합니다.",
+  "visas": [
+    {
+      "id": "e2",
+      "label": "E-2 투자",
+      "routes": [
+        {
+          "id": "kr",
+          "label": "한국, 주한미대사관",
+          "lines": ["DOS-MRV-E2"],
+          "options": [
+            { "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-E2-DEP" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        },
+        {
+          "id": "us_small",
+          "label": "미국 내 신분변경·연장, 소형 사업장",
+          "lines": ["USCIS-I129-E-SMALL", "USCIS-ASYLUM-SMALL"],
+          "options": [
+            { "id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP" },
+            { "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129" }
+          ]
+        },
+        {
+          "id": "us_general",
+          "label": "미국 내 신분변경·연장, 일반 사업장",
+          "lines": ["USCIS-I129-E-GENERAL", "USCIS-ASYLUM-GENERAL"],
+          "options": [
+            { "id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP" },
+            { "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "l1_blanket",
+      "label": "L-1 Blanket",
+      "routes": [
+        {
+          "id": "kr",
+          "label": "한국, 주한미대사관",
+          "lines": ["DOS-MRV-PETITION", "DOS-FRAUD-L-BLANKET"],
+          "options": [
+            { "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP" },
+            { "id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "l1_individual",
+      "label": "L-1 개별청원",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "미국 내 I-129 청원",
+          "lines": ["USCIS-I129-L", "USCIS-FRAUD-I129-L", "USCIS-ASYLUM-GENERAL"],
+          "options": [
+            { "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129" },
+            { "id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L" },
+            { "id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L" }
+          ]
+        },
+        {
+          "id": "kr",
+          "label": "승인 후 한국, 주한미대사관",
+          "lines": ["DOS-MRV-PETITION"],
+          "options": [
+            { "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "label": "B-1/B-2",
+      "routes": [
+        {
+          "id": "kr",
+          "label": "한국, 주한미대사관",
+          "lines": ["DOS-MRV-B"],
+          "options": [
+            { "id": "dep", "label": "동반 신청자", "type": "per_person", "fee_id": "DOS-MRV-B" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f1",
+      "label": "F-1 학생",
+      "routes": [
+        {
+          "id": "kr",
+          "label": "한국, 주한미대사관",
+          "lines": ["SEVIS-I901-F", "DOS-MRV-B"],
+          "options": [
+            { "id": "dep", "label": "동반가족 F-2", "type": "per_person", "fee_id": "DOS-MRV-B" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "h1b",
+      "label": "H-1B",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "미국 내 I-129 청원",
+          "lines": ["USCIS-I129-H", "USCIS-ACWIA", "USCIS-FRAUD-I129-H", "USCIS-ASYLUM-GENERAL"],
+          "options": [
+            { "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129" },
+            { "id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L" },
+            { "id": "h1b100k", "label": "$100,000 지급 요건", "type": "toggle", "fee_id": "H1B-100K" }
+          ]
+        },
+        {
+          "id": "kr",
+          "label": "승인 후 한국, 주한미대사관",
+          "lines": ["DOS-MRV-PETITION"],
+          "options": [
+            { "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o1",
+      "label": "O-1",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "미국 내 I-129 청원",
+          "lines": ["USCIS-I129-O", "USCIS-ASYLUM-GENERAL"],
+          "options": [{ "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129" }]
+        },
+        {
+          "id": "kr",
+          "label": "승인 후 한국, 주한미대사관",
+          "lines": ["DOS-MRV-PETITION"],
+          "options": [
+            { "id": "dep", "label": "동반가족 O-3", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP" },
+            { "id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "niw",
+      "label": "NIW 취업이민",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "I-140 청원",
+          "lines": ["USCIS-I140"],
+          "options": [{ "id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I140" }]
+        },
+        {
+          "id": "kr_cp",
+          "label": "영사수속, 주한미대사관",
+          "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"],
+          "options": [
+            { "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260" },
+            { "id": "aos_review", "label": "재정보증 심사 수수료", "type": "toggle", "fee_id": "DOS-AOS-REVIEW" }
+          ]
+        },
+        {
+          "id": "us_aos",
+          "label": "미국 내 신분조정 I-485",
+          "lines": ["USCIS-I485"],
+          "options": [{ "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "USCIS-I485" }]
+        }
+      ]
+    },
+    {
+      "id": "eb5",
+      "label": "EB-5 투자이민",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "I-526E 청원",
+          "lines": ["USCIS-I526E"],
+          "options": []
+        },
+        {
+          "id": "kr_cp",
+          "label": "영사수속, 주한미대사관",
+          "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"],
+          "options": [{ "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260" }]
+        },
+        {
+          "id": "i829",
+          "label": "조건해제 I-829",
+          "lines": ["USCIS-I829"],
+          "options": []
+        }
+      ]
+    },
+    {
+      "id": "family",
+      "label": "가족초청 이민",
+      "routes": [
+        {
+          "id": "us_petition",
+          "label": "I-130 청원",
+          "lines": ["USCIS-I130"],
+          "options": []
+        },
+        {
+          "id": "kr_cp",
+          "label": "영사수속, 주한미대사관",
+          "lines": ["DOS-IV-DS260", "DOS-AOS-REVIEW", "USCIS-IMMIGRANT-FEE"],
+          "options": [{ "id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260" }]
+        }
+      ]
+    }
+  ]
+}

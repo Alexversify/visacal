@@ -1,0 +1,39 @@
+# 감시 대상과 알림 설정. 소스를 추가하려면 여기만 고치면 됩니다.
+
+federal_register:
+  # 무료 공개 API, 키 불필요. 시행 전 단계(NPRM/Final Rule)를 여기서 잡습니다.
+  lookback_days: 14
+  agencies:
+    - u-s-citizenship-and-immigration-services
+    - state-department
+  types: [RULE, PRORULE, NOTICE]
+  keywords:
+    - fee
+    - fee schedule
+    - immigration benefit request
+    - visa services
+
+uscis:
+  g1055_url: https://www.uscis.gov/g-1055
+  # alert 블록과 PDF edition date만 비교합니다. 페이지 전체 해시는 오탐이 많습니다.
+  alert_selector: "div.usa-alert, .c-alert, [class*='alert']"
+  pdf_link_pattern: "g-1055"
+
+state_dept:
+  fees_url: https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html
+  reciprocity_kr_url: https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html
+
+# 추적 중인 양식. Federal Register 결과에 이 문자열이 있으면 중요도를 올립니다.
+watch_forms: [I-129, I-907, I-539, I-765, I-140, I-526E, I-485, DS-160, DS-260, G-1055]
+
+notify:
+  # 팀별로 다른 요약을 보냅니다. 주소는 GitHub Secrets에서 주입합니다.
+  channels:
+    processing:
+      label: 수속팀
+      focus: 양식별 실제 납부액, 시행일, 접수분 경과규정, 반려 위험
+    sales:
+      label: 영업팀
+      focus: 견적 총액 변동, 고객 안내 문구, 계약서 실비 조항 영향
+  # 변경이 없어도 매주 월요일에는 현황 요약을 보낼지 여부
+  weekly_digest: true

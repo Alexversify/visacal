@@ -1,0 +1,36 @@
+# 사이트 공통 설정. 값을 비워두면 해당 요소가 렌더링되지 않습니다.
+# 로컬에서 광고 없이 확인하고, 배포 전에 채우면 됩니다.
+
+site:
+  domain: visacal.com
+  title: VisaCal
+  tagline: 미국 비자 관납료와 CSPA 나이 계산
+  operator: 법무법인 한미
+  contact_email: alex@lawhanmi.com
+
+analytics:
+  # Google Analytics 4 측정 ID. 유입이 안 보이면 수익화 판단이 불가능합니다.
+  ga4_id: ""
+  # Search Console 소유확인 메타태그의 content 값
+  search_console: ""
+
+adsense:
+  # AdSense 승인 후 발급되는 ca-pub-0000000000000000 형식의 값
+  client_id: ""
+  slots:
+    # AdSense 관리화면에서 만든 광고 단위 ID
+    result_side: ""
+    page_bottom: ""
+
+cta:
+  # 광고보다 이쪽이 실제 수익입니다. 계산 결과 하단에 노출됩니다.
+  consult_label: 사건 검토 요청
+  consult_url: ""
+  # 유료 정밀검토 결제 링크. 토스페이먼츠 결제링크 또는 Stripe Payment Link를 넣으면
+  # 정적 사이트만으로 결제가 됩니다. 별도 서버가 필요 없습니다.
+  paid_label: CSPA 정밀검토 신청
+  paid_url: ""
+  paid_price: ""
+  # 문의 폼 전송 주소. Formspree에서 폼을 만들면 나오는 https://formspree.io/f/xxxxxxx 형식.
+  # 무료 플랜으로 월 50건까지 받습니다. 서버가 필요 없습니다.
+  form_endpoint: ""
