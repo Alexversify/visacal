@@ -35,6 +35,8 @@ CSS = """
   border-radius:2px;background:var(--paper);color:var(--ink);width:172px;
   font-variant-numeric:tabular-nums}
 .f input:focus,.f select:focus{outline:2px solid var(--ink);outline-offset:-1px;border-color:var(--ink)}
+.f.wide{flex-wrap:wrap}
+.f.wide label{flex-basis:100%}
 .f.wide input,.f.wide select{width:100%}
 .res{background:var(--paper);border:1px solid var(--ink);border-top-width:3px;
   padding:22px;position:sticky;top:20px;border-radius:2px}
