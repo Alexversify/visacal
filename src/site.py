@@ -161,6 +161,11 @@ def lead_form(cfg: dict[str, Any], topic: str = "") -> str:
     s = cfg.get("site") or {}
     endpoint = c.get("form_endpoint") or ""
     email = s.get("contact_email", "")
+    fields = c.get("form_fields") or {}
+    f_name = html.escape(fields.get("name", "name"))
+    f_contact = html.escape(fields.get("contact", "contact"))
+    f_detail = html.escape(fields.get("detail", "detail"))
+    is_google = "docs.google.com/forms" in endpoint
 
     if not endpoint:
         if not email:
@@ -177,13 +182,13 @@ def lead_form(cfg: dict[str, Any], topic: str = "") -> str:
     return f"""<div class="lead-form">
 <h3>사건 검토 요청</h3>
 <div class="sd">계산 결과가 경계선에 가깝거나 판단이 갈리는 경우, 실제 서류를 보고 확인해야 합니다.</div>
-<form action="{html.escape(endpoint)}" method="POST">
-  <input type="hidden" name="_subject" value="[VisaCal] {html.escape(topic or '검토 요청')}">
+<form action="{html.escape(endpoint)}" method="POST"{' target="_blank"' if is_google else ''}>
+  {'' if is_google else f'<input type="hidden" name="_subject" value="[VisaCal] {html.escape(topic or "검토 요청")}">'}
   <div class="g">
-    <input type="text" name="name" placeholder="성함" required>
-    <input type="text" name="contact" placeholder="연락처 또는 이메일" required>
+    <input type="text" name="{f_name}" placeholder="성함" required>
+    <input type="text" name="{f_contact}" placeholder="연락처 또는 이메일" required>
   </div>
-  <textarea name="detail" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required></textarea>
+  <textarea name="{f_detail}" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>{html.escape(("[" + topic + "] ") if topic else "")}</textarea>
   <button type="submit">검토 요청 보내기</button>
 </form>
 <div class="fine">보내주신 내용은 문의 처리와 수임 검토 목적으로만 사용합니다.
