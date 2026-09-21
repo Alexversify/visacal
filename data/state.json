@@ -1,0 +1,316 @@
+{
+  "checked_at": "2026-09-21T09:18:55+00:00",
+  "uscis_edition": "09/09/26",
+  "uscis_alerts": {
+    "064dd7a8abf39f7c": "Alert Type info ALERT: On June 8, 2026, the U.S. District Court for the District of Massachusetts issued an order that vacated agency guidance implementing the $100,000 payment requirement for certain H-1B petitions. See State of California v. Mullin, 1:25-cv-13829 (D. Mass.). DHS strongly disagrees with the court’s order and filed a motion to stay pending appeal with the United States Court of Appeals for the First Circuit (First Circuit). The District Court order was administratively stayed while the government pursued its motion to stay pending appeal with the First Circuit. On July 24, 2026, the First Circuit denied the government’s motion. DHS strongly disagrees with the First Circuit’s order denying the stay request but will comply with the court’s order while DHS considers next steps. If this order is later lifted, DHS still plans to collect the payment.",
+    "e105acb62937c822": "Alert Type info Alert: Litigation Update on Ms. L. v. ICE and Applicability of Certain HR-1 Fees",
+    "28c208401165fb57": "Alert Type info Alert: On Sept. 9, 2026, we published a new edition of Form G-1055, Fee Schedule. The new edition, 09/09/26, is in response to the final rule to amend regulations concerning the statutory 9-11 Response & Biometric Entry-Exit Fee for H-1B and L-1 Visas (9-11 Biometric Fee). The regulatory changes require petitioners that are covered employers to submit the 9-11 Biometric Fee for all H-1B and L-1 petitions, unless the petitioner is filing an amended petition that does not seek an extension of the alien’s currently authorized H-1B or L-1 status, as applicable. The new edition also includes a fee exemption for Form I-765, Application for Employment Authorization, requesting a renewal or replacement employment authorization document filed by dependents of Taipei Economic and Cultural Representative Office (TECRO) E-1 employees."
+  },
+  "fr_docs": {},
+  "pdf_amounts": {
+    "AR-11": [
+      0
+    ],
+    "G-28": [
+      0
+    ],
+    "G-28I": [
+      0
+    ],
+    "G-325A": [
+      0,
+      520
+    ],
+    "G-325R": [
+      0
+    ],
+    "G-845": [
+      0
+    ],
+    "G-884": [
+      0
+    ],
+    "G-1041": [
+      30,
+      80
+    ],
+    "G-1041A": [
+      30,
+      80
+    ],
+    "G-1145": [
+      0
+    ],
+    "G-1450": [
+      0
+    ],
+    "G-1566": [
+      280,
+      330
+    ],
+    "G-1650": [
+      0
+    ],
+    "G-1651": [
+      0
+    ],
+    "I-90": [
+      415,
+      465
+    ],
+    "I-912": [
+      0
+    ],
+    "I-102": [
+      24,
+      560
+    ],
+    "I-94": [
+      0,
+      24
+    ],
+    "I-129F": [
+      675
+    ],
+    "I-130": [
+      0
+    ],
+    "I-129S": [
+      0
+    ],
+    "I-131A": [
+      575
+    ],
+    "I-134": [
+      0
+    ],
+    "I-140": [
+      665,
+      715
+    ],
+    "I-191": [
+      930
+    ],
+    "I-192": [
+      1100
+    ],
+    "I-193": [
+      695
+    ],
+    "I-212": [
+      1175
+    ],
+    "I-290B": [
+      800
+    ],
+    "I-485": [
+      0
+    ],
+    "I-751": [
+      0
+    ],
+    "I-356": [
+      0
+    ],
+    "I-360": [
+      515
+    ],
+    "I-361": [
+      0
+    ],
+    "I-363": [
+      0
+    ],
+    "I-407": [
+      0
+    ],
+    "I-485A": [
+      1000
+    ],
+    "I-817": [
+      0
+    ],
+    "I-485J": [
+      0
+    ],
+    "I-508": [
+      0
+    ],
+    "I-526": [
+      3675
+    ],
+    "I-526E": [
+      3675
+    ],
+    "I-539": [
+      420,
+      470
+    ],
+    "I-566": [
+      0
+    ],
+    "I-589": [
+      0,
+      100,
+      102
+    ],
+    "I-590": [
+      0
+    ],
+    "I-600": [
+      920
+    ],
+    "I-600A": [
+      920
+    ],
+    "I-601": [
+      1050
+    ],
+    "I-601A": [
+      795
+    ],
+    "I-602": [
+      0
+    ],
+    "I-612": [
+      1100
+    ],
+    "I-687": [
+      1240
+    ],
+    "I-690": [
+      905
+    ],
+    "I-693": [
+      0
+    ],
+    "I-694": [
+      1125
+    ],
+    "I-698": [
+      1670
+    ],
+    "I-730": [
+      0
+    ],
+    "I-765V": [
+      0
+    ],
+    "I-800": [
+      920
+    ],
+    "I-800A": [
+      920
+    ],
+    "I-821": [
+      510
+    ],
+    "I-821D": [
+      85
+    ],
+    "I-824": [
+      590
+    ],
+    "I-829": [
+      3750
+    ],
+    "I-854": [
+      0
+    ],
+    "I-864": [
+      0
+    ],
+    "I-864A": [
+      0
+    ],
+    "I-865": [
+      0
+    ],
+    "I-881": [
+      340
+    ],
+    "I-905": [
+      230
+    ],
+    "I-129": [
+      2965
+    ],
+    "I-907": [
+      2075
+    ],
+    "I-765": [
+      1780
+    ],
+    "I-910": [
+      990
+    ],
+    "I-914": [
+      0
+    ],
+    "I-918": [
+      0
+    ],
+    "I-929": [
+      0
+    ],
+    "I-941": [
+      1020,
+      1200
+    ],
+    "I-945": [
+      0
+    ],
+    "I-956": [
+      17795
+    ],
+    "I-956F": [
+      17795
+    ],
+    "I-956G": [
+      3035
+    ],
+    "I-956H": [
+      0
+    ],
+    "I-956K": [
+      0
+    ],
+    "N-300": [
+      320
+    ],
+    "N-336": [
+      780,
+      830
+    ],
+    "N-400": [
+      0
+    ],
+    "N-426": [
+      0
+    ],
+    "N-470": [
+      420
+    ],
+    "N-565": [
+      505,
+      555
+    ],
+    "N-600": [
+      1335,
+      1385
+    ],
+    "N-600K": [
+      1335,
+      1385
+    ],
+    "N-644": [
+      0
+    ],
+    "N-648": [
+      0
+    ],
+    "I-131": [
+      630
+    ]
+  }
+}

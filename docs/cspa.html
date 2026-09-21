@@ -5,7 +5,7 @@
 <meta name="description" content="미국 이민 CSPA 나이 계산기. 접수가능일과 최종행동일 차트 기준을 함께 계산합니다.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
-
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QZPDBPC4SN"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QZPDBPC4SN');</script>
 <style>
 :root{
   --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
@@ -64,6 +64,8 @@ footer .disc{max-width:74ch;margin-bottom:10px}
   border-radius:2px;background:var(--paper);color:var(--ink);width:172px;
   font-variant-numeric:tabular-nums}
 .f input:focus,.f select:focus{outline:2px solid var(--ink);outline-offset:-1px;border-color:var(--ink)}
+.f.wide{flex-wrap:wrap}
+.f.wide label{flex-basis:100%}
 .f.wide input,.f.wide select{width:100%}
 .res{background:var(--paper);border:1px solid var(--ink);border-top-width:3px;
   padding:22px;position:sticky;top:20px;border-radius:2px}
@@ -174,9 +176,17 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 <div class="lead-form">
 <h3>사건 검토 요청</h3>
 <div class="sd">계산 결과가 경계선에 가깝거나 판단이 갈리는 경우, 실제 서류를 보고 확인해야 합니다.</div>
-<a href="mailto:alex@lawhanmi.com?subject=[VisaCal] CSPA 나이 검토 요청" style="display:block;text-align:center;
-  background:#14243c;color:#fff;text-decoration:none;padding:12px;font-weight:600;border-radius:2px">메일로 문의</a>
-<div class="fine">법무법인 한미 · 회신까지 영업일 기준 1일에서 2일 걸립니다.</div>
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSegDGS56OT9eoz3xxT0o9Mn9iDs7tJ-U0RL9ILslm-VK29-9w/formResponse" method="POST" target="_blank">
+  
+  <div class="g">
+    <input type="text" name="entry.304915958" placeholder="성함" required>
+    <input type="text" name="entry.1465445911" placeholder="연락처 또는 이메일" required>
+  </div>
+  <textarea name="entry.1359651639" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>[CSPA 나이] </textarea>
+  <button type="submit">검토 요청 보내기</button>
+</form>
+<div class="fine">보내주신 내용은 문의 처리와 수임 검토 목적으로만 사용합니다.
+회신까지 영업일 기준 1일에서 2일 걸립니다.</div>
 </div>
 
 <footer>
@@ -280,7 +290,7 @@ function calc(){
       </div>
       <div class="warn"><div>직계가족은 청원 접수 시점의 나이로 고정되며 계류기간을 차감하지 않습니다.
       청원인이 영주권자에서 시민권자로 바뀐 경우 전환 시점 기준이 달라지므로 별도 검토가 필요합니다.</div></div>
-      `;
+      <div class="cta"><a href="https://forms.gle/EiRWHjmEvjCPFYkt7">사건 검토 요청</a></div>`;
     return;
   }
 
@@ -311,7 +321,7 @@ function calc(){
     <div class="two">${box('접수가능일 기준', dff)}${box('최종행동일 기준', fad)}</div>
     ${detail('접수가능일', dff)}${detail('최종행동일', fad)}
     <div class="warn">${warns.join('')}</div>
-    `;
+    <div class="cta"><a href="https://forms.gle/EiRWHjmEvjCPFYkt7">사건 검토 요청</a></div>`;
 }
 
 document.addEventListener('input', e=>{ if(e.target.closest('.card')) calc(); });
