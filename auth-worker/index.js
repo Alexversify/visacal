@@ -98,6 +98,7 @@ function toMarkdown(m) {
     `summary: ${q(m.summary)}`,
     `cover: ${q(m.cover)}`,
     `draft: ${m.draft ? 'true' : 'false'}`,
+    ...(m.publish_at ? [`publish_at: ${q(m.publish_at)}`] : []),
     '---',
     '',
     (m.body || '').trim(),
@@ -193,6 +194,37 @@ async function api(request, env, url) {
     return json({ url: path.replace(/^docs/, '') });
   }
 
+  if (url.pathname === '/api/fees' && request.method === 'GET') {
+    const res = await gh(env, `contents/data/fees.json?ref=${env.GITHUB_BRANCH || 'main'}`);
+    if (!res.ok) return json({ error: '원장을 불러오지 못했습니다' }, 500);
+    const f = await res.json();
+    return json({ sha: f.sha, data: JSON.parse(b64ToUtf8(f.content)) });
+  }
+
+  if (url.pathname === '/api/fees' && request.method === 'PUT') {
+    const { sha, fees } = await request.json();
+    if (!Array.isArray(fees)) return json({ error: '잘못된 요청' }, 400);
+    const res = await gh(env, `contents/data/fees.json?ref=${env.GITHUB_BRANCH || 'main'}`);
+    const cur = await res.json();
+    if (cur.sha !== sha) return json({ error: '그 사이 자동 감시가 원장을 갱신했습니다. 새로고침 후 다시 저장하십시오.' }, 409);
+    const data = JSON.parse(b64ToUtf8(cur.content));
+    const byId = Object.fromEntries(fees.map((f) => [f.fee_id, f]));
+    for (const f of data.fees) {
+      const u = byId[f.fee_id];
+      if (!u) continue;
+      const amt = u.amount === '' || u.amount === null ? null : Number(u.amount);
+      if (amt !== f.amount) { f.prev_amount = f.amount; f.amount = Number.isFinite(amt) ? amt : null; }
+      f.status = u.status || f.status;
+      f.effective_date = u.effective_date || null;
+      f.basis = u.basis ?? f.basis;
+      delete f.pending_update;
+    }
+    data.updated_at = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+    const r = await putFile(env, 'data/fees.json', utf8ToB64(JSON.stringify(data, null, 2) + '\n'),
+      `fees: 원장 수정 (${who})`, cur.sha);
+    return json({ sha: r.content.sha });
+  }
+
   return json({ error: 'not found' }, 404);
 }
 
@@ -241,7 +273,7 @@ textarea{resize:vertical}
 .chk{display:flex;gap:6px;align-items:center;margin-top:12px;font-size:13.5px}
 @media(max-width:820px){.wrap{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
 </style></head><body>
-<div class="top"><b>VisaCal 관리자</b><div><span id="who"></span><a href="https://visacal.com/guides.html" target="_blank">사이트 보기</a><a href="#" id="logout" style="display:none">로그아웃</a></div></div>
+<div class="top"><b>VisaCal 관리자</b><div><a href="#" id="tab-posts" style="display:none">글</a><a href="#" id="tab-fees" style="display:none">수수료 원장</a><span id="who" style="margin-left:14px"></span><a href="https://visacal.com/guides.html" target="_blank">사이트 보기</a><a href="#" id="logout" style="display:none">로그아웃</a></div></div>
 
 <div class="login" id="login">
   <h1>로그인</h1>
@@ -270,9 +302,17 @@ textarea{resize:vertical}
       <label>본문 <small style="color:var(--faint)">## 소제목, - 목록, **굵게**</small></label>
       <div class="tools"><button type="button" data-ins="## ">소제목</button><button type="button" data-ins="- ">목록</button><button type="button" data-wrap="**">굵게</button><button type="button" id="imgbtn">이미지 넣기</button><input type="file" id="imgfile" accept="image/*" style="display:none"></div>
       <textarea id="body"></textarea>
+      <div class="row"><div><label>예약 게시 <small style="color:var(--faint)">비우면 즉시 게시, 한국 시간</small></label><input type="datetime-local" id="publish_at" style="width:100%;border:1px solid var(--rule);padding:8px 10px;font:inherit;font-size:14px"></div><div></div></div>
       <label class="chk"><input type="checkbox" id="draft"> 임시저장 (사이트에 공개하지 않음)</label>
       <div class="bar"><button class="btn solid" id="save">저장하고 게시</button><span class="msg" id="msg"></span><span class="sp"></span><button class="btn danger" id="del" style="display:none">삭제</button></div>
     </form>
+  </div>
+</div>
+
+<div class="wrap" id="feesview" style="display:none;grid-template-columns:1fr">
+  <div class="editor">
+    <h2>수수료 원장 <span><button class="btn solid" id="feesave" style="padding:5px 12px;font-size:12.5px">저장하고 반영</button> <span class="msg" id="fmsg"></span></span></h2>
+    <div style="overflow:auto"><table id="ftable" style="width:100%;border-collapse:collapse;font-size:13.5px"></table></div>
   </div>
 </div>
 
@@ -290,10 +330,10 @@ async function call(path,opt={}){
   return d;
 }
 function msg(t,ok){const m=$('msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');}
-function showLogin(err){$('app').style.display='none';$('login').style.display='';$('logout').style.display='none';$('who').textContent='';if(err)$('lerr').textContent=err;}
+function showLogin(err){$('feesview').style.display='none';$('tab-posts').style.display='none';$('tab-fees').style.display='none';$('app').style.display='none';$('login').style.display='';$('logout').style.display='none';$('who').textContent='';if(err)$('lerr').textContent=err;}
 
 async function start(){
-  try{const me=await call('/api/me');$('who').textContent=me.email;$('login').style.display='none';$('app').style.display='';$('logout').style.display='';blank();load();}
+  try{const me=await call('/api/me');$('who').textContent=me.email;$('login').style.display='none';$('app').style.display='';$('logout').style.display='';$('tab-posts').style.display='';$('tab-fees').style.display='';blank();load();}
   catch(e){}
 }
 window.onGoogle=r=>{token=r.credential;sessionStorage.setItem('vc_tok',token);$('lerr').textContent='';start();};
@@ -312,13 +352,13 @@ async function load(){
   document.querySelectorAll('#list li[data-p]').forEach(li=>li.onclick=()=>open(li.dataset.p));
 }
 function setCover(u){cover=u||'';const i=$('coverimg');i.src=u?'https://visacal.com'+u:'';i.style.display=u?'block':'none';$('coverdel').style.display=u?'':'none';}
-function blank(){cur=null;$('mode').textContent='새 글';['title','slug','summary','body'].forEach(k=>$(k).value='');$('date').value=today();$('category').value='뉴스';$('draft').checked=false;setCover('');$('del').style.display='none';msg('');}
+function blank(){cur=null;$('mode').textContent='새 글';['title','slug','summary','body'].forEach(k=>$(k).value='');$('date').value=today();$('publish_at').value='';$('category').value='뉴스';$('draft').checked=false;setCover('');$('del').style.display='none';msg('');}
 async function open(path){
   msg('불러오는 중',true);
   const p=await call('/api/post?path='+encodeURIComponent(path));
   cur={path:p.path,sha:p.sha};$('mode').textContent='수정: '+(p.title||'');
   $('title').value=p.title||'';$('slug').value=p.slug||'';$('date').value=String(p.date||today()).slice(0,10);
-  $('category').value=p.category||'뉴스';$('summary').value=p.summary||'';$('body').value=p.body||'';$('draft').checked=!!p.draft;
+  $('category').value=p.category||'뉴스';$('summary').value=p.summary||'';$('body').value=p.body||'';$('draft').checked=!!p.draft;$('publish_at').value=(p.publish_at||'').slice(0,16);
   setCover(p.cover||'');$('del').style.display='';msg('');load();
 }
 $('new').onclick=()=>{blank();load();};
@@ -342,9 +382,9 @@ $('save').onclick=async()=>{
   if(!$('title').value.trim())return msg('제목을 입력하십시오');
   $('save').disabled=true;msg('저장 중',true);
   try{
-    const d=await call('/api/post',{method:'POST',body:JSON.stringify({path:cur&&cur.path,sha:cur&&cur.sha,title:$('title').value.trim(),slug:$('slug').value.trim(),date:$('date').value,category:$('category').value,summary:$('summary').value.trim(),cover,body:$('body').value,draft:$('draft').checked})});
+    const d=await call('/api/post',{method:'POST',body:JSON.stringify({path:cur&&cur.path,sha:cur&&cur.sha,title:$('title').value.trim(),slug:$('slug').value.trim(),date:$('date').value,category:$('category').value,summary:$('summary').value.trim(),cover,body:$('body').value,draft:$('draft').checked,publish_at:$('publish_at').value})});
     cur={path:d.path,sha:d.sha};$('del').style.display='';
-    msg($('draft').checked?'임시저장됨':'게시됨. 1분 안에 사이트에 반영됩니다',true);load();
+    const pa=$('publish_at').value;msg($('draft').checked?'임시저장됨':(pa&&pa>new Date(Date.now()+9*3600e3).toISOString().slice(0,16)?('예약됨. '+pa.replace('T',' ')+'에 게시됩니다'):'게시됨. 1분 안에 사이트에 반영됩니다'),true);load();
   }catch(x){msg(x.message);}
   $('save').disabled=false;
 };
@@ -352,6 +392,32 @@ $('del').onclick=async()=>{
   if(!cur||!confirm('이 글을 삭제할까요? 사이트에서도 내려갑니다.'))return;
   try{await call('/api/post',{method:'DELETE',body:JSON.stringify(cur)});blank();load();msg('삭제됨',true);}catch(x){msg(x.message);}
 };
+let F=null;
+const ST=['시행중','시행예정','집행정지','검토필요'];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fmsg(t,ok){const m=$('fmsg');m.textContent=t;m.className='msg '+(ok?'ok':'err');}
+async function loadFees(){
+  fmsg('불러오는 중',true);
+  F=await call('/api/fees');
+  const th='padding:8px;border-bottom:1px solid var(--rule);text-align:left;color:var(--faint);font-weight:600;font-size:12px';
+  const td='padding:6px 8px;border-bottom:1px solid var(--hair)';
+  const inp='width:100%;border:1px solid var(--rule);padding:5px 7px;font:inherit;font-size:13px';
+  $('ftable').innerHTML='<tr><th style="'+th+'">비자</th><th style="'+th+'">항목</th><th style="'+th+'">금액</th><th style="'+th+'">상태</th><th style="'+th+'">시행일</th><th style="'+th+'">근거</th></tr>'+
+    F.data.fees.map(f=>'<tr data-id="'+esc(f.fee_id)+'"><td style="'+td+'">'+esc(f.visa)+'</td><td style="'+td+'">'+esc(f.item)+'</td>'+
+    '<td style="'+td+';width:110px"><input data-k="amount" style="'+inp+';text-align:right" value="'+(f.amount??'')+'" placeholder="확인 필요"></td>'+
+    '<td style="'+td+';width:110px"><select data-k="status" style="'+inp+'">'+ST.map(x=>'<option'+(x===f.status?' selected':'')+'>'+x+'</option>').join('')+'</select></td>'+
+    '<td style="'+td+';width:140px"><input data-k="effective_date" type="date" style="'+inp+'" value="'+esc(f.effective_date||'')+'"></td>'+
+    '<td style="'+td+'"><input data-k="basis" style="'+inp+'" value="'+esc(f.basis)+'"></td></tr>').join('');
+  fmsg('',true);
+}
+$('feesave').onclick=async()=>{
+  const fees=[...document.querySelectorAll('#ftable tr[data-id]')].map(tr=>{const o={fee_id:tr.dataset.id};tr.querySelectorAll('[data-k]').forEach(i=>o[i.dataset.k]=i.value.trim());return o;});
+  $('feesave').disabled=true;fmsg('저장 중',true);
+  try{const d=await call('/api/fees',{method:'PUT',body:JSON.stringify({sha:F.sha,fees})});F.sha=d.sha;fmsg('저장됨. 1분 안에 계산기에 반영됩니다',true);}catch(x){fmsg(x.message);}
+  $('feesave').disabled=false;
+};
+$('tab-fees').onclick=e=>{e.preventDefault();$('app').style.display='none';$('feesview').style.display='grid';loadFees();};
+$('tab-posts').onclick=e=>{e.preventDefault();$('feesview').style.display='none';$('app').style.display='';};
 </script></body></html>`;
 
 export default {
