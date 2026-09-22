@@ -1,0 +1,35 @@
+backend:
+  name: github
+  repo: Alexversify/visacal
+  branch: main
+  commit_messages:
+    create: "post: {{slug}} 작성"
+    update: "post: {{slug}} 수정"
+    delete: "post: {{slug}} 삭제"
+    uploadMedia: "media: {{path}} 업로드"
+
+site_url: https://visacal.com
+display_url: https://visacal.com
+locale: ko
+
+media_folder: docs/uploads
+public_folder: /uploads
+
+collections:
+  - name: posts
+    label: 뉴스와 소식
+    label_singular: 글
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.slug}}"
+    summary: "{{date}} · {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - {name: title, label: 제목, widget: string}
+      - {name: slug, label: 주소용 영문 키워드, widget: string, hint: "영문 소문자와 하이픈. 예) g1055-biometric-fee"}
+      - {name: date, label: 게시일, widget: datetime, format: "YYYY-MM-DD", time_format: false}
+      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지], default: 뉴스}
+      - {name: summary, label: 요약, widget: text, hint: "목록과 검색 결과에 노출됩니다. 두 문장 이내"}
+      - {name: cover, label: 대표 이미지, widget: image, required: false}
+      - {name: draft, label: 임시저장, widget: boolean, default: false, required: false}
+      - {name: body, label: 본문, widget: markdown}
