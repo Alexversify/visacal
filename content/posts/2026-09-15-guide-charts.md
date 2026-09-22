@@ -3,6 +3,7 @@ title: "접수가능일과 최종행동일, 어느 차트를 봐야 하는가"
 slug: "guide-charts"
 date: 2026-09-15
 category: "가이드"
+order: 2
 summary: "같은 사건인데 CSPA 판정이 갈린다면 대개 차트를 잘못 골랐기 때문입니다. 두 차트의 용도와 적용 경로를 구분합니다."
 cover: ""
 draft: false

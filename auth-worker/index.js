@@ -89,12 +89,14 @@ async function putFile(env, path, contentB64, message, sha) {
 const q = (v) => JSON.stringify(String(v ?? ''));
 
 function toMarkdown(m) {
+  const order = cleanOrder(m.order);
   return [
     '---',
     `title: ${q(m.title)}`,
     `slug: ${q(m.slug)}`,
     `date: ${m.date}`,
     `category: ${q(m.category || '뉴스')}`,
+    ...(order === null ? [] : [`order: ${order}`]),
     `summary: ${q(m.summary)}`,
     `cover: ${q(m.cover)}`,
     `draft: ${m.draft ? 'true' : 'false'}`,
@@ -123,6 +125,13 @@ function parseMarkdown(text) {
   }
   return { ...meta, body: m ? m[2].trim() : text };
 }
+
+// 목록 고정 순서. 비었거나 숫자가 아니면 순서 지정 없음으로 둡니다.
+const cleanOrder = (v) => {
+  if (v === null || v === undefined || String(v).trim() === '') return null;
+  const n = Number(String(v).trim());
+  return Number.isInteger(n) ? n : null;
+};
 
 const cleanSlug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'post';
 
@@ -289,7 +298,7 @@ body{margin:0;background:var(--ground);color:var(--ink);font-family:Pretendard,'
 .editor form{padding:18px 20px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{display:block;font-size:12.5px;color:var(--muted);margin:12px 0 5px}
-input[type=text],input[type=date],select,textarea{width:100%;border:1px solid var(--rule);padding:9px 10px;font:inherit;font-size:14px;border-radius:2px;background:var(--paper);color:var(--ink)}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;border:1px solid var(--rule);padding:9px 10px;font:inherit;font-size:14px;border-radius:2px;background:var(--paper);color:var(--ink)}
 textarea{resize:vertical}
 #body{min-height:340px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.6}
 .cover{display:flex;gap:12px;align-items:center}
@@ -334,7 +343,7 @@ textarea{resize:vertical}
       <label>본문 <small style="color:var(--faint)">## 소제목, - 목록, **굵게**</small></label>
       <div class="tools"><button type="button" data-ins="## ">소제목</button><button type="button" data-ins="- ">목록</button><button type="button" data-wrap="**">굵게</button><button type="button" id="imgbtn">이미지 넣기</button><input type="file" id="imgfile" accept="image/*" style="display:none"></div>
       <textarea id="body"></textarea>
-      <div class="row"><div><label>예약 게시 <small style="color:var(--faint)">비우면 즉시 게시, 한국 시간</small></label><input type="datetime-local" id="publish_at" style="width:100%;border:1px solid var(--rule);padding:8px 10px;font:inherit;font-size:14px"></div><div></div></div>
+      <div class="row"><div><label>예약 게시 <small style="color:var(--faint)">비우면 즉시 게시, 한국 시간</small></label><input type="datetime-local" id="publish_at" style="width:100%;border:1px solid var(--rule);padding:8px 10px;font:inherit;font-size:14px"></div><div><label>목록 순서 <small style="color:var(--faint)">작은 수가 위, 비우면 날짜순으로 뒤에</small></label><input type="number" id="order" step="1" placeholder="예: 1"></div></div>
       <label class="chk"><input type="checkbox" id="draft"> 임시저장 (사이트에 공개하지 않음)</label>
       <div class="bar"><button class="btn solid" id="save">저장하고 게시</button><span class="msg" id="msg"></span><span class="sp"></span><button class="btn danger" id="del" style="display:none">삭제</button></div>
     </form>
@@ -384,13 +393,13 @@ async function load(){
   document.querySelectorAll('#list li[data-p]').forEach(li=>li.onclick=()=>openPost(li.dataset.p));
 }
 function setCover(u){cover=u||'';const i=$('coverimg');i.src=u?'https://visacal.com'+u:'';i.style.display=u?'block':'none';$('coverdel').style.display=u?'':'none';}
-function blank(){cur=null;$('mode').textContent='새 글';['title','slug','summary','body'].forEach(k=>$(k).value='');$('date').value=today();$('publish_at').value='';$('category').value='뉴스';$('draft').checked=false;setCover('');$('del').style.display='none';msg('');}
+function blank(){cur=null;$('mode').textContent='새 글';['title','slug','summary','body','order'].forEach(k=>$(k).value='');$('date').value=today();$('publish_at').value='';$('category').value='뉴스';$('draft').checked=false;setCover('');$('del').style.display='none';msg('');}
 async function openPost(path){
   msg('불러오는 중',true);
   const p=await call('/api/post?path='+encodeURIComponent(path));
   cur={path:p.path,sha:p.sha};$('mode').textContent='수정: '+(p.title||'');
   $('title').value=p.title||'';$('slug').value=p.slug||'';$('date').value=String(p.date||today()).slice(0,10);
-  $('category').value=p.category||'뉴스';$('summary').value=p.summary||'';$('body').value=p.body||'';$('draft').checked=!!p.draft;$('publish_at').value=(p.publish_at||'').slice(0,16);
+  $('category').value=p.category||'뉴스';$('order').value=(p.order===undefined||p.order===null)?'':p.order;$('summary').value=p.summary||'';$('body').value=p.body||'';$('draft').checked=!!p.draft;$('publish_at').value=(p.publish_at||'').slice(0,16);
   setCover(p.cover||'');$('del').style.display='';msg('');load();
 }
 $('new').onclick=()=>{blank();load();};
@@ -414,7 +423,7 @@ $('save').onclick=async()=>{
   if(!$('title').value.trim())return msg('제목을 입력하십시오');
   $('save').disabled=true;msg('저장 중',true);
   try{
-    const d=await call('/api/post',{method:'POST',body:JSON.stringify({path:cur&&cur.path,sha:cur&&cur.sha,title:$('title').value.trim(),slug:$('slug').value.trim(),date:$('date').value,category:$('category').value,summary:$('summary').value.trim(),cover,body:$('body').value,draft:$('draft').checked,publish_at:$('publish_at').value})});
+    const d=await call('/api/post',{method:'POST',body:JSON.stringify({path:cur&&cur.path,sha:cur&&cur.sha,title:$('title').value.trim(),slug:$('slug').value.trim(),date:$('date').value,category:$('category').value,order:$('order').value.trim(),summary:$('summary').value.trim(),cover,body:$('body').value,draft:$('draft').checked,publish_at:$('publish_at').value})});
     cur={path:d.path,sha:d.sha};$('del').style.display='';
     const pa=$('publish_at').value;msg($('draft').checked?'임시저장됨':(pa&&pa>new Date(Date.now()+9*3600e3).toISOString().slice(0,16)?('예약됨. '+pa.replace('T',' ')+'에 게시됩니다'):'게시됨. 1분 안에 사이트에 반영됩니다'),true);load();
   }catch(x){msg(x.message);}

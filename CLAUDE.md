@@ -8,6 +8,7 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
   - sources.py 수수료 수집, ledger.py 변경 감지, analyze.py 요약, notify.py 메일
   - render.py 관납료·원장 페이지, cspa_page.py CSPA 계산기, articles.py 가이드 목록, posts.py 글 페이지, site.py 공통 레이아웃·광고·문의폼, static_pages.py 개인정보처리방침·sitemap·ads.txt·CNAME
 - content/posts/*.md 글. 관리자 화면(admin.visacal.com)이 여기에 커밋한다. 분류 "가이드"는 실무 가이드, 나머지는 최신 소식
+  - front matter의 order는 목록 고정 순서. 작은 수가 위로 가고, order가 없는 글은 날짜순으로 뒤에 붙는다
 - data/fees.json 수수료 원장, data/scenarios.json 비자별 계산 시나리오
 - config/site.yaml 도메인, 애드센스, GA4, 문의폼 설정
 - auth-worker/ admin.visacal.com Cloudflare Worker. 이 폴더가 바뀌면 Cloudflare가 자동 배포

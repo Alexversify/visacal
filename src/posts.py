@@ -47,6 +47,16 @@ def _slug(path: Path) -> str:
     return re.sub(r"[^a-z0-9\-]+", "-", path.stem.lower()).strip("-") or "post"
 
 
+def _order(value: Any) -> int | None:
+    """목록 고정 순서. 비었거나 숫자가 아니면 순서 지정 없음으로 봅니다."""
+    if value is None or str(value).strip() == "":
+        return None
+    try:
+        return int(str(value).strip())
+    except ValueError:
+        return None
+
+
 def _img(src: str) -> str:
     """CMS가 넣는 /uploads/... 경로를 페이지 위치 기준으로 맞춥니다."""
     if not src:
@@ -84,6 +94,7 @@ def load_posts() -> list[dict[str, Any]]:
         posts.append(
             {
                 "slug": _slug(path),
+                "order": _order(meta.get("order")),
                 "title": str(meta.get("title") or path.stem),
                 "summary": str(meta.get("summary") or ""),
                 "category": str(meta.get("category") or "뉴스"),
@@ -92,9 +103,13 @@ def load_posts() -> list[dict[str, Any]]:
                 "body": body,
             }
         )
-    # glob 순서는 파일시스템에 따라 달라지므로, 날짜가 같으면 slug 로 순서를 고정합니다
-    posts.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
-    return posts
+    # order 를 지정한 글이 오름차순으로 먼저 오고, 나머지는 최신순으로 뒤따릅니다.
+    # glob 순서는 파일시스템에 따라 달라지므로 동점일 때는 slug 로 순서를 고정합니다.
+    fixed = [p for p in posts if p["order"] is not None]
+    rest = [p for p in posts if p["order"] is None]
+    fixed.sort(key=lambda p: (p["order"], p["slug"]))
+    rest.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
+    return fixed + rest
 
 
 def _to_html(md_text: str) -> str:
