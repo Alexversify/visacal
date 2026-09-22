@@ -134,6 +134,7 @@ ADMIN_CONFIG = """backend:
   name: github
   repo: Alexversify/visacal
   branch: main
+  base_url: https://visacal-cms-auth.ktw199482.workers.dev
   commit_messages:
     create: "post: {{slug}} 작성"
     update: "post: {{slug}} 수정"
