@@ -126,7 +126,8 @@ ADMIN_HTML = """<!doctype html>
 <meta name="robots" content="noindex">
 <title>VisaCal 관리자</title>
 </head><body>
-<script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+<meta http-equiv="refresh" content="0; url=https://admin.visacal.com/">
+<p><a href="https://admin.visacal.com/">admin.visacal.com</a></p>
 </body></html>
 """
 
