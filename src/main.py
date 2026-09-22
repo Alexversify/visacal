@@ -22,6 +22,13 @@ def main() -> int:
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     pages_url = os.environ.get("PAGES_URL", "")
 
+    # 매시간 실행과 글 게시 직후 실행은 페이지만 다시 그립니다.
+    # 수수료 수집은 하루 두 번 정규 실행에서만 합니다.
+    if os.environ.get("RUN_MODE", "full") == "render":
+        print("[render] 페이지만 재생성")
+        render.render(ledger.load_fees(), ledger.load_changelog(), ledger.load_state())
+        return 0
+
     print("[1/5] 소스 수집")
     fr = sources.fetch_federal_register(cfg["federal_register"])
     uscis = sources.fetch_uscis_g1055(cfg["uscis"])
