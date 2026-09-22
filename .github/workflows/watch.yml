@@ -6,6 +6,15 @@ on:
     - cron: "30 22 * * *"
     - cron: "30 10 * * *"
   workflow_dispatch:
+  # 관리자 화면에서 글을 올리거나 설정을 바꾸면 바로 재빌드
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "config/**"
+      - "src/**"
+      - "data/scenarios.json"
+      - "docs/uploads/**"
 
 permissions:
   contents: write
@@ -50,6 +59,7 @@ jobs:
         run: |
           git config user.name "fee-watch"
           git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash || true
           git add data docs
           if git diff --staged --quiet; then
             echo "변경 없음"
