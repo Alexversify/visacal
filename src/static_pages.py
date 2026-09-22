@@ -91,13 +91,16 @@ def render_all(cfg: dict[str, Any]) -> None:
     if domain:
         (DOCS / "CNAME").write_text(domain + "\n", encoding="utf-8")
         (DOCS / "robots.txt").write_text(
-            f"User-agent: *\nAllow: /\nSitemap: https://{domain}/sitemap.xml\n", encoding="utf-8"
+            f"User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: https://{domain}/sitemap.xml\n", encoding="utf-8"
         )
         today = dt.date.today().isoformat()
         from src.articles import ARTICLES
 
+        from src.posts import load_posts
+
         pages = ["", "cspa.html", "guides.html", "changes.html", "privacy.html"]
         pages += [a["slug"] for a in ARTICLES]
+        pages += [f"news/{p['slug']}.html" for p in load_posts()]
         urls = "".join(
             f"<url><loc>https://{domain}/{page}</loc><lastmod>{today}</lastmod></url>"
             for page in pages
@@ -108,8 +111,69 @@ def render_all(cfg: dict[str, Any]) -> None:
             encoding="utf-8",
         )
 
+    render_admin()
+
     if client:
         pub = client.replace("ca-", "")
         (DOCS / "ads.txt").write_text(
             f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8"
         )
+
+
+ADMIN_HTML = """<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>VisaCal 관리자</title>
+</head><body>
+<script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+</body></html>
+"""
+
+ADMIN_CONFIG = """backend:
+  name: github
+  repo: Alexversify/visacal
+  branch: main
+  commit_messages:
+    create: "post: {{slug}} 작성"
+    update: "post: {{slug}} 수정"
+    delete: "post: {{slug}} 삭제"
+    uploadMedia: "media: {{path}} 업로드"
+
+site_url: https://visacal.com
+display_url: https://visacal.com
+locale: ko
+
+media_folder: docs/uploads
+public_folder: /uploads
+
+collections:
+  - name: posts
+    label: 뉴스와 소식
+    label_singular: 글
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.slug}}"
+    summary: "{{date}} · {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - {name: title, label: 제목, widget: string}
+      - {name: slug, label: 주소용 영문 키워드, widget: string, hint: "영문 소문자와 하이픈. 예) g1055-biometric-fee"}
+      - {name: date, label: 게시일, widget: datetime, format: "YYYY-MM-DD", time_format: false}
+      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지], default: 뉴스}
+      - {name: summary, label: 요약, widget: text, hint: "목록과 검색 결과에 노출됩니다. 두 문장 이내"}
+      - {name: cover, label: 대표 이미지, widget: image, required: false}
+      - {name: draft, label: 임시저장, widget: boolean, default: false, required: false}
+      - {name: body, label: 본문, widget: markdown}
+"""
+
+
+def render_admin() -> None:
+    admin = DOCS / "admin"
+    admin.mkdir(parents=True, exist_ok=True)
+    (admin / "index.html").write_text(ADMIN_HTML, encoding="utf-8")
+    (admin / "config.yml").write_text(ADMIN_CONFIG, encoding="utf-8")
+    (DOCS / "uploads").mkdir(exist_ok=True)
+    keep = DOCS / "uploads" / ".gitkeep"
+    if not keep.exists():
+        keep.write_text("", encoding="utf-8")
