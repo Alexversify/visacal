@@ -67,6 +67,15 @@ def load_posts() -> list[dict[str, Any]]:
         body = m.group(2) if m else raw
         if meta.get("draft"):
             continue
+        # 예약 게시: 한국 시간 기준으로 예정 시각이 지나야 공개
+        pub = meta.get("publish_at")
+        if pub:
+            try:
+                when = dt.datetime.fromisoformat(str(pub)[:16])
+                if when > dt.datetime.utcnow() + dt.timedelta(hours=9):
+                    continue
+            except ValueError:
+                pass
         date = meta.get("date") or dt.date.today()
         if isinstance(date, (dt.datetime,)):
             date = date.date()
