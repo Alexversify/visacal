@@ -42,6 +42,11 @@ CSS = """
 .list a:first-child{border-top:1px solid var(--rule)}
 .list b{display:block;font-size:16px;margin-bottom:4px;letter-spacing:-.01em}
 .list span{font-size:13.5px;color:var(--muted)}
+.list h2{font-size:13px;font-weight:600;color:var(--muted);margin:30px 0 6px}
+.list a.news{display:flex;gap:16px;align-items:flex-start}
+.list a.news img{width:132px;height:88px;object-fit:cover;border-radius:2px;border:1px solid var(--rule);flex:none}
+.list a.news .d{display:block;font-size:12px;color:var(--faint);margin-bottom:3px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.list a.news img{width:96px;height:64px}}
 """
 
 TOOL_CSPA = """<a class="tool" href="cspa.html"><b>CSPA 나이 계산기</b>
@@ -285,12 +290,23 @@ def render_articles(cfg: dict[str, Any]) -> list[Path]:
         path.write_text(doc, encoding="utf-8")
         out.append(path)
 
+    from src import posts as posts_mod
+
+    news = posts_mod.render_posts(cfg)
+    news_items = "".join(
+        f'<a class="news" href="news/{p["slug"]}.html">'
+        + (f'<img src="{html.escape(p["cover"].lstrip("/"))}" alt="">' if p["cover"] else "")
+        + f'<div><span class="d">{html.escape(p["category"])} · {p["date"].isoformat()}</span>'
+        f'<b>{html.escape(p["title"])}</b><span>{html.escape(p["summary"])}</span></div></a>'
+        for p in news[:20]
+    )
     items = "".join(
         f'<a href="{a["slug"]}"><b>{html.escape(a["title"])}</b><span>{html.escape(a["summary"])}</span></a>'
         for a in ARTICLES
     )
+    news_block = f'<h2>최신 소식</h2>{news_items}' if news_items else ""
     body = f"""
-<div class="list">{items}</div>
+<div class="list">{news_block}<h2>실무 가이드</h2>{items}</div>
 {site.lead_form(cfg)}
 {site.ad(cfg, "page_bottom")}
 """
