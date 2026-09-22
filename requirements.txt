@@ -3,3 +3,4 @@ PyYAML>=6.0
 pdfplumber>=0.11
 playwright>=1.47
 anthropic>=0.40
+markdown>=3.6
