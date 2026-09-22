@@ -225,6 +225,38 @@ async function api(request, env, url) {
     return json({ sha: r.content.sha });
   }
 
+  // 여러 파일을 커밋 하나로 반영합니다. 관리자 허용 계정만 호출할 수 있습니다.
+  if (url.pathname === '/api/commit' && request.method === 'POST') {
+    const { message, files } = await request.json();
+    if (!Array.isArray(files) || !files.length) return json({ error: '파일 없음' }, 400);
+    const br = env.GITHUB_BRANCH || 'main';
+    const H = { 'Content-Type': 'application/json' };
+    const ref = await (await gh(env, `git/ref/heads/${br}`)).json();
+    const base = ref.object.sha;
+    const baseCommit = await (await gh(env, `git/commits/${base}`)).json();
+    const tree = [];
+    for (const f of files) {
+      if (!f.path || f.path.startsWith('/') || f.path.includes('..')) return json({ error: `잘못된 경로: ${f.path}` }, 400);
+      if (f.delete) { tree.push({ path: f.path, mode: '100644', type: 'blob', sha: null }); continue; }
+      const br2 = await gh(env, 'git/blobs', { method: 'POST', headers: H, body: JSON.stringify({ content: f.b64, encoding: 'base64' }) });
+      if (!br2.ok) return json({ error: `blob 실패 ${f.path} ${br2.status}` }, 500);
+      tree.push({ path: f.path, mode: '100644', type: 'blob', sha: (await br2.json()).sha });
+    }
+    const t = await (await gh(env, 'git/trees', { method: 'POST', headers: H, body: JSON.stringify({ base_tree: baseCommit.tree.sha, tree }) })).json();
+    const c = await (await gh(env, 'git/commits', { method: 'POST', headers: H, body: JSON.stringify({ message: `${message || 'update'} (${who})`, tree: t.sha, parents: [base] }) })).json();
+    const u = await gh(env, `git/refs/heads/${br}`, { method: 'PATCH', headers: H, body: JSON.stringify({ sha: c.sha }) });
+    if (!u.ok) return json({ error: `반영 실패 ${u.status}: ${(await u.text()).slice(0, 200)}` }, 500);
+    return json({ sha: c.sha, files: files.length });
+  }
+
+  if (url.pathname === '/api/file' && request.method === 'GET') {
+    const path = url.searchParams.get('path') || '';
+    const res = await gh(env, `contents/${encodeURI(path)}?ref=${env.GITHUB_BRANCH || 'main'}`);
+    if (!res.ok) return json({ error: `없음 ${res.status}` }, 404);
+    const f = await res.json();
+    return json({ path: f.path, sha: f.sha, b64: (f.content || '').replace(/\n/g, '') });
+  }
+
   return json({ error: 'not found' }, 404);
 }
 
