@@ -1,5 +1,9 @@
 {
   "name": "visacal-cms-auth",
   "main": "index.js",
-  "compatibility_date": "2026-09-01"
+  "compatibility_date": "2026-09-01",
+  "vars": {
+    "ALLOWED_DOMAINS": "visacal.com",
+    "GITHUB_CLIENT_ID": "Ov23li0u1wbcrLAaBoTJ"
+  }
 }
