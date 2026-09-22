@@ -349,11 +349,11 @@ $('logout').onclick=e=>{e.preventDefault();token='';sessionStorage.removeItem('v
 async function load(){
   const list=await call('/api/posts');
   $('list').innerHTML=list.map(p=>'<li data-p="'+p.path+'"'+(cur&&cur.path===p.path?' class="on"':'')+'>'+p.name.replace(/\\.md$/,'').slice(11)+'<small>'+p.name.slice(0,10)+'</small></li>').join('')||'<li>글이 없습니다</li>';
-  document.querySelectorAll('#list li[data-p]').forEach(li=>li.onclick=()=>open(li.dataset.p));
+  document.querySelectorAll('#list li[data-p]').forEach(li=>li.onclick=()=>openPost(li.dataset.p));
 }
 function setCover(u){cover=u||'';const i=$('coverimg');i.src=u?'https://visacal.com'+u:'';i.style.display=u?'block':'none';$('coverdel').style.display=u?'':'none';}
 function blank(){cur=null;$('mode').textContent='새 글';['title','slug','summary','body'].forEach(k=>$(k).value='');$('date').value=today();$('publish_at').value='';$('category').value='뉴스';$('draft').checked=false;setCover('');$('del').style.display='none';msg('');}
-async function open(path){
+async function openPost(path){
   msg('불러오는 중',true);
   const p=await call('/api/post?path='+encodeURIComponent(path));
   cur={path:p.path,sha:p.sha};$('mode').textContent='수정: '+(p.title||'');
