@@ -5,6 +5,8 @@ on:
     # KST 07:30, 19:30. USCIS는 미 동부 업무시간에 갱신되므로 저녁 실행이 실질 감시입니다.
     - cron: "30 22 * * *"
     - cron: "30 10 * * *"
+    # 매시 5분: 예약 글 공개용 페이지 재생성
+    - cron: "5 * * * *"
   workflow_dispatch:
   # 관리자 화면에서 글을 올리거나 설정을 바꾸면 바로 재빌드
   push:
@@ -14,6 +16,7 @@ on:
       - "config/**"
       - "src/**"
       - "data/scenarios.json"
+      - "data/fees.json"
       - "docs/uploads/**"
 
 permissions:
@@ -28,6 +31,8 @@ jobs:
   watch:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      RUN_MODE: ${{ ((github.event_name == 'schedule' && github.event.schedule != '5 * * * *') || github.event_name == 'workflow_dispatch') && 'full' || 'render' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -39,7 +44,7 @@ jobs:
       - name: 의존성 설치
         run: |
           pip install -r requirements.txt
-          python -m playwright install --with-deps chromium
+          if [ "$RUN_MODE" = "full" ]; then python -m playwright install --with-deps chromium; fi
 
       - name: 수집 및 분석
         env:
