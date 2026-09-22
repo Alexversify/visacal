@@ -293,7 +293,7 @@ textarea{resize:vertical}
       <label>제목</label><input type="text" id="title" required>
       <div class="row">
         <div><label>게시일</label><input type="date" id="date" required></div>
-        <div><label>분류</label><select id="category"><option>뉴스</option><option>수수료 변경</option><option>정책 해설</option><option>공지</option></select></div>
+        <div><label>분류</label><select id="category"><option>뉴스</option><option>수수료 변경</option><option>정책 해설</option><option>공지</option><option>가이드</option></select></div>
       </div>
       <label>주소용 영문 키워드 <small style="color:var(--faint)">영문 소문자와 하이픈, 비우면 자동</small></label><input type="text" id="slug" placeholder="g1055-biometric-fee">
       <label>요약 <small style="color:var(--faint)">목록과 검색 결과에 노출, 두 문장 이내</small></label><textarea id="summary" rows="2"></textarea>
