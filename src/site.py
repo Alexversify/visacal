@@ -109,8 +109,10 @@ def head(cfg: dict[str, Any], title: str, css: str, description: str = "") -> st
 
 def header(cfg: dict[str, Any], active: str, stamp: str = "") -> str:
     site = cfg.get("site", {})
+    # 파이썬 3.11 에서는 f-string 안에 역슬래시를 쓸 수 없어 속성 문자열을 밖에 둡니다
+    current = ' aria-current="page"'
     links = "".join(
-        f'<a href="{href}"{" aria-current=\"page\"" if href == active else ""}>{html.escape(label)}</a>'
+        f'<a href="{href}"{current if href == active else ""}>{html.escape(label)}</a>'
         for href, label in NAV
     )
     stamp_html = f'<div class="stamp">{html.escape(stamp)}</div>' if stamp else ""
