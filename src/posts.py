@@ -92,7 +92,8 @@ def load_posts() -> list[dict[str, Any]]:
                 "body": body,
             }
         )
-    posts.sort(key=lambda p: p["date"], reverse=True)
+    # glob 순서는 파일시스템에 따라 달라지므로, 날짜가 같으면 slug 로 순서를 고정합니다
+    posts.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
     return posts
 
 
