@@ -3,7 +3,9 @@
   "main": "index.js",
   "compatibility_date": "2026-09-01",
   "vars": {
-    "ALLOWED_DOMAINS": "visacal.com",
-    "GITHUB_CLIENT_ID": "Ov23li0u1wbcrLAaBoTJ"
+    "GOOGLE_CLIENT_ID": "304502450571-kn2h9bp7hqds2j308qg8e1upcn009s10.apps.googleusercontent.com",
+    "ALLOWED_EMAILS": "ktw199482@gmail.com",
+    "GITHUB_REPO": "Alexversify/visacal",
+    "GITHUB_BRANCH": "main"
   }
 }
