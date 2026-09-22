@@ -3,6 +3,7 @@ title: "미국 비자 수수료, 자주 나오는 질문"
 slug: "guide-fee-faq"
 date: 2026-09-15
 category: "가이드"
+order: 5
 summary: "누가 내는가, 환불되는가, 왜 나라마다 금액이 다른가. 상담에서 반복되는 질문을 모았습니다."
 cover: ""
 draft: false

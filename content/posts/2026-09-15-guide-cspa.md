@@ -3,6 +3,7 @@ title: "CSPA 나이 계산, 무엇을 언제 기준으로 재는가"
 slug: "guide-cspa"
 date: 2026-09-15
 category: "가이드"
+order: 1
 summary: "자녀가 21세를 넘겨도 이민 대상으로 남을 수 있는지는 실제 나이가 아니라 CSPA 나이로 결정됩니다. 계산 구조와 자주 틀리는 지점을 정리했습니다."
 cover: ""
 draft: false
