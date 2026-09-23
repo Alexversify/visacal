@@ -71,7 +71,9 @@ Google이 인증한 동의 관리 플랫폼을 통해 사전 동의를 받아야
 </div>
 """
     doc = (
-        site.head(cfg, "개인정보처리방침", PRIVACY_CSS)
+        site.head(cfg, "개인정보처리방침", PRIVACY_CSS,
+                  "VisaCal 개인정보처리방침. 계산기 입력값은 브라우저 안에서만 처리합니다.",
+                  path="privacy.html")
         + site.header(cfg, "privacy.html")
         + body
         + site.footer(cfg)
@@ -81,9 +83,37 @@ Google이 인증한 동의 관리 플랫폼을 통해 사전 동의를 받아야
     return out
 
 
+def render_404(cfg: dict[str, Any]) -> Path:
+    """주소가 바뀌거나 오타로 들어온 방문자를 계산기로 돌려보냅니다."""
+    body = """
+<div class="doc">
+<h2 style="font-size:22px;margin:28px 0 8px">찾는 페이지가 없습니다</h2>
+<p>주소가 바뀌었거나 잘못 입력된 것 같습니다. 아래에서 필요한 계산기를 바로 여십시오.</p>
+<ul>
+<li><a href="/">비자별 관납료 계산기</a></li>
+<li><a href="/cspa.html">CSPA 나이 계산기</a></li>
+<li><a href="/guides.html">가이드와 소식</a></li>
+<li><a href="/changes.html">수수료 원장과 변경 이력</a></li>
+</ul>
+</div>
+"""
+    doc = (
+        site.head(cfg, "페이지를 찾을 수 없습니다", PRIVACY_CSS,
+                  "요청하신 주소를 찾지 못했습니다. 관납료 계산기와 CSPA 나이 계산기로 이동할 수 있습니다.",
+                  path=None)
+        + site.header(cfg, "")
+        + body
+        + site.footer(cfg)
+    ).replace("<head>", '<head><meta name="robots" content="noindex">', 1)
+    out = DOCS / "404.html"
+    out.write_text(doc, encoding="utf-8")
+    return out
+
+
 def render_all(cfg: dict[str, Any]) -> None:
     DOCS.mkdir(parents=True, exist_ok=True)
     render_privacy(cfg)
+    render_404(cfg)
 
     domain = (cfg.get("site") or {}).get("domain") or ""
     client = (cfg.get("adsense") or {}).get("client_id") or ""
@@ -162,7 +192,8 @@ collections:
       - {name: title, label: 제목, widget: string}
       - {name: slug, label: 주소용 영문 키워드, widget: string, hint: "영문 소문자와 하이픈. 예) g1055-biometric-fee"}
       - {name: date, label: 게시일, widget: datetime, format: "YYYY-MM-DD", time_format: false}
-      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지], default: 뉴스}
+      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지, 가이드], default: 뉴스}
+      - {name: order, label: 목록 순서, widget: number, required: false, value_type: int, hint: "작은 수가 위로. 비우면 날짜순으로 뒤에 붙습니다"}
       - {name: summary, label: 요약, widget: text, hint: "목록과 검색 결과에 노출됩니다. 두 문장 이내"}
       - {name: cover, label: 대표 이미지, widget: image, required: false}
       - {name: draft, label: 임시저장, widget: boolean, default: false, required: false}

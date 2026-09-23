@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import html
+import json
 from pathlib import Path
 from typing import Any
 
@@ -45,6 +46,7 @@ nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
 .stamp{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums;margin-top:10px}
 .ad{margin:22px 0;min-height:1px}
+.ad-label{display:block;font-size:11px;color:var(--faint);letter-spacing:.06em;margin-bottom:4px}
 .ad-side{margin:18px 0 0}
 .cta{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
 .cta a{display:block;text-align:center;text-decoration:none;padding:11px 14px;
@@ -76,10 +78,29 @@ def load_cfg() -> dict[str, Any]:
     return yaml.safe_load(SITE_CFG.read_text(encoding="utf-8")) or {}
 
 
-def head(cfg: dict[str, Any], title: str, css: str, description: str = "") -> str:
+def canonical_url(cfg: dict[str, Any], path: str = "") -> str:
+    """페이지의 정규 주소. path 가 비면 루트입니다."""
+    domain = (cfg.get("site") or {}).get("domain") or ""
+    if not domain:
+        return ""
+    return f"https://{domain}/{path.lstrip('/')}"
+
+
+def head(
+    cfg: dict[str, Any],
+    title: str,
+    css: str,
+    description: str = "",
+    path: str | None = "",
+    jsonld: str = "",
+    og_type: str = "website",
+    image: str = "",
+) -> str:
     site = cfg.get("site", {})
     client = (cfg.get("adsense") or {}).get("client_id") or ""
+    # 소유 확인용 메타와 로더를 함께 냅니다. 심사 중에도 메타는 필요합니다.
     ads_script = (
+        f'<meta name="google-adsense-account" content="{html.escape(client)}">'
         f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={html.escape(client)}" crossorigin="anonymous"></script>'
         if client
         else ""
@@ -96,13 +117,41 @@ def head(cfg: dict[str, Any], title: str, css: str, description: str = "") -> st
     verify = an.get("search_console") or ""
     verify_tag = f'<meta name="google-site-verification" content="{html.escape(verify)}">' if verify else ""
     desc = description or site.get("tagline", "")
+    full_title = f"{title} · {site.get('title', 'VisaCal')}"
+    # path 가 None 이면 정규 주소를 넣지 않습니다. 404 처럼 대표 주소가 없는 페이지입니다.
+    url = canonical_url(cfg, path) if path is not None else ""
+    canonical_tag = f'<link rel="canonical" href="{html.escape(url)}">' if url else ""
+
+    # 공유 카드. 카카오톡과 슬랙, 검색 미리보기가 같은 값을 읽습니다.
+    og = [
+        f'<meta property="og:type" content="{html.escape(og_type)}">',
+        f'<meta property="og:title" content="{html.escape(full_title)}">',
+        f'<meta property="og:description" content="{html.escape(desc)}">',
+        f'<meta property="og:site_name" content="{html.escape(site.get("title", "VisaCal"))}">',
+        '<meta property="og:locale" content="ko_KR">',
+    ]
+    if url:
+        og.append(f'<meta property="og:url" content="{html.escape(url)}">')
+    if image:
+        img_url = image if image.startswith("http") else canonical_url(cfg, image)
+        og.append(f'<meta property="og:image" content="{html.escape(img_url)}">')
+    og.append('<meta name="twitter:card" content="%s">' % ("summary_large_image" if image else "summary"))
+    og_tags = "".join(og)
+
+    ld = f'<script type="application/ld+json">{jsonld}</script>' if jsonld else ""
+
     return f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(title)} · {html.escape(site.get('title', 'VisaCal'))}</title>
+<title>{html.escape(full_title)}</title>
 <meta name="description" content="{html.escape(desc)}">
+<meta name="theme-color" content="#14243c">
+{canonical_tag}
+{og_tags}
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 {verify_tag}
+{ld}
 {ads_script}{ga_script}
 <style>{TOKENS}{css}</style></head><body>"""
 
@@ -124,14 +173,73 @@ def header(cfg: dict[str, Any], active: str, stamp: str = "") -> str:
 {stamp_html}"""
 
 
+def _publisher(cfg: dict[str, Any]) -> dict[str, Any]:
+    s = cfg.get("site") or {}
+    return {"@type": "Organization", "name": s.get("operator") or s.get("title", "VisaCal"),
+            "url": canonical_url(cfg)}
+
+
+def jsonld_site(cfg: dict[str, Any]) -> str:
+    """홈에 넣는 사이트 정보. 검색 결과에 사이트명과 운영 주체를 알립니다."""
+    s = cfg.get("site") or {}
+    data = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": s.get("title", "VisaCal"),
+        "url": canonical_url(cfg),
+        "inLanguage": "ko",
+        "publisher": _publisher(cfg),
+    }
+    return json.dumps(data, ensure_ascii=False)
+
+
+def jsonld_article(cfg: dict[str, Any], title: str, description: str, path: str,
+                   published: str, image: str = "") -> str:
+    """글 페이지의 구조화 데이터. 발행일과 작성 주체를 명시합니다."""
+    data: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": title[:110],
+        "description": description,
+        "inLanguage": "ko",
+        "datePublished": published,
+        "dateModified": published,
+        "mainEntityOfPage": canonical_url(cfg, path),
+        "author": _publisher(cfg),
+        "publisher": _publisher(cfg),
+    }
+    if image:
+        data["image"] = image if image.startswith("http") else canonical_url(cfg, image)
+    return json.dumps(data, ensure_ascii=False)
+
+
+def jsonld_tool(cfg: dict[str, Any], name: str, description: str, path: str) -> str:
+    """계산기 페이지. 무료 웹 도구라는 점을 명시합니다."""
+    data = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": name,
+        "description": description,
+        "url": canonical_url(cfg, path),
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "inLanguage": "ko",
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"},
+        "publisher": _publisher(cfg),
+    }
+    return json.dumps(data, ensure_ascii=False)
+
+
 def ad(cfg: dict[str, Any], slot_key: str, css_class: str = "ad") -> str:
     ads = cfg.get("adsense") or {}
     client = ads.get("client_id") or ""
     slot = (ads.get("slots") or {}).get(slot_key) or ""
     if not (client and slot):
         return ""
+    # 광고 표기를 붙여 본문과 구분합니다. 계산 결과로 오인되면 정책 위반입니다.
     return (
-        f'<div class="{css_class}"><ins class="adsbygoogle" style="display:block"'
+        f'<div class="{css_class}"><span class="ad-label">광고</span>'
+        f'<ins class="adsbygoogle" style="display:block"'
         f' data-ad-client="{html.escape(client)}" data-ad-slot="{html.escape(slot)}"'
         ' data-ad-format="auto" data-full-width-responsive="true"></ins>'
         "<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>"

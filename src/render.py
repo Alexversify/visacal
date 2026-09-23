@@ -253,7 +253,11 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
 금액이 확인되지 않은 항목은 원장에서 채워야 합계에 반영됩니다.</p>
 """
     doc = (
-        site.head(cfg, "비자별 관납료", INDEX_CSS, "미국 비자 종류별 관납료를 진행 경로와 동반가족까지 반영해 계산합니다.")
+        site.head(
+            cfg, "비자별 관납료", INDEX_CSS,
+            "미국 비자 종류별 관납료를 진행 경로와 동반가족까지 반영해 계산합니다.",
+            path="", jsonld=site.jsonld_site(cfg),
+        )
         + site.header(cfg, "index.html", _checked_kst(state))
         + body
         + site.footer(cfg)
@@ -325,7 +329,9 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
 <div class="log">{''.join(log_html) or '<div class="entry"><div class="d">기록 없음</div><p>감시 시작 이후 감지된 변경이 없습니다.</p></div>'}</div>
 """
     doc = (
-        site.head(cfg, "수수료 원장과 변경 이력", CHANGES_CSS)
+        site.head(cfg, "수수료 원장과 변경 이력", CHANGES_CSS,
+                  "미국 이민 수수료의 현재 금액과 변경 이력을 출처와 함께 정리한 원장입니다.",
+                  path="changes.html")
         + site.header(cfg, "changes.html", _checked_kst(state))
         + body
         + site.footer(cfg)

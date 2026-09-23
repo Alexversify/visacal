@@ -87,6 +87,8 @@ def render_articles(cfg: dict[str, Any]) -> list[Path]:
     blocks = ""
     if news:
         blocks += "<h2>최신 소식</h2>" + "".join(_item(p) for p in news[:30])
+    if news and guides:
+        blocks += site.ad(cfg, "list_mid")
     if guides:
         blocks += "<h2>실무 가이드</h2>" + "".join(_item(p) for p in guides)
 
@@ -96,7 +98,9 @@ def render_articles(cfg: dict[str, Any]) -> list[Path]:
 {site.ad(cfg, "page_bottom")}
 """
     doc = (
-        site.head(cfg, "가이드와 소식", CSS, "미국 비자 수수료와 CSPA 나이 계산에 관한 실무 해설과 최신 소식")
+        site.head(cfg, "가이드와 소식", CSS,
+                  "미국 비자 수수료와 CSPA 나이 계산에 관한 실무 해설과 최신 소식",
+                  path="guides.html")
         + site.header(cfg, "guides.html")
         + body
         + site.footer(cfg)

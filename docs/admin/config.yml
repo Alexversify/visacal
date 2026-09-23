@@ -29,7 +29,8 @@ collections:
       - {name: title, label: 제목, widget: string}
       - {name: slug, label: 주소용 영문 키워드, widget: string, hint: "영문 소문자와 하이픈. 예) g1055-biometric-fee"}
       - {name: date, label: 게시일, widget: datetime, format: "YYYY-MM-DD", time_format: false}
-      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지], default: 뉴스}
+      - {name: category, label: 분류, widget: select, options: [뉴스, 수수료 변경, 정책 해설, 공지, 가이드], default: 뉴스}
+      - {name: order, label: 목록 순서, widget: number, required: false, value_type: int, hint: "작은 수가 위로. 비우면 날짜순으로 뒤에 붙습니다"}
       - {name: summary, label: 요약, widget: text, hint: "목록과 검색 결과에 노출됩니다. 두 문장 이내"}
       - {name: cover, label: 대표 이미지, widget: image, required: false}
       - {name: draft, label: 임시저장, widget: boolean, default: false, required: false}

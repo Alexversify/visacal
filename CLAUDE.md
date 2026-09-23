@@ -11,6 +11,7 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
   - front matter의 order는 목록 고정 순서. 작은 수가 위로 가고, order가 없는 글은 날짜순으로 뒤에 붙는다
 - data/fees.json 수수료 원장, data/scenarios.json 비자별 계산 시나리오
 - config/site.yaml 도메인, 애드센스, GA4, 문의폼 설정
+  - adsense.slots가 비면 그 자리의 광고는 렌더링되지 않는다. 광고 단위를 만들어 slot 번호를 채워야 노출된다
 - auth-worker/ admin.visacal.com Cloudflare Worker. 이 폴더가 바뀌면 Cloudflare가 자동 배포
 - docs/ GitHub Pages 배포 폴더. 직접 고치지 말고 생성기를 고친 뒤 재생성
 
@@ -26,3 +27,5 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
 - 비밀값(토큰, API 키)을 코드나 커밋에 넣지 않는다. Cloudflare·GitHub Secrets에만 둔다
 - 디자인 토큰은 site.py 의 TOKENS를 따른다 (잉크 #14243c, Pretendard)
 - 애드센스 심사 중에는 URL 구조를 크게 바꾸지 않는다
+- 광고 태그를 innerHTML로 넣지 않는다. 스크립트가 실행되지 않아 광고가 비고, 재계산마다 다시 만들면 정책 위반 소지가 있다
+- CSPA 나이 산정 기준은 최종행동일 차트가 원칙. 2025-08-15 전 접수된 신분조정 신청만 경과규정으로 접수가능일 차트

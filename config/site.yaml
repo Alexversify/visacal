@@ -14,9 +14,13 @@ analytics:
 adsense:
   # AdSense 승인 후 발급되는 ca-pub-0000000000000000 형식의 값
   client_id: "ca-pub-1964223951103950"
+  # AdSense에서 광고 단위를 만들면 나오는 data-ad-slot 숫자를 넣습니다.
+  # 비어 있는 자리는 렌더링되지 않으므로, 만든 것부터 채우면 됩니다.
   slots:
-    result_side: ""
-    page_bottom: ""
+    result_side: ""    # 계산 결과 아래
+    page_bottom: ""    # 페이지 맨 아래
+    in_article: ""     # 글 본문 중간, 문단 세 개 뒤
+    list_mid: ""       # 가이드 목록에서 소식과 가이드 사이
 
 cta:
   consult_label: 사건 검토 요청

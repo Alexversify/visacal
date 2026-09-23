@@ -120,6 +120,21 @@ def _to_html(md_text: str) -> str:
     return re.sub(r'src="/(uploads/[^"]+)"', r'src="../\1"', out)
 
 
+def _with_inline_ad(body_html: str, ad_html: str) -> str:
+    """본문 중간에 광고를 한 번 넣습니다.
+
+    문단 세 개를 읽은 뒤가 자연스럽고, 짧은 글에는 넣지 않습니다.
+    본문과 붙어 보이지 않도록 광고 표기는 site.ad 가 함께 출력합니다.
+    """
+    if not ad_html:
+        return body_html
+    ends = [m.end() for m in re.finditer(r"</p>", body_html)]
+    if len(ends) < 6:
+        return body_html
+    cut = ends[2]
+    return body_html[:cut] + ad_html + body_html[cut:]
+
+
 def render_posts(cfg: dict[str, Any]) -> list[dict[str, Any]]:
     posts = load_posts()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -136,14 +151,23 @@ def render_posts(cfg: dict[str, Any]) -> list[dict[str, Any]]:
   <h1>{html.escape(p['title'])}</h1>
   <div class="sum">{html.escape(p['summary'])}</div>
   {cover}
-  {_to_html(p['body'])}
+  {_with_inline_ad(_to_html(p['body']), site.ad(cfg, "in_article"))}
   <a class="back" href="../guides.html">가이드와 소식 전체 보기</a>
 </article>
 {site.lead_form(cfg, p['title'][:30])}
 {site.ad(cfg, "page_bottom")}
 """
         doc = (
-            site.head(cfg, p["title"], CSS, p["summary"])
+            site.head(
+                cfg, p["title"], CSS, p["summary"],
+                path=f"news/{p['slug']}.html",
+                jsonld=site.jsonld_article(
+                    cfg, p["title"], p["summary"], f"news/{p['slug']}.html",
+                    p["date"].isoformat(), p["cover"],
+                ),
+                og_type="article",
+                image=p["cover"],
+            )
             + site.header(cfg, "guides.html")
             + body
             + site.footer(cfg)
