@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <title>수수료 원장과 변경 이력 · VisaCal</title>
 <meta name="description" content="미국 비자 관납료와 CSPA 나이 계산">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -19,10 +20,12 @@ body{margin:0;background:var(--ground);color:var(--ink);
   font-size:15px;line-height:1.6}
 .wrap{max-width:1020px;margin:0 auto;padding:28px 20px 64px}
 a{color:var(--ink)}
-.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
   border-bottom:2px solid var(--ink);padding-bottom:12px}
-.brand{font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
-.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:9px;letter-spacing:0}
+.brand{display:inline-flex;align-items:center;gap:8px;font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand svg{flex:none;display:block}
+.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:1px;letter-spacing:0}
+@media (max-width:480px){.brand span{display:none}}
 nav{display:flex;gap:16px;font-size:14px}
 nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
 nav a:hover{color:var(--ink)}
@@ -70,7 +73,7 @@ td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
 @media (max-width:640px){td:first-child,th:first-child{display:none}}
 </style></head><body><div class="wrap">
 <div class="top">
-  <a class="brand" href="index.html">VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
+  <a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="23" rx="5" fill="currentColor"/><rect x="9" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/><rect x="19.8" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/><path d="M10 14.5l6 8.5 6-8.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
   <nav><a href="index.html">관납료</a><a href="cspa.html">CSPA 나이</a><a href="guides.html">가이드</a><a href="changes.html" aria-current="page">원장과 이력</a></nav>
 </div>
 <div class="stamp">마지막 확인 2026-09-28 10:02 KST</div>

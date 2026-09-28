@@ -22,6 +22,16 @@ NAV = [
     ("changes.html", "원장과 이력"),
 ]
 
+# 달력 위에 V자 체크. 파비콘(docs/favicon.svg)과 같은 도형입니다.
+LOGO_SVG = (
+    '<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">'
+    '<rect x="3" y="6" width="26" height="23" rx="5" fill="currentColor"/>'
+    '<rect x="9" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/>'
+    '<rect x="19.8" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/>'
+    '<path d="M10 14.5l6 8.5 6-8.5" fill="none" stroke="#fff" stroke-width="3.2"'
+    ' stroke-linecap="round" stroke-linejoin="round"/></svg>'
+)
+
 TOKENS = """
 :root{
   --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
@@ -35,10 +45,12 @@ body{margin:0;background:var(--ground);color:var(--ink);
   font-size:15px;line-height:1.6}
 .wrap{max-width:1020px;margin:0 auto;padding:28px 20px 64px}
 a{color:var(--ink)}
-.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
   border-bottom:2px solid var(--ink);padding-bottom:12px}
-.brand{font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
-.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:9px;letter-spacing:0}
+.brand{display:inline-flex;align-items:center;gap:8px;font-size:19px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand svg{flex:none;display:block}
+.brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:1px;letter-spacing:0}
+@media (max-width:480px){.brand span{display:none}}
 nav{display:flex;gap:16px;font-size:14px}
 nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
 nav a:hover{color:var(--ink)}
@@ -99,6 +111,7 @@ def head(cfg: dict[str, Any], title: str, css: str, description: str = "") -> st
     return f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <title>{html.escape(title)} · {html.escape(site.get('title', 'VisaCal'))}</title>
 <meta name="description" content="{html.escape(desc)}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -116,7 +129,7 @@ def header(cfg: dict[str, Any], active: str, stamp: str = "") -> str:
     stamp_html = f'<div class="stamp">{html.escape(stamp)}</div>' if stamp else ""
     return f"""<div class="wrap">
 <div class="top">
-  <a class="brand" href="index.html">{html.escape(site.get('title', 'VisaCal'))}<span>{html.escape(site.get('tagline', ''))}</span></a>
+  <a class="brand" href="index.html">{LOGO_SVG}{html.escape(site.get('title', 'VisaCal'))}<span>{html.escape(site.get('tagline', ''))}</span></a>
   <nav>{links}</nav>
 </div>
 {stamp_html}"""
