@@ -111,7 +111,10 @@ def head(cfg: dict[str, Any], title: str, css: str, description: str = "") -> st
     return f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>{html.escape(title)} · {html.escape(site.get('title', 'VisaCal'))}</title>
 <meta name="description" content="{html.escape(desc)}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
