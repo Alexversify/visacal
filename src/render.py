@@ -337,9 +337,10 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
 
 def render_static(cfg: dict[str, Any]) -> None:
     """도메인, 광고, 개인정보처리방침처럼 매 실행마다 같은 내용인 파일들."""
-    from src import articles, cspa_page, static_pages
+    from src import age_page, articles, cspa_page, static_pages
 
     cspa_page.render_cspa(cfg)
+    age_page.render_age(cfg)
     articles.render_articles(cfg)
     static_pages.render_all(cfg)
 

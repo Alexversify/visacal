@@ -18,6 +18,7 @@ SITE_CFG = ROOT / "config" / "site.yaml"
 NAV = [
     ("index.html", "관납료"),
     ("cspa.html", "CSPA 나이"),
+    ("age.html", "만 나이"),
     ("guides.html", "가이드"),
     ("changes.html", "원장과 이력"),
 ]
