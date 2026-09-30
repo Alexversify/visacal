@@ -220,6 +220,6 @@ def footer(cfg: dict[str, Any], extra: str = "") -> str:
     return f"""<footer>
 <div class="disc">{extra}이 사이트의 계산 결과는 공개된 정부 자료를 근거로 한 참고용 추정이며 법률 자문이 아닙니다.
 실제 신청 전에는 반드시 담당 변호사의 검토를 받으십시오. 계산 결과로 발생한 손해에 대해 책임지지 않습니다.</div>
-<div>{operator}{' · ' if operator and email else ''}{email} · <a href="privacy.html">개인정보처리방침</a></div>
+<div>{operator}{' · ' if operator and email else ''}{email} · <a href="privacy.html">개인정보처리방침</a> · <a href="https://feedbal.com/say/visacal">건의하기</a></div>
 </footer>
 </div></body></html>"""
