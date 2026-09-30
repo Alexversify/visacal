@@ -1,0 +1,17 @@
+[
+  {
+    "date": "2026-09-30T16:36:23+00:00",
+    "changes": [
+      {
+        "kind": "USCIS 신규 공지",
+        "severity": "high",
+        "detail": "Alert Type info Alert: On Sept. 30, 2026, USCIS announced a Federal Register notice that will increase certain H.R.-1 immigration-related fees for fiscal year 2027. These fee adjustments are minor and account for inflation from July 2025 through July 2026. The new inflation-adjusted fees are effective Oct. 16, 2026. If you submit a request postmarked on or after Oct. 16, 2026, for a benefit that requires one of these fees, you must include the new fee for the specific benefit you are requesting. Any request postmarked on or after Oct. 16, 2026 without the proper filing fee will be rejected. See the web alert for more information.",
+        "url": "https://www.uscis.gov/g-1055"
+      }
+    ],
+    "analysis": {
+      "headline": "변경 감지됨. 분석 응답 파싱 실패",
+      "severity": "medium"
+    }
+  }
+]
