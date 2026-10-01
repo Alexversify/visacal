@@ -1,5 +1,32 @@
 [
   {
+    "date": "2026-10-01T17:06:18+00:00",
+    "changes": [
+      {
+        "kind": "G-1055 개정판",
+        "severity": "high",
+        "detail": "edition 09/09/26 -> 10/01/26",
+        "url": "https://www.uscis.gov/g-1055"
+      },
+      {
+        "kind": "USCIS 신규 공지",
+        "severity": "high",
+        "detail": "Alert Type info Alert: On Oct. 1, 2026, we published a new edition of Form G-1055, Fee Schedule. The new edition, 10/01/26, includes the Fiscal Year 2027 inflationary-adjusted H.R. 1 immigration-related fee for Form EOIR-29, Notice of Appeal to the Board of Immigration Appeals from a Decision of a DHS Officer. This new fee is effective on Oct. 1, 2026. If you submit a Form EOIR-29 postmarked on or after Oct. 1, 2026, you must include the new fee.",
+        "url": "https://www.uscis.gov/g-1055"
+      },
+      {
+        "kind": "USCIS 공지 내림",
+        "severity": "medium",
+        "detail": "아래 공지가 페이지에서 사라졌습니다. 집행 재개 여부 확인 필요. Alert Type info Alert: On Sept. 9, 2026, we published a new edition of Form G-1055, Fee Schedule. The new edition, 09/09/26, is in response to the final rule to amend regulations concerning the statutory 9-11 Response & Biometric Entry-Exit Fee for H-1B and L-1 Visas (9-11 Biometric Fee). The regulatory changes require petitioners that are covered employers to submit the 9-11 Biometric Fee for all H-1B and L-1 petitions, unless the petitioner is filing an amended petition that does not seek an e",
+        "url": "https://www.uscis.gov/g-1055"
+      }
+    ],
+    "analysis": {
+      "headline": "변경 감지됨. 분석 응답 파싱 실패",
+      "severity": "medium"
+    }
+  },
+  {
     "date": "2026-09-30T16:36:23+00:00",
     "changes": [
       {
