@@ -98,7 +98,7 @@ def render_all(cfg: dict[str, Any]) -> None:
 
         from src.posts import load_posts
 
-        pages = ["", "cspa.html", "age.html", "guides.html", "changes.html", "privacy.html"]
+        pages = ["", "cspa.html", "age.html", "consular-rate/", "consular-rate/history/", "guides.html", "changes.html", "privacy.html"]
         pages += [a["slug"] for a in ARTICLES]
         pages += [f"news/{p['slug']}.html" for p in load_posts()]
         urls = "".join(

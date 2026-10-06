@@ -1,0 +1,448 @@
+"""영사환율 추이 페이지. docs/consular-rate/history/index.html
+
+그래프, 요약 카드, 비자별 원화 추이, 달력 히트맵, 날짜 조회를 한 화면에 둡니다.
+데이터는 JSON으로 심고 브라우저에서 그립니다. 외부 라이브러리를 쓰지 않습니다.
+
+그리는 규칙
+- 영사환율은 바뀔 때까지 같은 값이 유지되므로 계단형으로 그립니다. 주말처럼 기록이 없는 날은 직전 값이 이어집니다
+- 수집에 실패한 날은 선을 끊고 회색 구간으로 둡니다. 앞뒤 값을 이어 붙이거나 보간하지 않습니다
+- 원화 추이는 그날 기록된 수수료(consular_fee_history.csv)만 씁니다. 기록이 없던 날의 수수료를 짐작하지 않습니다
+"""
+
+from __future__ import annotations
+
+import html
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+from src import site
+from src.consular_rate import load_fee_history, load_history_all, mrv_fees
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT_DIR = ROOT / "docs" / "consular-rate" / "history"
+TITLE = "영사환율 추이와 날짜별 조회"
+MIN_DAYS = 7
+
+CSS = """
+:root{
+  --gap:#e4e7ec; --gap-line:#c9ced7; --fee:#b4651c;
+  --h1:#e6edf6; --h2:#c3d2e6; --h3:#8fa8cb; --h4:#55769f; --h5:#24406a;
+  --ht-light:#14243c; --ht-dark:#ffffff;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:#e3e8f0; --muted:#a9b2c1; --faint:#7f8a9b;
+    --rule:#334157; --hair:#253145; --ground:#0e1520; --paper:#151f2e;
+    --warn:#f08a8a; --pend:#e0bd6a; --ok:#7fcfa2;
+    --gap:#232b38; --gap-line:#3a4455; --fee:#f0a35c;
+    --h1:#1c2a40; --h2:#26416a; --h3:#3a6198; --h4:#6a90c6; --h5:#a9c4ea;
+    --ht-light:#e3e8f0; --ht-dark:#0e1520;
+  }
+  .brand svg path{stroke:var(--ground)}
+  input,select{color-scheme:dark}
+}
+h1{font-size:22px;letter-spacing:-.02em;margin:26px 0 6px}
+.lede{margin:0 0 18px;max-width:72ch;color:var(--muted);font-size:14px}
+.lede a{color:var(--ink)}
+h2{font-size:15px;margin:32px 0 10px}
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:2px;padding:14px 16px}
+.ranges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ranges button{border:1px solid var(--rule);background:var(--paper);color:var(--muted);font:inherit;font-size:13px;
+  padding:5px 11px;border-radius:2px;cursor:pointer}
+.ranges button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:600}
+.chart{position:relative;touch-action:pan-y}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:inherit;font-size:11px;fill:var(--faint)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:12.5px;padding:5px 8px;
+  border-radius:2px;white-space:nowrap;font-variant-numeric:tabular-nums;z-index:2}
+.tip[hidden]{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;vertical-align:-1px;margin-right:5px}
+.lg-line{width:16px;height:2px;background:var(--ink);vertical-align:3px!important}
+.lg-dot{width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.lg-fee{width:9px;height:9px;background:var(--fee);transform:rotate(45deg)}
+.lg-gap{width:14px;height:10px;background:var(--gap);border:1px solid var(--gap-line)}
+.wait{color:var(--pend);font-size:14px;padding:26px 4px;text-align:center}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.card{background:var(--paper);border:1px solid var(--rule);padding:12px 14px;border-radius:2px}
+.card .k{font-size:12px;color:var(--faint);margin-bottom:3px}
+.card .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.card .s{font-size:11.5px;color:var(--faint);margin-top:1px;font-variant-numeric:tabular-nums}
+.pick{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13.5px;color:var(--muted);flex-wrap:wrap}
+.pick select{min-width:0;max-width:100%;flex:1 1 220px}
+.pick select,.pick input{border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:14px;
+  padding:6px 9px;border-radius:2px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-head b{font-size:15px;font-variant-numeric:tabular-nums}
+.cal-head button{border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;width:34px;height:30px;
+  border-radius:2px;cursor:pointer}
+.cal-head button:disabled{opacity:.35;cursor:default}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;max-width:560px;margin:0 auto}
+.cal-head,.ramp{max-width:560px;margin-left:auto;margin-right:auto}
+.cal .wd{font-size:11.5px;color:var(--faint);text-align:center;padding:2px 0}
+.cal .c{aspect-ratio:1/1;min-height:40px;border-radius:2px;border:1px solid var(--hair);background:var(--paper);
+  display:flex;flex-direction:column;justify-content:space-between;padding:3px 4px;font-variant-numeric:tabular-nums;
+  cursor:pointer;color:var(--faint);text-align:left;font:inherit}
+.cal .c.blank{visibility:hidden}
+.cal .c .dn{font-size:11px;line-height:1}
+.cal .c .rv{font-size:10.5px;font-weight:600;line-height:1;align-self:flex-end}
+.cal .c.l1{background:var(--h1);color:var(--ht-light)} .cal .c.l2{background:var(--h2);color:var(--ht-light)}
+.cal .c.l3{background:var(--h3);color:var(--ht-light)} .cal .c.l4{background:var(--h4);color:var(--ht-dark)}
+.cal .c.l5{background:var(--h5);color:var(--ht-dark)}
+.cal .c.chg{outline:2px solid var(--ink);outline-offset:-2px}
+.cal .c.fail{background:repeating-linear-gradient(135deg,var(--gap) 0 4px,var(--gap-line) 4px 5px);color:var(--muted)}
+.cal .c.sel{box-shadow:0 0 0 2px var(--fee)}
+.ramp{display:flex;align-items:center;gap:3px;font-size:12px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.ramp i{width:16px;height:12px;border-radius:2px;display:inline-block}
+.ramp .sp{width:10px}
+.look .res{margin-top:10px;font-size:14.5px;line-height:1.6}
+.look .res b{font-variant-numeric:tabular-nums}
+.look .res .n{color:var(--muted);font-size:13px}
+.look table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+.look td,.look th{padding:7px 8px;border-bottom:1px solid var(--hair);text-align:left}
+.look th{font-size:12px;color:var(--faint);font-weight:600}
+.look .num{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:640px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){
+  .panel{padding:12px 10px}
+  .cal{gap:2px}
+  .cal .c{min-height:0;padding:2px 3px}
+  .cal .c .rv{font-size:9px}
+  .card .v{font-size:17px}
+}
+"""
+
+JS = r"""
+const RATES = __RATES__, FEES = __FEES__, FEEH = __FEEH__, MIN_DAYS = __MIN__;
+const $ = id => document.getElementById(id);
+const DAY = 86400000;
+const toN = s => Date.UTC(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10))/DAY;
+const toS = n => new Date(n*DAY).toISOString().slice(0,10);
+const won = v => Math.round(v).toLocaleString('ko-KR');
+const rateTxt = v => (Number.isInteger(v) ? v : +v.toFixed(2)).toLocaleString('ko-KR');
+
+// rows: {d: 일수, s: 'YYYY-MM-DD', v: 값|null(실패), prev: 직전 성공값}
+const rows = RATES.map(([s,v]) => ({d:toN(s), s, v}));
+let last = null;
+rows.forEach(r => { r.prev = last; if(r.v!=null){ r.chg = (last!=null && r.v!==last); last = r.v; } });
+const okRows = rows.filter(r => r.v!=null);
+const byDate = Object.fromEntries(rows.map(r => [r.s, r]));
+const firstD = rows.length ? rows[0].d : null, lastD = rows.length ? rows[rows.length-1].d : null;
+const enough = rows.length >= MIN_DAYS;
+
+const RANGES = [['1m','1개월',30],['3m','3개월',91],['6m','6개월',182],['1y','1년',365],['all','전체',null]];
+let range = 'all';
+function domain(){
+  const r = RANGES.find(x=>x[0]===range);
+  const d0 = r[2]==null ? firstD : Math.max(firstD, lastD - r[2] + 1);
+  return [d0, lastD + 1];  // 마지막 날도 하루 폭을 갖도록 끝을 하루 뒤로 둡니다
+}
+
+// 시리즈를 끊긴 구간 단위로 나눕니다. 실패일은 회색 구간, 선은 이어 붙이지 않습니다.
+function pieces(series, d0, d1){
+  const pre = [...series].reverse().find(p => p.d < d0);
+  const pts = series.filter(p => p.d >= d0 && p.d < d1);
+  if(pre && pre.v!=null) pts.unshift({...pre, d:d0, carry:true});
+  const segs = [], gaps = [];
+  let cur = null;
+  pts.forEach((p,i) => {
+    if(p.v==null){
+      if(cur){ segs.push({pts:cur, end:p.d}); cur = null; }
+      const next = pts.slice(i+1).find(q => q.v!=null);
+      const g = [p.d, next ? next.d : d1];
+      if(gaps.length && gaps[gaps.length-1][1] >= g[0]) gaps[gaps.length-1][1] = Math.max(gaps[gaps.length-1][1], g[1]);
+      else gaps.push(g);
+    } else { (cur = cur || []).push(p); }
+  });
+  if(cur) segs.push({pts:cur, end:d1});
+  return {segs, gaps, pts};
+}
+
+function draw(el, series, opt){
+  const W = Math.max(300, el.clientWidth), H = W < 480 ? 190 : 230;
+  const L = W < 480 ? 44 : 58, R = 10, T = 12, B = 26;
+  const [d0, d1] = domain();
+  const {segs, gaps, pts} = pieces(series, d0, d1);
+  const vals = pts.filter(p=>p.v!=null).map(p=>p.v);
+  if(!vals.length){ el.innerHTML = '<div class="wait">이 기간에 확인된 값이 없습니다.</div>'; return; }
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const pad = Math.max((hi-lo)*0.18, opt.minPad);
+  lo -= pad; hi += pad;
+  const x = d => L + (d-d0)/(d1-d0)*(W-L-R), y = v => T + (hi-v)/(hi-lo)*(H-T-B);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${opt.label}">`;
+  gaps.forEach(([a,b]) => { s += `<rect x="${x(a)}" y="${T}" width="${Math.max(2,x(b)-x(a))}" height="${H-T-B}" fill="var(--gap)"/>`; });
+  for(let i=0;i<3;i++){
+    const v = lo+pad + (hi-lo-2*pad)*i/2, yy = y(v).toFixed(1);
+    s += `<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="var(--hair)"/>`
+       + `<text x="${L-6}" y="${+yy+4}" text-anchor="end">${opt.ytxt(v)}</text>`;
+  }
+  s += `<line x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}" stroke="var(--rule)"/>`;
+  const n = W < 480 ? 3 : 5, span = d1-1-d0;
+  for(let i=0;i<n;i++){
+    const d = Math.round(d0 + span*i/(n-1)), str = toS(d);
+    const t = (d1-d0) > 200 ? str.slice(0,7) : str.slice(5);
+    s += `<text x="${x(d+0.5)}" y="${H-8}" text-anchor="${i===0?'start':i===n-1?'end':'middle'}">${t}</text>`;
+  }
+  segs.forEach(seg => {
+    let p = `M${x(seg.pts[0].d).toFixed(1)},${y(seg.pts[0].v).toFixed(1)}`;
+    seg.pts.slice(1).forEach(q => { p += `H${x(q.d).toFixed(1)}V${y(q.v).toFixed(1)}`; });
+    p += `H${x(seg.end).toFixed(1)}`;
+    s += `<path d="${p}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>`;
+  });
+  s += `<line class="guide" y1="${T}" y2="${H-B}" stroke="var(--faint)" style="display:none"/>`;
+  (opt.marks||[]).forEach(m => {
+    if(m.d < d0 || m.d >= d1) return;
+    const cx = x(m.d).toFixed(1), cy = y(m.v).toFixed(1);
+    if(m.kind==='fee') s += `<rect x="${cx-5}" y="${cy-5}" width="10" height="10" transform="rotate(45 ${cx} ${cy})" fill="var(--fee)" stroke="var(--paper)" stroke-width="2"/>`;
+    else s += `<circle cx="${cx}" cy="${cy}" r="4.5" fill="var(--ink)" stroke="var(--paper)" stroke-width="2"/>`;
+    s += `<circle cx="${cx}" cy="${cy}" r="12" fill="transparent" data-d="${m.s}" style="cursor:pointer"/>`;
+  });
+  s += '</svg><div class="tip" hidden></div>';
+  el.innerHTML = s;
+
+  const svg = el.querySelector('svg'), tip = el.querySelector('.tip'), guide = el.querySelector('.guide');
+  const hits = pts.filter(p => !p.carry);
+  function show(e){
+    const r = svg.getBoundingClientRect(), k = W / r.width;
+    const px = (e.clientX - r.left) * k;
+    if(px < L || px > W-R || !hits.length) return hide();
+    let best = hits[0];
+    hits.forEach(h => { if(Math.abs(x(h.d+0.5)-px) < Math.abs(x(best.d+0.5)-px)) best = h; });
+    const gx = x(best.d+0.5);
+    guide.setAttribute('x1',gx); guide.setAttribute('x2',gx); guide.style.display='';
+    tip.textContent = opt.tip(best); tip.hidden = false;
+    const left = gx / k, w = tip.offsetWidth;
+    tip.style.left = Math.min(Math.max(0, left - w/2), r.width - w) + 'px';
+    tip.style.top = Math.max(0, (best.v!=null ? y(best.v) : T) / k - 38) + 'px';
+  }
+  function hide(){ tip.hidden = true; guide.style.display = 'none'; }
+  svg.addEventListener('pointermove', show);
+  svg.addEventListener('pointerdown', show);
+  svg.addEventListener('pointerleave', e => { if(e.pointerType==='mouse') hide(); });
+  svg.addEventListener('click', e => { const t = e.target.closest('[data-d]'); if(t) lookup(t.dataset.d, true); });
+}
+
+// ---------------------------------------------------------------- 환율 그래프와 카드
+function drawRate(){
+  draw($('rate-chart'), rows, {
+    label:'영사환율 추이 그래프', minPad:5, ytxt: v => won(v),
+    marks: rows.filter(r=>r.chg).map(r=>({d:r.d, s:r.s, v:r.v, kind:'rate'})),
+    tip: p => p.v==null ? `${p.s} · 조회 실패` :
+      `${p.s} · ${rateTxt(p.v)}원` + (p.chg ? ` (이전 ${rateTxt(p.prev)}원)` : '')
+  });
+}
+
+function drawCards(){
+  const [d0, d1] = domain();
+  const pre = [...okRows].reverse().find(r => r.d < d0);
+  const inR = okRows.filter(r => r.d >= d0 && r.d < d1);
+  const vals = inR.map(r=>r.v).concat(pre ? [pre.v] : []);
+  const cur = okRows[okRows.length-1];
+  const find = v => inR.find(r=>r.v===v) || pre;
+  const card = (k,v,s) => `<div class="card"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s||''}</div></div>`;
+  if(!vals.length){ $('cards').innerHTML = card('현재 환율', cur ? rateTxt(cur.v)+'원' : '수집 준비 중', cur ? cur.s+' 확인' : ''); return; }
+  const hi = Math.max(...vals), lo = Math.min(...vals);
+  const chg = inR.filter(r=>r.chg).length;
+  $('cards').innerHTML =
+    card('현재 환율', rateTxt(cur.v)+'원', cur.s+' 확인') +
+    card('기간 내 최고', rateTxt(hi)+'원', find(hi) && find(hi).d >= d0 ? find(hi).s : '기간 시작 시점 값') +
+    card('기간 내 최저', rateTxt(lo)+'원', find(lo) && find(lo).d >= d0 ? find(lo).s : '기간 시작 시점 값') +
+    card('기간 내 변경 횟수', chg+'회', RANGES.find(r=>r[0]===range)[1]);
+}
+
+// ---------------------------------------------------------------- 비자별 원화 추이
+function feeAt(id, s){
+  const h = FEEH[id] || [];
+  let a = null;
+  for(const [d,v] of h){ if(d <= s) a = v; else break; }
+  return a;
+}
+function feeSeries(id){
+  const h = FEEH[id] || [];
+  const changes = new Set();
+  h.forEach(([d,v],i) => { if(i>0 && v!==h[i-1][1]) changes.add(d); });
+  // 수수료 기록이 시작되기 전 날짜는 아예 빼서 금액을 짐작하지 않습니다.
+  const series = rows.filter(r => feeAt(id, r.s)!=null).map(r => {
+    const a = feeAt(id, r.s);
+    return {d:r.d, s:r.s, v: r.v==null ? null : a*r.v, usd:a, rate:r.v, chg:r.chg, feeChg:changes.has(r.s)};
+  });
+  return series;
+}
+function drawFee(){
+  const id = $('fee-pick').value;
+  const series = feeSeries(id);
+  if(!series.length){ $('fee-chart').innerHTML = '<div class="wait">이 비자의 수수료 기록이 아직 없습니다.</div>'; return; }
+  const marks = [];
+  series.forEach(p => {
+    if(p.v==null) return;
+    if(p.feeChg) marks.push({d:p.d, s:p.s, v:p.v, kind:'fee'});
+    else if(p.chg) marks.push({d:p.d, s:p.s, v:p.v, kind:'rate'});
+  });
+  draw($('fee-chart'), series, {
+    label:'비자 수수료 원화 금액 추이 그래프', minPad:3000, ytxt: v => (v/10000).toFixed(1)+'만',
+    marks,
+    tip: p => p.v==null ? `${p.s} · 조회 실패` :
+      `${p.s} · ${won(p.v)}원 (${p.usd} USD × ${rateTxt(p.rate)})` + (p.feeChg ? ' 수수료 변경' : p.chg ? ' 환율 변경' : '')
+  });
+}
+
+// ---------------------------------------------------------------- 달력 히트맵
+const months = [];
+if(rows.length){
+  let [y,m] = [+rows[0].s.slice(0,4), +rows[0].s.slice(5,7)];
+  const [ly,lm] = [+rows[rows.length-1].s.slice(0,4), +rows[rows.length-1].s.slice(5,7)];
+  while(y<ly || (y===ly && m<=lm)){ months.push([y,m]); if(++m>12){ m=1; y++; } }
+}
+let mi = months.length-1, selected = null;
+const allVals = okRows.map(r=>r.v), vmin = Math.min(...allVals), vmax = Math.max(...allVals);
+const level = v => vmax===vmin ? 3 : 1 + Math.min(4, Math.floor((v-vmin)/(vmax-vmin)*5));
+function drawCal(){
+  if(!months.length){ $('cal').innerHTML = '<div class="wait" style="grid-column:1/-1">아직 기록이 없습니다.</div>'; return; }
+  const [y,m] = months[mi];
+  $('cal-title').textContent = `${y}년 ${m}월`;
+  $('cal-prev').disabled = mi===0; $('cal-next').disabled = mi===months.length-1;
+  const first = new Date(Date.UTC(y,m-1,1)).getUTCDay(), days = new Date(Date.UTC(y,m,0)).getUTCDate();
+  let h = '일월화수목금토'.split('').map(w=>`<div class="wd">${w}</div>`).join('');
+  for(let i=0;i<first;i++) h += '<div class="c blank"></div>';
+  for(let d=1; d<=days; d++){
+    const s = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`, r = byDate[s];
+    let cls = 'c', rv = '', label = `${s} 기록 없음`;
+    if(r && r.v==null){ cls += ' fail'; rv = '실패'; label = `${s} 조회 실패`; }
+    else if(r){ cls += ' l'+level(r.v) + (r.chg?' chg':''); rv = won(r.v); label = `${s} ${rv}원${r.chg?' 변경일':''}`; }
+    if(s===selected) cls += ' sel';
+    h += `<button type="button" class="${cls}" data-day="${s}" aria-label="${label}"><span class="dn">${d}</span><span class="rv">${rv}</span></button>`;
+  }
+  $('cal').innerHTML = h;
+  if(okRows.length){
+    $('ramp').innerHTML = `<span>${won(vmin)}</span>` + [1,2,3,4,5].map(i=>`<i style="background:var(--h${i})"></i>`).join('')
+      + `<span>${won(vmax)}원</span><span class="sp"></span><i style="outline:2px solid var(--ink);outline-offset:-2px;background:var(--paper)"></i>변경일`
+      + `<span class="sp"></span><i style="background:repeating-linear-gradient(135deg,var(--gap) 0 4px,var(--gap-line) 4px 5px)"></i>조회 실패`;
+  }
+}
+$('cal-prev').addEventListener('click', ()=>{ if(mi>0){ mi--; drawCal(); } });
+$('cal-next').addEventListener('click', ()=>{ if(mi<months.length-1){ mi++; drawCal(); } });
+$('cal').addEventListener('click', e=>{ const b = e.target.closest('[data-day]'); if(b) lookup(b.dataset.day, false); });
+
+// ---------------------------------------------------------------- 날짜 조회
+function lookup(s, jump){
+  if(!s) return;
+  selected = s;
+  $('look-date').value = s;
+  const k = months.findIndex(([y,m]) => y===+s.slice(0,4) && m===+s.slice(5,7));
+  if(k>=0) mi = k;
+  drawCal();
+  const r = byDate[s], d = toN(s);
+  const before = [...okRows].reverse().find(x => x.d <= d);
+  let msg, use = null;
+  if(!rows.length) msg = '아직 기록이 없습니다.';
+  else if(d < firstD) msg = `수집을 시작한 ${rows[0].s} 이전 날짜입니다.`;
+  else if(r && r.v!=null){
+    use = r.v;
+    msg = `<b>${s}</b> 영사환율은 <b>1 USD = ${rateTxt(r.v)}원</b>입니다.` + (r.chg ? `<div class="n">이날 ${rateTxt(r.prev)}원에서 바뀌었습니다.</div>` : '');
+  } else if(r){
+    msg = `<b>${s}</b> 조회 실패. 그날 확인된 값이 없습니다.` + (before ? `<div class="n">직전 확인값은 ${before.s}의 ${rateTxt(before.v)}원입니다. 같은 값이었다고 단정할 수 없습니다.</div>` : '');
+  } else {
+    use = before ? before.v : null;
+    msg = `<b>${s}</b> 기록 없음 (주말, 공휴일 등).` + (before ? `<div class="n">직전 확인값 ${before.s} 기준 ${rateTxt(before.v)}원을 보여 드립니다.</div>` : '');
+  }
+  let table = '';
+  if(use!=null){
+    const tr = FEES.map(f => { const a = feeAt(f.id, s);
+      return a==null ? '' : `<tr><td>${f.label}</td><td class="num">${a} USD</td><td class="num">${won(a*use)}원</td></tr>`; }).join('');
+    table = tr ? `<table><thead><tr><th>비자</th><th class="num">1인 USD</th><th class="num">1인 원화</th></tr></thead><tbody>${tr}</tbody></table>`
+               : '<div class="n">이 날짜에 기록된 수수료가 없어 원화 금액은 계산하지 않았습니다.</div>';
+  }
+  $('look-res').innerHTML = msg + table;
+  if(jump) $('look').scrollIntoView({behavior:'smooth', block:'start'});
+}
+$('look-date').addEventListener('change', e => lookup(e.target.value, false));
+
+// ---------------------------------------------------------------- 시작
+function drawAll(){ if(enough){ drawRate(); drawFee(); } drawCards(); }
+if(rows.length){ $('look-date').min = rows[0].s; $('look-date').max = rows[rows.length-1].s; }
+if(!enough){
+  const msg = rows.length ? `기록 누적 중 (${rows.length}일째). ${MIN_DAYS}일 이상 쌓이면 그래프가 표시됩니다.` : '수집 준비 중';
+  ['rate-chart','fee-chart'].forEach(id => { $(id).innerHTML = `<div class="wait">${msg}</div>`; });
+  $('ranges').hidden = true; $('fee-pickrow').hidden = true;
+} else {
+  $('ranges').innerHTML = RANGES.map(r=>`<button type="button" data-r="${r[0]}" aria-pressed="${r[0]===range}">${r[1]}</button>`).join('');
+  $('ranges').addEventListener('click', e=>{ const b = e.target.closest('[data-r]'); if(!b) return;
+    range = b.dataset.r; $('ranges').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); drawAll(); });
+  $('fee-pick').addEventListener('change', drawFee);
+}
+drawAll();
+drawCal();
+if(rows.length) lookup(rows[rows.length-1].s, false);
+let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(()=>{ if(enough){ drawRate(); drawFee(); } }, 150); });
+"""
+
+
+def render_history(cfg: dict[str, Any] | None = None) -> Path:
+    cfg = cfg or site.load_cfg()
+    hist = load_history_all()
+    fees = mrv_fees()
+    fee_hist = load_fee_history()
+
+    options = "".join(
+        f'<option value="{html.escape(f["fee_id"])}">{html.escape(f["visa"])}, {html.escape(f["item"])}</option>'
+        for f in fees
+    )
+    body = f"""
+<h1>{html.escape(TITLE)}</h1>
+<p class="lede">AIS 결제 화면에서 매일 확인한 주한미국대사관 영사환율 기록입니다.
+영사환율은 바뀔 때까지 같은 값이 유지되므로 계단형으로 그리고, 조회에 실패한 날은 선을 끊어 회색으로 표시합니다.
+<a href="../">오늘 환율과 원화 계산기로 돌아가기</a></p>
+
+<div class="panel">
+  <div class="ranges" id="ranges" role="group" aria-label="기간"></div>
+  <div class="chart" id="rate-chart"><noscript><div class="wait">그래프를 보려면 자바스크립트가 필요합니다.</div></noscript></div>
+  <div class="legend"><span><i class="lg-line"></i>영사환율</span><span><i class="lg-dot"></i>환율 변경일, 누르면 아래에서 조회</span><span><i class="lg-gap"></i>조회 실패</span></div>
+</div>
+<div class="cards" id="cards"></div>
+
+<h2>비자 수수료 원화 추이</h2>
+<div class="panel">
+  <div class="pick" id="fee-pickrow"><label for="fee-pick">비자</label><select id="fee-pick">{options}</select></div>
+  <div class="chart" id="fee-chart"></div>
+  <div class="legend"><span><i class="lg-line"></i>1인 원화 금액</span><span><i class="lg-dot"></i>환율 변경</span><span><i class="lg-fee"></i>수수료 변경</span><span><i class="lg-gap"></i>조회 실패</span></div>
+</div>
+
+<h2>월별 달력</h2>
+<div class="panel">
+  <div class="cal-head"><button type="button" id="cal-prev" aria-label="이전 달">‹</button><b id="cal-title"></b><button type="button" id="cal-next" aria-label="다음 달">›</button></div>
+  <div class="cal" id="cal"></div>
+  <div class="ramp" id="ramp"></div>
+</div>
+
+<h2 id="look">날짜로 조회</h2>
+<div class="panel look">
+  <div class="pick"><label for="look-date">날짜</label><input type="date" id="look-date"></div>
+  <div class="res" id="look-res"></div>
+</div>
+{site.ad(cfg, "page_bottom")}
+"""
+    js = (
+        JS.replace("__RATES__", json.dumps([[d, r] for d, r in hist.items()]))
+        .replace(
+            "__FEES__",
+            json.dumps([{"id": f["fee_id"], "label": f"{f['visa']}"} for f in fees], ensure_ascii=False),
+        )
+        .replace("__FEEH__", json.dumps({k: [[d, a] for d, a in v] for k, v in fee_hist.items()}))
+        .replace("__MIN__", str(MIN_DAYS))
+    )
+    desc = "주한미국대사관 영사환율 변동 그래프, 기간별 최고·최저, 비자별 원화 수수료 추이, 달력 히트맵과 날짜별 조회."
+    doc = (
+        site.head(cfg, TITLE, CSS, desc)
+        + site.header(cfg, "")
+        + body
+        + site.footer(cfg)
+    ).replace("</body></html>", f"<script>{js}</script></body></html>")
+    # consular-rate/history/ 하위 페이지라 상대경로 링크를 두 단계 올립니다.
+    doc = re.sub(r'href="(?!https?:|mailto:|#|\.\./|/)([a-z\-]+\.html)"', r'href="../../\1"', doc)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUT_DIR / "index.html"
+    out.write_text(doc, encoding="utf-8")
+    return out
