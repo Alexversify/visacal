@@ -4,8 +4,10 @@
 <title>CSPA 나이 계산기 · VisaCal</title>
 <meta name="description" content="미국 이민 CSPA 나이 계산기. 최종행동일 차트를 원칙으로, 경과규정이 적용되는 접수가능일 기준까지 함께 계산합니다.">
 <meta name="theme-color" content="#14243c">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="canonical" href="https://visacal.com/cspa.html">
-<meta property="og:type" content="website"><meta property="og:title" content="CSPA 나이 계산기 · VisaCal"><meta property="og:description" content="미국 이민 CSPA 나이 계산기. 최종행동일 차트를 원칙으로, 경과규정이 적용되는 접수가능일 기준까지 함께 계산합니다."><meta property="og:site_name" content="VisaCal"><meta property="og:locale" content="ko_KR"><meta property="og:url" content="https://visacal.com/cspa.html"><meta name="twitter:card" content="summary">
+<meta property="og:type" content="website"><meta property="og:title" content="CSPA 나이 계산기 · VisaCal"><meta property="og:description" content="미국 이민 CSPA 나이 계산기. 최종행동일 차트를 원칙으로, 경과규정이 적용되는 접수가능일 기준까지 함께 계산합니다."><meta property="og:site_name" content="VisaCal"><meta property="og:locale" content="ko_KR"><meta property="og:url" content="https://visacal.com/cspa.html"><meta property="og:image" content="https://visacal.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
@@ -57,6 +59,16 @@ footer a{color:var(--muted)}
 .lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
 @media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
 footer .disc{max-width:74ch;margin-bottom:10px}
+.rel{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;margin-top:16px;border-radius:2px}
+.rel h3{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.rel a{display:block;padding:7px 0;border-top:1px solid var(--hair);text-decoration:none;font-size:13.5px;line-height:1.45}
+.rel a:first-of-type{border-top:0}
+.rel a:hover{color:var(--muted)}
+.fill{margin-top:10px}
+.fill button{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--rule);
+  padding:9px 12px;font:inherit;font-size:13px;border-radius:2px;cursor:pointer}
+.fill button:hover{border-color:var(--ink)}
+.fill .done{display:block;font-size:12px;color:var(--ok);margin-top:6px;text-align:center}
 
 .lede{margin:20px 0 24px;max-width:72ch;color:var(--muted);font-size:14px}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:34px;align-items:start}
@@ -174,7 +186,9 @@ footer .disc{max-width:74ch;margin-bottom:10px}
   <div>
     <div class="side">
       <div class="res" id="out"></div>
+      <div class="fill"><button type="button" id="fillLead">계산 결과를 문의 내용에 넣기</button><span class="done" id="fillDone" hidden>문의 내용에 넣었습니다</span></div>
       <div class="cta"><a href="https://forms.gle/EiRWHjmEvjCPFYkt7">사건 검토 요청</a></div>
+      <div class="rel"><h3>같이 보면 좋은 글</h3><a href="news/2026-09-15-guide-cspa.html">CSPA 나이 계산, 무엇을 언제 기준으로 재는가</a><a href="news/2026-09-15-guide-charts.html">접수가능일과 최종행동일, 어느 차트를 봐야 하는가</a><a href="news/2026-09-15-guide-fee-faq.html">미국 비자 수수료, 자주 나오는 질문</a></div>
     </div>
     
   </div>
@@ -243,7 +257,7 @@ DS-260은 제출 기록, 수수료는 납부 영수증을 보관하십시오.
     <input type="text" name="entry.304915958" placeholder="성함" required>
     <input type="text" name="entry.1465445911" placeholder="연락처 또는 이메일" required>
   </div>
-  <textarea name="entry.1359651639" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>[CSPA 나이] </textarea>
+  <textarea id="leadDetail" name="entry.1359651639" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>[CSPA 나이] </textarea>
   <button type="submit">검토 요청 보내기</button>
 </form>
 <div class="fine">보내주신 내용은 문의 처리와 수임 검토 목적으로만 사용합니다.
@@ -435,6 +449,41 @@ function calc(){
     <div class="warn">${warns.join('')}</div>`;
 }
 
+// 계산 결과를 문의 폼에 넣습니다. 자동으로 넣지 않고 누를 때만 넣습니다.
+// 생년월일 같은 입력값은 넣지 않고 판정 결과만 옮깁니다.
+function fillLead(){
+  const box = document.getElementById('leadDetail');
+  if(!box) return;
+  const v = read();
+  const lines = ['[CSPA 나이 검토 요청]'];
+  const cat = $('cat').options[$('cat').selectedIndex].text;
+  lines.push(`카테고리: ${cat}`);
+  if(v.cat !== 'IR'){
+    lines.push(`진행 경로: ${$('route').options[$('route').selectedIndex].text}`);
+    const b = basis(v);
+    const t = calcTrack(v, b.key === 'dff' ? v.dff : v.fad);
+    lines.push(`적용 기준: ${b.key === 'dff' ? '접수가능일 차트, 경과규정' : '최종행동일 차트'}`);
+    if(t){
+      lines.push(`비자 가용 기준일: ${fmt(t.avail)}`);
+      lines.push(`청원 계류기간: ${t.pending}일`);
+      lines.push(`CSPA 나이: ${t.age.y}세 ${t.age.m}개월 ${t.age.d}일 (${t.age.under21?'21세 미만':'21세 이상'})`);
+      lines.push(`신분취득 신청 기한: ${fmt(t.seekBy)}`);
+      if(t.sought === false) lines.push('1년 요건 기한 초과, 예외 사유 검토 필요');
+    } else {
+      lines.push('입력이 부족해 계산되지 않았습니다.');
+    }
+  } else if(v.dob && v.filed){
+    const age = exactAge(v.dob, v.filed);
+    lines.push(`직계가족, 청원 접수일 기준 ${age.y}세 ${age.m}개월 ${age.d}일`);
+  }
+  box.value = lines.join('\n') + '\n\n확인하고 싶은 내용: ';
+  box.focus();
+  box.setSelectionRange(box.value.length, box.value.length);
+  const done = document.getElementById('fillDone');
+  if(done) done.hidden = false;
+}
+
+document.addEventListener('click', e=>{ if(e.target.id==='fillLead') fillLead(); });
 document.addEventListener('input', e=>{ if(e.target.closest('.card')) calc(); });
 document.addEventListener('change', e=>{ if(e.target.closest('.card')) calc(); });
 calc();

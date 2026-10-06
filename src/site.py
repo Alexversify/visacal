@@ -69,6 +69,16 @@ footer a{color:var(--muted)}
 .lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
 @media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
 footer .disc{max-width:74ch;margin-bottom:10px}
+.rel{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;margin-top:16px;border-radius:2px}
+.rel h3{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.rel a{display:block;padding:7px 0;border-top:1px solid var(--hair);text-decoration:none;font-size:13.5px;line-height:1.45}
+.rel a:first-of-type{border-top:0}
+.rel a:hover{color:var(--muted)}
+.fill{margin-top:10px}
+.fill button{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--rule);
+  padding:9px 12px;font:inherit;font-size:13px;border-radius:2px;cursor:pointer}
+.fill button:hover{border-color:var(--ink)}
+.fill .done{display:block;font-size:12px;color:var(--ok);margin-top:6px;text-align:center}
 """
 
 
@@ -132,10 +142,14 @@ def head(
     ]
     if url:
         og.append(f'<meta property="og:url" content="{html.escape(url)}">')
-    if image:
-        img_url = image if image.startswith("http") else canonical_url(cfg, image)
+    # 글에 대표 이미지가 없으면 사이트 기본 카드 이미지를 씁니다.
+    card = image or "og.png"
+    img_url = card if card.startswith("http") else canonical_url(cfg, card)
+    if img_url:
         og.append(f'<meta property="og:image" content="{html.escape(img_url)}">')
-    og.append('<meta name="twitter:card" content="%s">' % ("summary_large_image" if image else "summary"))
+        og.append('<meta property="og:image:width" content="1200">')
+        og.append('<meta property="og:image:height" content="630">')
+    og.append('<meta name="twitter:card" content="summary_large_image">')
     og_tags = "".join(og)
 
     ld = f'<script type="application/ld+json">{jsonld}</script>' if jsonld else ""
@@ -146,6 +160,8 @@ def head(
 <title>{html.escape(full_title)}</title>
 <meta name="description" content="{html.escape(desc)}">
 <meta name="theme-color" content="#14243c">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
 {canonical_tag}
 {og_tags}
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -230,6 +246,28 @@ def jsonld_tool(cfg: dict[str, Any], name: str, description: str, path: str) -> 
     return json.dumps(data, ensure_ascii=False)
 
 
+def related(items: list[tuple[str, str]], title: str = "같이 보면 좋은 글") -> str:
+    """계산기 옆에 붙이는 관련 글 묶음. (주소, 제목) 목록을 받습니다."""
+    if not items:
+        return ""
+    links = "".join(
+        f'<a href="{html.escape(href)}">{html.escape(label)}</a>' for href, label in items
+    )
+    return f'<div class="rel"><h3>{html.escape(title)}</h3>{links}</div>'
+
+
+def fill_button(label: str = "계산 결과를 문의 내용에 넣기") -> str:
+    """결과를 문의 폼에 넣는 버튼.
+
+    자동으로 채우지 않고 누를 때만 넣습니다. 입력값이 사용자 손을 떠나는 시점을
+    사용자가 정하게 하려는 것입니다.
+    """
+    return (
+        f'<div class="fill"><button type="button" id="fillLead">{html.escape(label)}</button>'
+        '<span class="done" id="fillDone" hidden>문의 내용에 넣었습니다</span></div>'
+    )
+
+
 def ad(cfg: dict[str, Any], slot_key: str, css_class: str = "ad") -> str:
     ads = cfg.get("adsense") or {}
     client = ads.get("client_id") or ""
@@ -298,7 +336,7 @@ def lead_form(cfg: dict[str, Any], topic: str = "") -> str:
     <input type="text" name="{f_name}" placeholder="성함" required>
     <input type="text" name="{f_contact}" placeholder="연락처 또는 이메일" required>
   </div>
-  <textarea name="{f_detail}" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>{html.escape(("[" + topic + "] ") if topic else "")}</textarea>
+  <textarea id="leadDetail" name="{f_detail}" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>{html.escape(("[" + topic + "] ") if topic else "")}</textarea>
   <button type="submit">검토 요청 보내기</button>
 </form>
 <div class="fine">보내주신 내용은 문의 처리와 수임 검토 목적으로만 사용합니다.

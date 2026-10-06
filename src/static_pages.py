@@ -83,6 +83,14 @@ Google이 인증한 동의 관리 플랫폼을 통해 사전 동의를 받아야
     return out
 
 
+FAVICON = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="8" fill="#14243c"/>
+<path d="M16 19 L32 45 L48 19" fill="none" stroke="#fff" stroke-width="7"
+  stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>
+"""
+
+
 def render_404(cfg: dict[str, Any]) -> Path:
     """주소가 바뀌거나 오타로 들어온 방문자를 계산기로 돌려보냅니다."""
     body = """
@@ -117,6 +125,8 @@ def render_all(cfg: dict[str, Any]) -> None:
 
     domain = (cfg.get("site") or {}).get("domain") or ""
     client = (cfg.get("adsense") or {}).get("client_id") or ""
+
+    (DOCS / "favicon.svg").write_text(FAVICON, encoding="utf-8")
 
     if domain:
         (DOCS / "CNAME").write_text(domain + "\n", encoding="utf-8")

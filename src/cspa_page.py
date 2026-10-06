@@ -275,6 +275,41 @@ function calc(){
     <div class="warn">${warns.join('')}</div>`;
 }
 
+// 계산 결과를 문의 폼에 넣습니다. 자동으로 넣지 않고 누를 때만 넣습니다.
+// 생년월일 같은 입력값은 넣지 않고 판정 결과만 옮깁니다.
+function fillLead(){
+  const box = document.getElementById('leadDetail');
+  if(!box) return;
+  const v = read();
+  const lines = ['[CSPA 나이 검토 요청]'];
+  const cat = $('cat').options[$('cat').selectedIndex].text;
+  lines.push(`카테고리: ${cat}`);
+  if(v.cat !== 'IR'){
+    lines.push(`진행 경로: ${$('route').options[$('route').selectedIndex].text}`);
+    const b = basis(v);
+    const t = calcTrack(v, b.key === 'dff' ? v.dff : v.fad);
+    lines.push(`적용 기준: ${b.key === 'dff' ? '접수가능일 차트, 경과규정' : '최종행동일 차트'}`);
+    if(t){
+      lines.push(`비자 가용 기준일: ${fmt(t.avail)}`);
+      lines.push(`청원 계류기간: ${t.pending}일`);
+      lines.push(`CSPA 나이: ${t.age.y}세 ${t.age.m}개월 ${t.age.d}일 (${t.age.under21?'21세 미만':'21세 이상'})`);
+      lines.push(`신분취득 신청 기한: ${fmt(t.seekBy)}`);
+      if(t.sought === false) lines.push('1년 요건 기한 초과, 예외 사유 검토 필요');
+    } else {
+      lines.push('입력이 부족해 계산되지 않았습니다.');
+    }
+  } else if(v.dob && v.filed){
+    const age = exactAge(v.dob, v.filed);
+    lines.push(`직계가족, 청원 접수일 기준 ${age.y}세 ${age.m}개월 ${age.d}일`);
+  }
+  box.value = lines.join('\n') + '\n\n확인하고 싶은 내용: ';
+  box.focus();
+  box.setSelectionRange(box.value.length, box.value.length);
+  const done = document.getElementById('fillDone');
+  if(done) done.hidden = false;
+}
+
+document.addEventListener('click', e=>{ if(e.target.id==='fillLead') fillLead(); });
 document.addEventListener('input', e=>{ if(e.target.closest('.card')) calc(); });
 document.addEventListener('change', e=>{ if(e.target.closest('.card')) calc(); });
 calc();
@@ -336,12 +371,28 @@ DS-260은 제출 기록, 수수료는 납부 영수증을 보관하십시오.
 """
 
 
+def _guides() -> list[tuple[str, str]]:
+    """CSPA 판단에 바로 쓰이는 글만 추립니다."""
+    from src.posts import load_posts
+
+    want = ["guide-cspa", "guide-charts", "guide-fee-faq"]
+    posts = load_posts()
+    out: list[tuple[str, str]] = []
+    for key in want:
+        for post in posts:
+            if post["slug"].endswith(key):
+                out.append((f"news/{post['slug']}.html", post["title"]))
+                break
+    return out
+
+
 def render_cspa(cfg: dict[str, Any] | None = None) -> Path:
     cfg = cfg or site.load_cfg()
     # 정책 분기 기준일만 주입합니다. 광고와 전환 동선은 아래 본문에 고정으로 둡니다.
     # innerHTML 로 넣은 <script> 는 실행되지 않아 광고가 채워지지 않고,
     # 입력할 때마다 광고 태그를 다시 만드는 동작은 정책상으로도 위험합니다.
     js = JS.replace("__FAD_POLICY_DATE__", FAD_POLICY_DATE)
+    related = site.related(_guides())
 
     body = f"""
 <p class="lede">청원 접수일, 승인일, 우선일 도래일을 넣으면 CSPA 나이와 판정 근거가 되는 날짜를 계산합니다.
@@ -394,7 +445,9 @@ def render_cspa(cfg: dict[str, Any] | None = None) -> Path:
   <div>
     <div class="side">
       <div class="res" id="out"></div>
+      {site.fill_button("계산 결과를 문의 내용에 넣기")}
       {site.cta(cfg)}
+      {related}
     </div>
     {site.ad(cfg, "result_side", "ad ad-side")}
   </div>

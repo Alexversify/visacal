@@ -21,6 +21,17 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 SCENARIOS = ROOT / "data" / "scenarios.json"
 
+# 비자별로 같이 보면 좋은 글. 글이 지워지면 그 줄만 조용히 빠집니다.
+VISA_GUIDES = {
+    "e2": ["guide-e2-cost", "guide-fee-faq"],
+    "l1_blanket": ["guide-l1-blanket-cost", "guide-fee-faq"],
+    "l1_individual": ["guide-l1-blanket-cost", "guide-fee-faq"],
+    "niw": ["guide-cspa", "guide-charts", "guide-fee-faq"],
+    "eb5": ["guide-cspa", "guide-charts", "guide-fee-faq"],
+    "family": ["guide-cspa", "guide-charts", "guide-fee-faq"],
+}
+DEFAULT_GUIDES = ["guide-fee-faq", "guide-cspa"]
+
 STATUS_COLOR = {
     "시행중": "#1f6b45",
     "시행예정": "#8a6d1f",
@@ -36,6 +47,8 @@ INDEX_CSS = """
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
 .chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:34px;align-items:start}
+.side{position:sticky;top:20px}
+.fxnote{margin-top:8px;font-size:11.5px;color:var(--faint);line-height:1.5}
 .pick h2{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 10px}
 .opt{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--hair);cursor:pointer}
 .opt:last-child{border-bottom:0}
@@ -51,7 +64,7 @@ INDEX_CSS = """
 .count span{min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
 .count label{font-size:12.5px;color:var(--muted)}
 .bill{background:var(--paper);border:1px solid var(--ink);border-top-width:3px;
-  padding:22px 22px 18px;position:sticky;top:20px;border-radius:2px}
+  padding:22px 22px 18px;border-radius:2px}
 .bill h2{font-size:15px;margin:0 0 3px;font-weight:700}
 .bill .who{font-size:12.5px;color:var(--faint);margin-bottom:16px}
 .li{display:flex;align-items:baseline;gap:6px;padding:7px 0;font-size:14px}
@@ -76,7 +89,7 @@ INDEX_CSS = """
 .note{margin-top:30px;color:var(--faint);font-size:12.5px;max-width:70ch}
 @media (max-width:860px){
   .cols{grid-template-columns:1fr;gap:22px}
-  .bill{position:static;order:-1}
+  .side{position:static;order:-1}
 }
 """
 
@@ -87,6 +100,7 @@ table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--pape
 th{text-align:left;font-weight:600;color:var(--faint);font-size:12px;padding:9px 10px;border-bottom:1px solid var(--rule)}
 td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
 .amt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.st{white-space:nowrap;width:1%}
 .st b{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
 .who{color:var(--faint);font-size:12.5px}
 .pend{background:#fdf9ee;border:1px solid #ecdcb4;padding:8px 10px;font-size:12.5px;margin-top:5px}
@@ -100,12 +114,46 @@ td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
 """
 
 JS = r"""
-const FEES = __FEES__, VISAS = __VISAS__;
-const S = {visa: VISAS[0].id, route: VISAS[0].routes[0].id, opts:{}, counts:{}, rate:''};
+const FEES = __FEES__, VISAS = __VISAS__, GUIDES = __GUIDES__, FX = __FX__;
+const S = {visa: VISAS[0].id, route: VISAS[0].routes[0].id, opts:{}, counts:{},
+           rate: FX.rate ? String(FX.rate) : ''};
+
+// 주소에 담긴 선택을 복원합니다. 개인정보는 넣지 않고 비자와 경로, 선택 항목만 담습니다.
+(function restore(){
+  const q = new URLSearchParams(location.search);
+  const v = VISAS.find(x=>x.id===q.get('visa'));
+  if(!v) return;
+  S.visa = v.id;
+  const r = v.routes.find(x=>x.id===q.get('route'));
+  S.route = r ? r.id : v.routes[0].id;
+  (q.get('opts')||'').split(',').filter(Boolean).forEach(part=>{
+    const [id, n] = part.split(':');
+    S.opts[id] = true;
+    if(n) S.counts[id] = Math.min(10, Math.max(1, parseInt(n,10)||1));
+  });
+  if(q.get('rate')) S.rate = q.get('rate');
+})();
+
+function shareUrl(){
+  const q = new URLSearchParams();
+  q.set('visa', S.visa);
+  q.set('route', S.route);
+  const opts = Object.keys(S.opts).filter(k=>S.opts[k])
+    .map(k => S.counts[k] && S.counts[k] > 1 ? `${k}:${S.counts[k]}` : k);
+  if(opts.length) q.set('opts', opts.join(','));
+  return location.pathname + '?' + q.toString();
+}
 const fee = id => FEES[id];
 const money = (v,c) => (c==='KRW' ? v.toLocaleString('ko-KR')+'원' : '$'+v.toLocaleString('en-US'));
 const visa = () => VISAS.find(v=>v.id===S.visa);
 const route = () => visa().routes.find(r=>r.id===S.route) || visa().routes[0];
+
+function relBlock(){
+  const list = GUIDES[S.visa] || GUIDES.__default__ || [];
+  if(!list.length) return '';
+  const links = list.map(g=>`<a href="${g[0]}">${g[1]}</a>`).join('');
+  return `<div class="rel"><h3>같이 보면 좋은 글</h3>${links}</div>`;
+}
 
 function chips(){
   return VISAS.map(v=>`<button class="chip" aria-pressed="${v.id===S.visa}" data-visa="${v.id}">${v.label}</button>`).join('');
@@ -185,13 +233,43 @@ function bill(){
     <div class="krw"><label for="rate">환율</label>
       <input id="rate" inputmode="decimal" value="${S.rate}" placeholder="1,400">
       <span class="out">${conv!=null ? conv.toLocaleString('ko-KR')+'원' : '원화 환산'}</span></div>
+    ${FX.date ? `<div class="fxnote">${FX.date} 고시 기준 참고 환율입니다. 실제 결제 환율은 다를 수 있습니다.</div>` : ''}
     ${flags.length?`<div class="flag">${[...new Set(flags)].join('')}</div>`:''}`;
+}
+
+function summary(){
+  const items = lines();
+  const parts = [`${visa().label} · ${route().label}`];
+  let usd = 0, krw = 0, unknown = 0;
+  items.forEach(it=>{
+    const f = it.f;
+    if(f.amount==null){ unknown++; parts.push(`- ${it.label}: 금액 확인 필요`); return; }
+    const sub = f.amount*it.qty;
+    if(f.currency==='KRW') krw += sub; else usd += sub;
+    parts.push(`- ${it.label}: ${money(sub, f.currency)}${it.qty>1?` (${it.qty}건)`:''}`);
+  });
+  parts.push(`미화 합계 $${usd.toLocaleString('en-US')}`);
+  if(krw) parts.push(`원화 항목 ${krw.toLocaleString('ko-KR')}원`);
+  if(unknown) parts.push(`금액 미확인 ${unknown}건`);
+  return parts.join('\n');
+}
+
+function fillLead(){
+  const box = document.getElementById('leadDetail');
+  if(!box) return;
+  box.value = `[관납료 문의]\n${summary()}\n\n확인하고 싶은 내용: `;
+  box.focus();
+  box.setSelectionRange(box.value.length, box.value.length);
+  const done = document.getElementById('fillDone');
+  if(done) done.hidden = false;
 }
 
 function draw(keepFocus){
   document.getElementById('visas').innerHTML = chips();
   document.getElementById('controls').innerHTML = controls();
   document.getElementById('bill').innerHTML = bill();
+  document.getElementById('rel').innerHTML = relBlock();
+  history.replaceState(null, '', shareUrl());
   if(keepFocus){ const el=document.getElementById('rate'); if(el){ el.focus(); el.setSelectionRange(el.value.length,el.value.length); } }
 }
 
@@ -211,8 +289,44 @@ document.addEventListener('change', e=>{
   }
 });
 document.addEventListener('input', e=>{ if(e.target.id==='rate'){ S.rate=e.target.value; draw(true); } });
+document.addEventListener('click', e=>{ if(e.target.id==='fillLead') fillLead(); });
 draw();
 """
+
+
+def _fx() -> dict[str, Any]:
+    """마지막으로 받아둔 참고 환율. 파일이 없으면 환산을 비워 둡니다."""
+    path = ROOT / "data" / "fx.json"
+    if not path.exists():
+        return {"rate": None, "date": None}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {"rate": None, "date": None}
+    rate = data.get("rate")
+    if not isinstance(rate, (int, float)) or rate <= 0:
+        return {"rate": None, "date": None}
+    return {"rate": float(rate), "date": data.get("date")}
+
+
+def _guide_links() -> dict[str, list[tuple[str, str]]]:
+    """비자 id 별로 (주소, 제목) 목록을 만듭니다."""
+    from src.posts import load_posts
+
+    by_slug = {p["slug"]: p for p in load_posts()}
+    # 글 파일명이 날짜로 시작하므로 끝부분으로 찾습니다.
+    def find(key: str) -> tuple[str, str] | None:
+        for slug, post in by_slug.items():
+            if slug.endswith(key):
+                return (f"news/{slug}.html", post["title"])
+        return None
+
+    out: dict[str, list[tuple[str, str]]] = {}
+    for visa_id in list(VISA_GUIDES) + ["__default__"]:
+        keys = DEFAULT_GUIDES if visa_id == "__default__" else VISA_GUIDES[visa_id]
+        found = [hit for hit in (find(k) for k in keys) if hit]
+        out[visa_id] = found[:3]
+    return out
 
 
 def _checked_kst(state: dict[str, Any]) -> str:
@@ -237,15 +351,27 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
         }
         for f in fees.get("fees", [])
     }
-    js = JS.replace("__FEES__", json.dumps(index, ensure_ascii=False)).replace(
-        "__VISAS__", json.dumps(scenarios["visas"], ensure_ascii=False)
+    guides = _guide_links()
+    js = (
+        JS.replace("__FEES__", json.dumps(index, ensure_ascii=False))
+        .replace("__VISAS__", json.dumps(scenarios["visas"], ensure_ascii=False))
+        .replace("__GUIDES__", json.dumps(guides, ensure_ascii=False))
+        .replace("__FX__", json.dumps(_fx(), ensure_ascii=False))
     )
     cfg = site.load_cfg()
     body = f"""
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>
-  <div class="bill" id="bill"></div>
+  <div>
+    <div class="side">
+      <div class="bill" id="bill"></div>
+      {site.fill_button()}
+      {site.cta(cfg)}
+      <div id="rel"></div>
+    </div>
+    {site.ad(cfg, "result_side", "ad ad-side")}
+  </div>
 </div>
 {site.lead_form(cfg, "관납료 문의")}
 {site.ad(cfg, "page_bottom")}
