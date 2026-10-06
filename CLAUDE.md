@@ -7,7 +7,7 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
   - RUN_MODE=render python -m src.main 은 수집 없이 페이지만 재생성 (로컬 확인은 이걸로)
   - sources.py 수수료 수집, ledger.py 변경 감지, analyze.py 요약, notify.py 메일
   - render.py 관납료·원장 페이지, cspa_page.py CSPA 계산기, articles.py 가이드 목록, posts.py 글 페이지, site.py 공통 레이아웃·광고·문의폼, static_pages.py 개인정보처리방침·sitemap·ads.txt·CNAME
-  - consular_rate.py 주한미국대사관 영사환율 수집(AIS 결제창, Playwright 로그인). 결과는 data/consular_rate.json, data/consular_rate_history.csv. 페이지는 consular_page.py 가 /consular-rate/ 로 생성
+  - consular_rate.py 주한미국대사관 영사환율 수집(AIS 결제창, Playwright 로그인). 결과는 data/consular_rate.json, data/consular_rate_history.csv(실패일은 rate 빈칸), data/consular_fee_history.csv. 페이지는 consular_page.py 가 /consular-rate/, consular_history.py 가 /consular-rate/history/ 로 생성
 - content/posts/*.md 글. 관리자 화면(admin.visacal.com)이 여기에 커밋한다. 분류 "가이드"는 실무 가이드, 나머지는 최신 소식
 - data/fees.json 수수료 원장, data/scenarios.json 비자별 계산 시나리오
 - config/site.yaml 도메인, 애드센스, GA4, 문의폼 설정

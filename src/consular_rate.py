@@ -12,6 +12,8 @@ AIS(ais.usvisa-info.com) 결제 화면에 표시되는 원화 환율을 그대�
 저장
 - data/consular_rate.json         rate, checked_at, changed_at, previous_rate (KST ISO)
 - data/consular_rate_history.csv  date, rate. 하루 한 줄, 같은 날 재실행 시 덮어씁니다
+  수집에 실패한 날은 rate를 비워 둡니다. 같은 날 성공 기록이 있으면 실패로 덮지 않습니다
+- data/consular_fee_history.csv   date, fee_id, amount. 성공한 날의 원장 MRV 수수료. 원화 추이 그래프용
 수집에 실패하면 json의 기존 값은 그대로 두고 last_error, failed_at 만 기록합니다.
 """
 
@@ -31,6 +33,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 RATE_JSON = ROOT / "data" / "consular_rate.json"
 HISTORY_CSV = ROOT / "data" / "consular_rate_history.csv"
+FEE_HISTORY_CSV = ROOT / "data" / "consular_fee_history.csv"
 FEES_JSON = ROOT / "data" / "fees.json"
 
 SIGN_IN = "https://ais.usvisa-info.com/ko-kr/niv/users/sign_in"
@@ -64,17 +67,41 @@ def load_rate() -> dict[str, Any]:
         return {}
 
 
-def load_history() -> list[tuple[str, float]]:
+def load_history_all() -> dict[str, float | None]:
+    """날짜별 환율. 수집 실패한 날은 None."""
     if not HISTORY_CSV.exists():
-        return []
-    rows = []
+        return {}
+    rows: dict[str, float | None] = {}
     with HISTORY_CSV.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
+            d = (row.get("date") or "").strip()
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", d):
+                continue
+            raw = (row.get("rate") or "").strip()
             try:
-                rows.append((row["date"], float(row["rate"])))
+                rows[d] = float(raw) if raw else None
+            except ValueError:
+                continue
+    return dict(sorted(rows.items()))
+
+
+def load_history() -> list[tuple[str, float]]:
+    """성공한 날만."""
+    return [(d, r) for d, r in load_history_all().items() if r is not None]
+
+
+def load_fee_history() -> dict[str, list[tuple[str, float]]]:
+    """fee_id 별 [(날짜, USD 금액)]."""
+    out: dict[str, list[tuple[str, float]]] = {}
+    if not FEE_HISTORY_CSV.exists():
+        return out
+    with FEE_HISTORY_CSV.open(encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                out.setdefault(row["fee_id"], []).append((row["date"], float(row["amount"])))
             except (KeyError, TypeError, ValueError):
                 continue
-    return sorted(rows)
+    return {k: sorted(v) for k, v in out.items()}
 
 
 def fmt_rate(rate: float | None) -> str:
@@ -207,14 +234,36 @@ def record_success(rate: float, now: dt.datetime) -> tuple[dict[str, Any], float
         changed_from = None
     _write_json(data)
 
-    rows = {d: r for d, r in load_history()}
+    rows = load_history_all()
     rows[now.date().isoformat()] = rate
+    _write_history(rows)
+    _record_fees(now.date().isoformat())
+    return data, changed_from
+
+
+def _write_history(rows: dict[str, float | None]) -> None:
+    HISTORY_CSV.parent.mkdir(parents=True, exist_ok=True)
     with HISTORY_CSV.open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(["date", "rate"])
         for d in sorted(rows):
-            w.writerow([d, fmt_rate(rows[d]).replace(",", "")])
-    return data, changed_from
+            r = rows[d]
+            w.writerow([d, "" if r is None else fmt_rate(r).replace(",", "")])
+
+
+def _record_fees(day: str) -> None:
+    """그날 원장에 있던 MRV 수수료를 남깁니다. 지난 날짜의 금액은 만들어 내지 않습니다."""
+    hist = load_fee_history()
+    for f in mrv_fees():
+        rows = [r for r in hist.get(f["fee_id"], []) if r[0] != day]
+        rows.append((day, float(f["amount"])))
+        hist[f["fee_id"]] = sorted(rows)
+    with FEE_HISTORY_CSV.open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["date", "fee_id", "amount"])
+        for fee_id in sorted(hist):
+            for d, amount in hist[fee_id]:
+                w.writerow([d, fee_id, fmt_rate(amount).replace(",", "")])
 
 
 def record_failure(message: str, now: dt.datetime) -> None:
@@ -222,6 +271,11 @@ def record_failure(message: str, now: dt.datetime) -> None:
     data["last_error"] = message
     data["failed_at"] = now.isoformat()
     _write_json(data)
+    rows = load_history_all()
+    day = now.date().isoformat()
+    if rows.get(day) is None:  # 같은 날 앞서 성공했다면 그 값을 지킵니다
+        rows[day] = None
+        _write_history(rows)
 
 
 # ---------------------------------------------------------------- 알림

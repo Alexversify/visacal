@@ -51,6 +51,7 @@ h2{font-size:15px;margin:30px 0 10px}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;padding:5px 8px;
   border-radius:2px;white-space:nowrap;font-variant-numeric:tabular-nums;transform:translate(-50%,-110%)}
 .tip[hidden]{display:none}
+.more{margin:8px 0 0;font-size:13.5px}
 .guide{margin-top:34px;max-width:74ch}
 .guide p{color:var(--muted);font-size:14px;margin:0 0 10px}
 @media (max-width:760px){
@@ -280,6 +281,7 @@ def render_consular(cfg: dict[str, Any] | None = None) -> Path:
 
 <h2>환율 변동</h2>
 <div class="chart">{chart_svg}<div class="tip" id="tip" hidden></div></div>
+<p class="more"><a href="history/">기간별 추이, 달력, 날짜별 조회 보기</a></p>
 
 <h2>최근 변경 이력</h2>
 {changes}

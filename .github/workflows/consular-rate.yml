@@ -61,7 +61,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           keep="$RUNNER_TEMP/consular-keep"
           mkdir -p "$keep"
-          cp data/consular_rate.json data/consular_rate_history.csv "$keep"/ 2>/dev/null || true
+          cp data/consular_rate.json data/consular_rate_history.csv data/consular_fee_history.csv "$keep"/ 2>/dev/null || true
           for attempt in 1 2 3; do
             git add data docs
             if git diff --staged --quiet; then

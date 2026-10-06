@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from src import consular_page, consular_rate, site
+from src import consular_history, consular_page, consular_rate, site
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -366,6 +366,7 @@ def render_static(cfg: dict[str, Any]) -> None:
     cspa_page.render_cspa(cfg)
     age_page.render_age(cfg)
     consular_page.render_consular(cfg)
+    consular_history.render_history(cfg)
     articles.render_articles(cfg)
     static_pages.render_all(cfg)
 
