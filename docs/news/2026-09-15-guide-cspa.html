@@ -75,7 +75,8 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 .art h1{font-size:26px;line-height:1.3;letter-spacing:-.025em;margin:0 0 12px}
 .art .sum{font-size:15px;color:var(--muted);padding-bottom:18px;border-bottom:1px solid var(--rule)}
 .art .cover{width:100%;height:auto;margin:22px 0 4px;border-radius:2px;border:1px solid var(--rule)}
-.art h2{font-size:17px;margin:32px 0 10px;letter-spacing:-.01em}
+.art h2{font-size:17px;margin:32px 0 10px;letter-spacing:-.01em;scroll-margin-top:16px}
+.art h3{scroll-margin-top:16px}
 .art h3{font-size:15px;margin:22px 0 6px}
 .art p{margin:0 0 13px}
 .art ul,.art ol{padding-left:20px;margin:0 0 13px}
@@ -86,12 +87,37 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 .art td{padding:8px 10px;border-bottom:1px solid var(--hair)}
 .art blockquote{margin:16px 0;padding:12px 16px;background:var(--paper);border-left:3px solid var(--ink);font-size:14px;color:var(--muted)}
 .art .back{display:inline-block;margin-top:28px;font-size:14px}
+.post{display:grid;grid-template-columns:minmax(0,72ch) 212px;gap:40px;align-items:start}
+.rail{position:sticky;top:20px}
+/* 전역 nav 규칙이 display:flex 라서 목차에도 걸립니다. 여기서 되돌립니다. */
+.toc{display:block;background:var(--paper);border:1px solid var(--rule);padding:14px 16px;border-radius:2px}
+.toc h2{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.toc a{display:block;padding:5px 0;font-size:13px;line-height:1.45;text-decoration:none;color:var(--muted)}
+.toc a:hover{color:var(--ink)}
+.toc a.l3{padding-left:10px;font-size:12.5px;color:var(--faint)}
+.post-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px;
+  padding-top:20px;border-top:1px solid var(--rule)}
+.post-nav a{display:block;padding:12px 14px;border:1px solid var(--rule);background:var(--paper);
+  text-decoration:none;border-radius:2px}
+.post-nav a:hover{border-color:var(--ink)}
+.post-nav a.next{text-align:right}
+.post-nav .k{display:block;font-size:11.5px;color:var(--faint);margin-bottom:4px}
+.post-nav b{font-size:13.5px;line-height:1.45;letter-spacing:-.01em}
+.nav-empty{display:block}
+@media (max-width:980px){
+  .post{grid-template-columns:1fr;gap:22px}
+  .rail{position:static;order:-1}
+  .toc{margin-top:18px}
+  .post-nav{grid-template-columns:1fr}
+  .post-nav a.next{text-align:left}
+}
 </style></head><body><div class="wrap">
 <div class="top">
   <a class="brand" href="../index.html">VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
   <nav><a href="../index.html">관납료</a><a href="../cspa.html">CSPA 나이</a><a href="../guides.html" aria-current="page">가이드</a><a href="../changes.html">원장과 이력</a></nav>
 </div>
 
+<div class="post">
 <article class="art">
   <div class="kicker">가이드 · 2026-09-15</div>
   <h1>CSPA 나이 계산, 무엇을 언제 기준으로 재는가</h1>
@@ -100,7 +126,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
   <p>미국 이민법에서 자녀는 21세 미만이어야 부모의 신청에 함께 포함됩니다. 그런데 우선일 대기가 몇 년씩 걸리는 카테고리에서는
 아이가 기다리는 동안 21세를 넘기는 일이 흔합니다. 이런 경우를 구제하기 위해 만든 것이 아동신분보호법(CSPA)입니다.
 핵심은 실제 나이가 아닌 별도로 계산한 나이, 이른바 CSPA 나이로 판단한다는 점입니다.</p>
-<h2>계산 구조</h2>
+<h2 id="sec-1">계산 구조</h2>
 <p>우선순위 카테고리에서 CSPA 나이는 두 단계로 나옵니다.</p>
 <ol>
 <li>비자가 가용된 시점의 실제 나이를 구합니다.</li>
@@ -108,7 +134,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 </ol>
 <p>청원 계류기간은 승인일에서 접수일을 뺀 일수입니다. 행정 처리가 오래 걸린 책임을 신청인에게 지우지 않는다는 취지입니다.
 계류가 길었던 사건일수록 이 차감이 크고, 그만큼 보호 가능성이 올라갑니다.</p>
-<h2>비자 가용 시점이 언제인가</h2>
+<h2 id="sec-2">비자 가용 시점이 언제인가</h2>
 <p>여기가 실무에서 가장 많이 틀립니다. 가용 시점은 두 날짜 중 나중입니다.</p>
 <ul>
 <li>비자불레틴 차트에서 우선일이 도래한 날</li>
@@ -116,11 +142,11 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 </ul>
 <p>승인되지 않은 청원으로는 비자를 받을 수 없으므로, 차트상 순번이 먼저 와도 승인이 늦으면 승인일이 기준이 됩니다.
 반대로 승인이 훨씬 먼저 끝났다면 차트 도래일이 기준입니다.</p>
-<h2>직계가족은 계산하지 않는다</h2>
+<h2 id="sec-3">직계가족은 계산하지 않는다</h2>
 <p>시민권자의 직계가족(IR)은 대기 순번이 없으므로 계류기간 차감도 없습니다.
 청원을 접수한 날의 나이로 고정되며, 그날 21세 미만이었다면 이후 심사가 얼마나 길어지든 자녀로 남습니다.
 영주권자 청원이 진행 중에 청원인이 시민권을 취득해 카테고리가 바뀌는 경우는 별도 검토가 필요합니다.</p>
-<h2>어느 차트로 가용을 판단하는가</h2>
+<h2 id="sec-4">어느 차트로 가용을 판단하는가</h2>
 <p>원칙은 최종행동일 차트입니다. 해외 영사수속은 국무부가 계속 이 기준을 써왔고,
 미국 내 신분조정도 2025년 8월 15일자 USCIS 정책 변경으로 같은 기준이 되었습니다.
 그 전, 2023년 2월 14일부터는 신분조정에 접수가능일 차트를 적용했습니다.</p>
@@ -129,7 +155,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 신청서를 언제 냈는지를 먼저 확인해야 합니다.</p>
 <p>접수가능일 차트가 없어진 것은 아닙니다. 신분조정 신청서를 언제 낼 수 있는지를 정하는 기준으로는 그대로 쓰입니다.
 접수 시기와 나이 산정 기준이 서로 다른 차트를 따른다는 점을 기억하십시오.</p>
-<h2>나이가 보호되어도 놓치는 요건</h2>
+<h2 id="sec-5">나이가 보호되어도 놓치는 요건</h2>
 <p>CSPA 나이가 21세 미만으로 나왔다고 끝이 아닙니다. 비자 가용일로부터 1년 안에 영주권 취득을 위한 조치를 해야 합니다.
 인정되는 조치는 정해져 있습니다.</p>
 <ul>
@@ -147,14 +173,17 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 <p>계산 결과에서 세 개의 날짜를 같이 확인하십시오. 나이를 재는 기준일, 그 전에 비자가 가용되어야 하는 마감 기준일,
 그리고 신청 기한 1년입니다. 이 셋 중 하나만 어긋나도 결론이 바뀝니다.</p>
 </blockquote>
-<h2>퇴보가 있었다면</h2>
+<h2 id="sec-6">퇴보가 있었다면</h2>
 <p>우선일이 도래했다가 다시 뒤로 밀리는 퇴보는 드물지 않습니다. 이런 경우 최초로 도래한 시점을 가용일로 봅니다.
 따라서 과거 비자불레틴을 거슬러 확인해야 하고, 지금 차트만 보고 계산하면 실제보다 나이가 많게 나옵니다.
 아래 계산기에 가용일을 직접 입력하도록 만든 이유입니다.</p>
 <p><a href="../cspa.html"><strong>CSPA 나이 계산기</strong>
 최종행동일 기준을 원칙으로, 경과규정이 적용되는 접수가능일 기준까지 나란히 계산합니다</a></p>
+  <nav class="post-nav" aria-label="앞뒤 글"><span class="nav-empty"></span><a class="next" href="./2026-09-15-guide-charts.html"><span class="k">다음 글</span><b>접수가능일과 최종행동일, 어느 차트를 봐야 하는가</b></a></nav>
   <a class="back" href="../guides.html">가이드와 소식 전체 보기</a>
 </article>
+<aside class="rail"><nav class="toc" aria-label="목차"><h2>목차</h2><a class="l2" href="#sec-1">계산 구조</a><a class="l2" href="#sec-2">비자 가용 시점이 언제인가</a><a class="l2" href="#sec-3">직계가족은 계산하지 않는다</a><a class="l2" href="#sec-4">어느 차트로 가용을 판단하는가</a><a class="l2" href="#sec-5">나이가 보호되어도 놓치는 요건</a><a class="l2" href="#sec-6">퇴보가 있었다면</a></nav></aside>
+</div>
 <div class="lead-form">
 <h3>사건 검토 요청</h3>
 <div class="sd">계산 결과가 경계선에 가깝거나 판단이 갈리는 경우, 실제 서류를 보고 확인해야 합니다.</div>
