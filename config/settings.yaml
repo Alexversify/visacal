@@ -23,10 +23,6 @@ sevis:
   # I-901 SEVIS 등록 수수료. 납부는 fmjfee.com 에서 하지만 금액 고시는 ICE 쪽입니다.
   fee_url: https://www.ice.gov/sevis/i901
 
-fx:
-  # 원화 환산에 쓰는 참고 환율. 유럽중앙은행 고시를 중계하는 공개 API라 키가 필요 없습니다.
-  url: https://api.frankfurter.app/latest
-
 state_dept:
   fees_url: https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html
   reciprocity_kr_url: https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html

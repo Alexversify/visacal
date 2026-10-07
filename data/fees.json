@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-22",
+  "updated_at": "2026-10-07",
   "note": "amount가 null인 항목은 아직 확인되지 않은 금액입니다. 확인 후 값을 넣고 status를 '시행중'으로 바꾸십시오.",
   "fees": [
     {
@@ -15,7 +15,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "DOS-MRV-PETITION-DEP",
@@ -30,7 +30,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "DOS-FRAUD-L-BLANKET",
@@ -45,7 +45,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "PL-114-113-L",
@@ -60,7 +60,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-9-11-BIOMETRIC-L",
@@ -75,7 +75,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "require": [
@@ -96,7 +96,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "DOS-MRV-E2-DEP",
@@ -111,7 +111,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/SouthKorea.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I129-E-SMALL",
@@ -126,7 +126,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I129-E-GENERAL",
@@ -141,7 +141,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-ASYLUM-SMALL",
@@ -156,7 +156,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-ASYLUM-GENERAL",
@@ -171,7 +171,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I539-DEP",
@@ -186,7 +186,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I907-I129",
@@ -201,7 +201,7 @@
       "status": "시행중",
       "source_url": "https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I907-I140",
@@ -216,7 +216,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-907",
@@ -238,7 +238,7 @@
       "status": "시행중",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "SEVIS-I901-F",
@@ -253,7 +253,7 @@
       "status": "검토필요",
       "source_url": "https://www.fmjfee.com/",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "sevis",
         "form": "I-901",
@@ -278,7 +278,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-129",
@@ -308,7 +308,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "require": [
@@ -329,7 +329,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "require": [
@@ -351,7 +351,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-129",
@@ -380,7 +380,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "require": [
@@ -402,7 +402,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-129",
@@ -429,7 +429,7 @@
       "status": "집행정지",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     },
     {
       "fee_id": "USCIS-I140",
@@ -444,7 +444,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-140",
@@ -466,7 +466,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-526E"
@@ -485,7 +485,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-829"
@@ -504,7 +504,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-130",
@@ -526,7 +526,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "form": "I-485",
@@ -549,7 +549,7 @@
       "status": "검토필요",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "state_dept",
         "require": [
@@ -573,7 +573,7 @@
       "status": "검토필요",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "state_dept",
         "require": [
@@ -594,7 +594,7 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00",
+      "last_checked": "2026-10-07T01:44:22+00:00",
       "match": {
         "source": "uscis_g1055_pdf",
         "require": [
@@ -615,7 +615,7 @@
       "status": "시행중",
       "source_url": "",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-10-07T01:44:22+00:00"
     }
   ]
 }

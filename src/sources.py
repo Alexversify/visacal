@@ -205,34 +205,6 @@ def fetch_sevis_fee(cfg: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-# ---------------------------------------------------------------- 환율
-
-
-def fetch_fx(cfg: dict[str, Any]) -> dict[str, Any]:
-    """원화 환산에 쓸 참고 환율입니다.
-
-    유럽중앙은행 고시를 중계하는 공개 API라 키가 없어도 됩니다.
-    실패하면 기존 값을 그대로 두므로, 화면에는 마지막으로 받은 값과 그 날짜가 남습니다.
-    견적용 참고값이지 실제 결제 환율이 아닙니다.
-    """
-    url = cfg.get("url") or "https://api.frankfurter.app/latest"
-    out: dict[str, Any] = {"source": "fx", "error": None, "rate": None, "date": None}
-    try:
-        res = requests.get(
-            url, params={"from": "USD", "to": "KRW"}, headers={"User-Agent": UA}, timeout=20
-        )
-        res.raise_for_status()
-        data = res.json()
-        rate = (data.get("rates") or {}).get("KRW")
-        if not isinstance(rate, (int, float)) or rate <= 0:
-            raise ValueError(f"환율 응답이 비정상입니다: {data}")
-        out["rate"] = round(float(rate), 2)
-        out["date"] = data.get("date")
-    except Exception as exc:  # noqa: BLE001
-        out["error"] = str(exc)
-    return out
-
-
 # ---------------------------------------------------------------- 국무부
 
 

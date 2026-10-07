@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from src import site
+from src import consular_history, consular_page, consular_rate, site
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -48,7 +48,6 @@ INDEX_CSS = """
 .chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:34px;align-items:start}
 .side{position:sticky;top:20px}
-.fxnote{margin-top:8px;font-size:11.5px;color:var(--faint);line-height:1.5}
 .pick h2{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 10px}
 .opt{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--hair);cursor:pointer}
 .opt:last-child{border-bottom:0}
@@ -86,6 +85,11 @@ INDEX_CSS = """
 .flag{margin-top:14px;font-size:12.5px;line-height:1.55}
 .flag div{padding:7px 10px;border-left:3px solid var(--pend);background:#fdf9ee;margin-top:6px}
 .flag div.stop{border-left-color:var(--warn);background:#fdf2f2}
+.rate-badge{display:inline-block;margin:18px 0 0;padding:5px 11px;border:1px solid var(--ink);border-radius:2px;
+  font-size:13px;font-weight:600;text-decoration:none;font-variant-numeric:tabular-nums;background:var(--paper)}
+.rate-badge span{color:var(--faint);font-weight:400;margin-left:4px}
+.rate-badge:hover{background:var(--ink);color:#fff}
+.li-krw{font-size:12px;color:var(--faint);text-align:right;margin:-5px 0 3px;font-variant-numeric:tabular-nums}
 .note{margin-top:30px;color:var(--faint);font-size:12.5px;max-width:70ch}
 @media (max-width:860px){
   .cols{grid-template-columns:1fr;gap:22px}
@@ -116,9 +120,8 @@ td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
 """
 
 JS = r"""
-const FEES = __FEES__, VISAS = __VISAS__, GUIDES = __GUIDES__, FX = __FX__;
-const S = {visa: VISAS[0].id, route: VISAS[0].routes[0].id, opts:{}, counts:{},
-           rate: FX.rate ? String(FX.rate) : ''};
+const FEES = __FEES__, VISAS = __VISAS__, GUIDES = __GUIDES__, CRATE = __CRATE__;
+const S = {visa: VISAS[0].id, route: VISAS[0].routes[0].id, opts:{}, counts:{}, rate:''};
 
 // 주소에 담긴 선택을 복원합니다. 개인정보는 넣지 않고 비자와 경로, 선택 항목만 담습니다.
 (function restore(){
@@ -148,6 +151,9 @@ function shareUrl(){
 const fee = id => FEES[id];
 const money = (v,c) => (c==='KRW' ? v.toLocaleString('ko-KR')+'원' : '$'+v.toLocaleString('en-US'));
 const visa = () => VISAS.find(v=>v.id===S.visa);
+// 대사관 MRV 수수료는 원화로 결제하므로 영사환율 환산액을 함께 보여줍니다.
+const isMrv = f => f.id && f.id.startsWith('DOS-MRV') && f.currency==='USD' && f.amount!=null;
+const mrvKrw = (f,qty) => Math.round(f.amount*(qty||1)*CRATE.rate).toLocaleString('ko-KR')+'원';
 const route = () => visa().routes.find(r=>r.id===S.route) || visa().routes[0];
 
 function relBlock(){
@@ -173,7 +179,8 @@ function controls(){
     h += '<div class="group"><h2>선택 항목</h2>' + r.options.map(o=>{
       const f = fee(o.fee_id) || {};
       const dead = f.status === '집행정지';
-      const price = (f.amount==null) ? '확인 필요' : money(f.amount, f.currency);
+      const price = (f.amount==null) ? '확인 필요' : money(f.amount, f.currency)
+        + ((CRATE && isMrv(f)) ? ` (${mrvKrw(f)}, 영사환율 ${CRATE.checked} 확인)` : '');
       const note = dead ? '현재 납부 대상 아님' : '';
       const on = !!S.opts[o.id];
       let block = `<label class="opt ${dead?'dead':''}"><input type="checkbox" data-opt="${o.id}" ${on?'checked':''}>
@@ -211,7 +218,8 @@ function bill(){
     const sub = f.amount*qty;
     if(f.currency==='KRW') krw+=sub; else usd+=sub;
     const q = qty>1 ? `<span class="tag">${money(f.amount,f.currency)} × ${qty}</span>` : '';
-    return `<div class="li"><span class="nm">${it.label}</span>${q}<span class="dots"></span><span class="v">${money(sub,f.currency)}</span></div>`;
+    const k = (CRATE && isMrv(f)) ? `<div class="li-krw">영사환율 ${CRATE.label} 기준 ${mrvKrw(f,qty)} · ${CRATE.checked} 확인</div>` : '';
+    return `<div class="li"><span class="nm">${it.label}</span>${q}<span class="dots"></span><span class="v">${money(sub,f.currency)}</span></div>${k}`;
   }).join('');
 
   const sub = [];
@@ -235,7 +243,6 @@ function bill(){
     <div class="krw"><label for="rate">환율</label>
       <input id="rate" inputmode="decimal" value="${S.rate}" placeholder="1,400">
       <span class="out">${conv!=null ? conv.toLocaleString('ko-KR')+'원' : '원화 환산'}</span></div>
-    ${FX.date ? `<div class="fxnote">${FX.date} 고시 기준 참고 환율입니다. 실제 결제 환율은 다를 수 있습니다.</div>` : ''}
     ${flags.length?`<div class="flag">${[...new Set(flags)].join('')}</div>`:''}`;
 }
 
@@ -296,21 +303,6 @@ draw();
 """
 
 
-def _fx() -> dict[str, Any]:
-    """마지막으로 받아둔 참고 환율. 파일이 없으면 환산을 비워 둡니다."""
-    path = ROOT / "data" / "fx.json"
-    if not path.exists():
-        return {"rate": None, "date": None}
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
-        return {"rate": None, "date": None}
-    rate = data.get("rate")
-    if not isinstance(rate, (int, float)) or rate <= 0:
-        return {"rate": None, "date": None}
-    return {"rate": float(rate), "date": data.get("date")}
-
-
 def _guide_links() -> dict[str, list[tuple[str, str]]]:
     """비자 id 별로 (주소, 제목) 목록을 만듭니다."""
     from src.posts import load_posts
@@ -346,6 +338,7 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     scenarios = json.loads(SCENARIOS.read_text(encoding="utf-8"))
     index = {
         f["fee_id"]: {
+            "id": f["fee_id"],
             "amount": f.get("amount"),
             "currency": f.get("currency", "USD"),
             "item": f.get("item", ""),
@@ -354,14 +347,25 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
         for f in fees.get("fees", [])
     }
     guides = _guide_links()
+    rate = consular_rate.load_rate()
+    crate = (
+        {
+            "rate": rate["rate"],
+            "label": consular_rate.fmt_rate(rate["rate"]),
+            "checked": (rate.get("checked_at") or "")[:10],
+        }
+        if rate.get("rate") is not None
+        else None
+    )
     js = (
         JS.replace("__FEES__", json.dumps(index, ensure_ascii=False))
         .replace("__VISAS__", json.dumps(scenarios["visas"], ensure_ascii=False))
         .replace("__GUIDES__", json.dumps(guides, ensure_ascii=False))
-        .replace("__FX__", json.dumps(_fx(), ensure_ascii=False))
+        .replace("__CRATE__", json.dumps(crate))
     )
     cfg = site.load_cfg()
     body = f"""
+{consular_page.rate_badge(rate)}
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>
@@ -479,9 +483,12 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
 
 def render_static(cfg: dict[str, Any]) -> None:
     """도메인, 광고, 개인정보처리방침처럼 매 실행마다 같은 내용인 파일들."""
-    from src import articles, cspa_page, static_pages
+    from src import age_page, articles, cspa_page, static_pages
 
     cspa_page.render_cspa(cfg)
+    age_page.render_age(cfg)
+    consular_page.render_consular(cfg)
+    consular_history.render_history(cfg)
     articles.render_articles(cfg)
     static_pages.render_all(cfg)
 

@@ -3,16 +3,20 @@
 from __future__ import annotations
 
 import json
+import mimetypes
 import os
 import smtplib
 import ssl
 from email.message import EmailMessage
+from pathlib import Path
 from typing import Any
 
 import requests
 
 
-def _send_mail(to_addrs: list[str], subject: str, body: str) -> None:
+def _send_mail(
+    to_addrs: list[str], subject: str, body: str, attachments: list[Path] | None = None
+) -> None:
     host = os.environ.get("SMTP_HOST")
     user = os.environ.get("SMTP_USER")
     password = os.environ.get("SMTP_PASS")
@@ -24,6 +28,10 @@ def _send_mail(to_addrs: list[str], subject: str, body: str) -> None:
     msg["From"] = os.environ.get("SMTP_FROM", user)
     msg["To"] = ", ".join(to_addrs)
     msg.set_content(body)
+    for path in attachments or []:
+        ctype = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+        maintype, subtype = ctype.split("/", 1)
+        msg.add_attachment(path.read_bytes(), maintype=maintype, subtype=subtype, filename=path.name)
     port = int(os.environ.get("SMTP_PORT", "465"))
     context = ssl.create_default_context()
     if port == 465:

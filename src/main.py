@@ -35,17 +35,7 @@ def main() -> int:
     pdf = sources.fetch_g1055_pdf_fees(uscis.get("pdf_url"))
     state_dept = sources.fetch_state_fees(cfg["state_dept"])
     sevis = sources.fetch_sevis_fee(cfg.get("sevis") or {})
-    fx = sources.fetch_fx(cfg.get("fx") or {})
-
-    # 환율은 받았을 때만 덮어씁니다. 실패하면 직전 값과 그 날짜가 화면에 남습니다.
-    if fx.get("rate"):
-        (ROOT / "data" / "fx.json").write_text(
-            json.dumps({"rate": fx["rate"], "date": fx["date"], "base": "USD", "quote": "KRW"},
-                       ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-
-    for result in (fr, uscis, pdf, state_dept, sevis, fx):
+    for result in (fr, uscis, pdf, state_dept, sevis):
         status = result.get("error") or "ok"
         print(f"  - {result['source']}: {status}")
 
