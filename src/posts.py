@@ -232,7 +232,11 @@ def render_posts(cfg: dict[str, Any]) -> list[dict[str, Any]]:
         cover = (
             f'<img class="cover" src="{html.escape(_img(p["cover"]))}" alt="">' if p["cover"] else ""
         )
-        marked, toc = _outline(_to_html(p["body"]))
+        rendered = _to_html(p["body"])
+        marked, toc = _outline(rendered)
+        # 본문이 짧으면 옆 광고를 달지 않습니다. 글보다 광고가 두드러지면 안 됩니다.
+        long_enough = len(re.findall(r"</p>", rendered)) >= 6
+        rail_ad = site.ad(cfg, "result_side", "ad ad-side") if long_enough else ""
         body = f"""
 <div class="post">
 <article class="art">
@@ -240,11 +244,11 @@ def render_posts(cfg: dict[str, Any]) -> list[dict[str, Any]]:
   <h1>{html.escape(p['title'])}</h1>
   <div class="sum">{html.escape(p['summary'])}</div>
   {cover}
-  {_with_inline_ad(marked, site.ad(cfg, "in_article"))}
+  {_with_inline_ad(marked, site.ad(cfg, "in_article") if long_enough else "")}
   {_neighbours(posts, p)}
   <a class="back" href="../guides.html">가이드와 소식 전체 보기</a>
 </article>
-<aside class="rail">{toc}{site.ad(cfg, "result_side", "ad ad-side")}</aside>
+<aside class="rail">{toc}{rail_ad}</aside>
 </div>
 {site.lead_form(cfg, p['title'][:30])}
 {site.ad(cfg, "page_bottom")}

@@ -453,6 +453,7 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
 <tbody>{''.join(rows)}</tbody></table>
 <h3>변경 이력</h3>
 <div class="log">{''.join(log_html) or '<div class="entry"><div class="d">기록 없음</div><p>감시 시작 이후 감지된 변경이 없습니다.</p></div>'}</div>
+{site.ad(cfg, "page_bottom")}
 """
     doc = (
         site.head(cfg, "수수료 원장과 변경 이력", CHANGES_CSS,
