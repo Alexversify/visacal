@@ -12,7 +12,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src import analyze as analyzer
-from src import ledger, notify, render, sources
+from src import fill, ledger, notify, render, sources
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config" / "settings.yaml"
@@ -34,6 +34,7 @@ def main() -> int:
     uscis = sources.fetch_uscis_g1055(cfg["uscis"])
     pdf = sources.fetch_g1055_pdf_fees(uscis.get("pdf_url"))
     state_dept = sources.fetch_state_fees(cfg["state_dept"])
+    sevis = sources.fetch_sevis_fee(cfg.get("sevis") or {})
     fx = sources.fetch_fx(cfg.get("fx") or {})
 
     # 환율은 받았을 때만 덮어씁니다. 실패하면 직전 값과 그 날짜가 화면에 남습니다.
@@ -44,11 +45,12 @@ def main() -> int:
             encoding="utf-8",
         )
 
-    for result in (fr, uscis, pdf, state_dept, fx):
+    for result in (fr, uscis, pdf, state_dept, sevis, fx):
         status = result.get("error") or "ok"
         print(f"  - {result['source']}: {status}")
 
-    collected = {"federal_register": fr, "uscis": uscis, "pdf": pdf, "state_dept": state_dept}
+    collected = {"federal_register": fr, "uscis": uscis, "pdf": pdf,
+                 "state_dept": state_dept, "sevis": sevis}
 
     print("[2/5] 변경 감지")
     old_state = ledger.load_state()
@@ -79,7 +81,16 @@ def main() -> int:
         print("[3/5] 분석 생략")
         print("[4/5] 알림 생략")
 
-    print("[5/5] 저장 및 렌더링")
+    print("[5/5] 금액 채우기, 저장 및 렌더링")
+    # 비어 있는 금액만 공식 자료에서 채웁니다. 이미 있는 값은 건드리지 않습니다.
+    report = fill.fill_missing(fees, collected)
+    filled = [r for r in report if r["amount"] is not None]
+    if filled:
+        print(f"  - 금액 채움 {len(filled)}건: {', '.join(r['fee_id'] for r in filled)}")
+    for row in report:
+        if row["amount"] is None:
+            print(f"  - 미채움 {row['fee_id']}: {row['result']}")
+
     for fee in fees.get("fees", []):
         fee["last_checked"] = new_state["checked_at"]
     ledger.save_fees(fees)

@@ -104,6 +104,8 @@ td{padding:9px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
 .st b{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
 .who{color:var(--faint);font-size:12.5px}
 .pend{background:#fdf9ee;border:1px solid #ecdcb4;padding:8px 10px;font-size:12.5px;margin-top:5px}
+.auto{background:#f3f6f4;border:1px solid #cfdcd4;padding:8px 10px;font-size:12.5px;margin-top:5px;line-height:1.55}
+.auto .src{color:var(--faint);font-size:11.5px;word-break:break-all}
 .log{border-left:2px solid var(--rule);padding-left:18px;margin-top:12px}
 .entry{margin-bottom:24px;position:relative}
 .entry:before{content:"";position:absolute;left:-23px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--ink)}
@@ -413,6 +415,13 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
                 f'<div class="pend">제안된 수정: {html.escape(str(pending.get("field")))} → '
                 f'{html.escape(str(pending.get("proposed")))}. 근거: {html.escape(str(pending.get("reason")))[:200]}. '
                 "승인 전까지 반영되지 않습니다.</div>"
+            )
+        auto = fee.get("auto_fill")
+        if auto:
+            # 기계가 채운 금액은 근거가 된 원문 줄을 같이 보여 줍니다. 대조가 바로 됩니다.
+            pend += (
+                f'<div class="auto">공식 자료에서 자동으로 채운 금액입니다. '
+                f'확인 후 상태를 바꾸십시오.<br><span class="src">{html.escape(str(auto.get("line", ""))[:220])}</span></div>'
             )
         url = fee.get("source_url") or ""
         item = html.escape(fee.get("item", ""))

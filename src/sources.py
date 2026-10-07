@@ -180,6 +180,31 @@ def fetch_g1055_pdf_fees(pdf_url: str | None) -> dict[str, Any]:
         return {"source": "uscis_g1055_pdf", "error": str(exc), "rows": []}
 
 
+# ---------------------------------------------------------------- SEVIS
+
+
+def fetch_sevis_fee(cfg: dict[str, Any]) -> dict[str, Any]:
+    """I-901 SEVIS 등록 수수료는 ICE 소관이라 별도 트랙으로 봅니다."""
+    url = cfg.get("fee_url")
+    out: dict[str, Any] = {"source": "sevis", "error": None, "rows": []}
+    if not url:
+        out["error"] = "fee_url 없음"
+        return out
+    try:
+        body, _, _ = _browser_text(url)
+        for line in body.splitlines():
+            line = line.strip()
+            if not line or not re.search(r"\$\d", line):
+                continue
+            if not re.search(r"I-901|SEVIS", line, re.I):
+                continue
+            amounts = [int(a.replace(",", "")) for a in re.findall(r"\$([\d,]+)", line)]
+            out["rows"].append({"form": "I-901", "amounts": amounts, "line": line[:300]})
+    except Exception as exc:  # noqa: BLE001
+        out["error"] = str(exc)
+    return out
+
+
 # ---------------------------------------------------------------- 환율
 
 

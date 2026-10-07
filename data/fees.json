@@ -75,7 +75,13 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "require": [
+          "9-11"
+        ]
+      }
     },
     {
       "fee_id": "DOS-MRV-E2",
@@ -210,7 +216,14 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-907",
+        "require": [
+          "i-140"
+        ]
+      }
     },
     {
       "fee_id": "DOS-MRV-B",
@@ -240,7 +253,17 @@
       "status": "검토필요",
       "source_url": "https://www.fmjfee.com/",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "sevis",
+        "form": "I-901",
+        "require": [
+          "f-1"
+        ],
+        "exclude": [
+          "j-1"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-I129-H",
@@ -255,7 +278,22 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-129",
+        "require": [
+          "h-1b"
+        ],
+        "exclude": [
+          "acwia",
+          "fraud",
+          "9-11",
+          "premium",
+          "biometric",
+          "data"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-ACWIA",
@@ -270,7 +308,13 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "require": [
+          "acwia"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-FRAUD-I129-H",
@@ -285,7 +329,14 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "require": [
+          "fraud",
+          "h-1b"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-I129-L",
@@ -300,7 +351,21 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-129",
+        "require": [
+          "l-1"
+        ],
+        "exclude": [
+          "fraud",
+          "9-11",
+          "premium",
+          "biometric",
+          "blanket"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-FRAUD-I129-L",
@@ -315,7 +380,14 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "require": [
+          "fraud",
+          "l-1"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-I129-O",
@@ -330,7 +402,19 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-129",
+        "require": [
+          "o-1"
+        ],
+        "exclude": [
+          "fraud",
+          "premium",
+          "biometric"
+        ]
+      }
     },
     {
       "fee_id": "H1B-100K",
@@ -360,7 +444,14 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-140",
+        "exclude": [
+          "premium"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-I526E",
@@ -375,7 +466,11 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-526E"
+      }
     },
     {
       "fee_id": "USCIS-I829",
@@ -390,7 +485,11 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-829"
+      }
     },
     {
       "fee_id": "USCIS-I130",
@@ -405,7 +504,14 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-130",
+        "exclude": [
+          "i-130a"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-I485",
@@ -420,7 +526,15 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "form": "I-485",
+        "exclude": [
+          "biometric",
+          "i-485j"
+        ]
+      }
     },
     {
       "fee_id": "DOS-IV-DS260",
@@ -435,7 +549,16 @@
       "status": "검토필요",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "state_dept",
+        "require": [
+          "immigrant visa application"
+        ],
+        "exclude": [
+          "affidavit"
+        ]
+      }
     },
     {
       "fee_id": "DOS-AOS-REVIEW",
@@ -450,7 +573,13 @@
       "status": "검토필요",
       "source_url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "state_dept",
+        "require": [
+          "affidavit of support"
+        ]
+      }
     },
     {
       "fee_id": "USCIS-IMMIGRANT-FEE",
@@ -465,7 +594,13 @@
       "status": "검토필요",
       "source_url": "https://www.uscis.gov/g-1055",
       "prev_amount": null,
-      "last_checked": "2026-09-22T08:26:55+00:00"
+      "last_checked": "2026-09-22T08:26:55+00:00",
+      "match": {
+        "source": "uscis_g1055_pdf",
+        "require": [
+          "immigrant fee"
+        ]
+      }
     },
     {
       "fee_id": "KR-COURIER",

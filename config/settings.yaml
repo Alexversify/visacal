@@ -19,6 +19,10 @@ uscis:
   alert_selector: "div.usa-alert, .c-alert, [class*='alert']"
   pdf_link_pattern: "g-1055"
 
+sevis:
+  # I-901 SEVIS 등록 수수료. 납부는 fmjfee.com 에서 하지만 금액 고시는 ICE 쪽입니다.
+  fee_url: https://www.ice.gov/sevis/i901
+
 fx:
   # 원화 환산에 쓰는 참고 환율. 유럽중앙은행 고시를 중계하는 공개 API라 키가 필요 없습니다.
   url: https://api.frankfurter.app/latest
