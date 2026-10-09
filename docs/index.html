@@ -7,9 +7,14 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>비자별 관납료 · VisaCal</title>
 <meta name="description" content="미국 비자 종류별 관납료를 진행 경로와 동반가족까지 반영해 계산합니다.">
+<meta name="theme-color" content="#14243c">
+<link rel="canonical" href="https://visacal.com/">
+<meta property="og:type" content="website"><meta property="og:title" content="비자별 관납료 · VisaCal"><meta property="og:description" content="미국 비자 종류별 관납료를 진행 경로와 동반가족까지 반영해 계산합니다."><meta property="og:site_name" content="VisaCal"><meta property="og:locale" content="ko_KR"><meta property="og:url" content="https://visacal.com/"><meta property="og:image" content="https://visacal.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1964223951103950" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-QZPDBPC4SN"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QZPDBPC4SN');</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "VisaCal", "url": "https://visacal.com/", "inLanguage": "ko", "publisher": {"@type": "Organization", "name": "법무법인 한미", "url": "https://visacal.com/"}}</script>
+<meta name="google-adsense-account" content="ca-pub-1964223951103950"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1964223951103950" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-QZPDBPC4SN"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QZPDBPC4SN');</script>
 <style>
 :root{
   --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
@@ -35,6 +40,7 @@ nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
 .stamp{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums;margin-top:10px}
 .ad{margin:22px 0;min-height:1px}
+.ad-label{display:block;font-size:11px;color:var(--faint);letter-spacing:.06em;margin-bottom:4px}
 .ad-side{margin:18px 0 0}
 .cta{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
 .cta a{display:block;text-align:center;text-decoration:none;padding:11px 14px;
@@ -57,6 +63,16 @@ footer a{color:var(--muted)}
 .lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
 @media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
 footer .disc{max-width:74ch;margin-bottom:10px}
+.rel{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;margin-top:16px;border-radius:2px}
+.rel h3{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.rel a{display:block;padding:7px 0;border-top:1px solid var(--hair);text-decoration:none;font-size:13.5px;line-height:1.45}
+.rel a:first-of-type{border-top:0}
+.rel a:hover{color:var(--muted)}
+.fill{margin-top:10px}
+.fill button{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--rule);
+  padding:9px 12px;font:inherit;font-size:13px;border-radius:2px;cursor:pointer}
+.fill button:hover{border-color:var(--ink)}
+.fill .done{display:block;font-size:12px;color:var(--ok);margin-top:6px;text-align:center}
 
 .visas{display:flex;flex-wrap:wrap;gap:7px;margin:22px 0 26px}
 .chip{border:1px solid var(--rule);background:var(--paper);padding:7px 14px;
@@ -65,6 +81,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
 .chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:34px;align-items:start}
+.side{position:sticky;top:20px}
 .pick h2{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 10px}
 .opt{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--hair);cursor:pointer}
 .opt:last-child{border-bottom:0}
@@ -80,7 +97,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 .count span{min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
 .count label{font-size:12.5px;color:var(--muted)}
 .bill{background:var(--paper);border:1px solid var(--ink);border-top-width:3px;
-  padding:22px 22px 18px;position:sticky;top:20px;border-radius:2px}
+  padding:22px 22px 18px;border-radius:2px}
 .bill h2{font-size:15px;margin:0 0 3px;font-weight:700}
 .bill .who{font-size:12.5px;color:var(--faint);margin-bottom:16px}
 .li{display:flex;align-items:baseline;gap:6px;padding:7px 0;font-size:14px}
@@ -110,7 +127,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 .note{margin-top:30px;color:var(--faint);font-size:12.5px;max-width:70ch}
 @media (max-width:860px){
   .cols{grid-template-columns:1fr;gap:22px}
-  .bill{position:static;order:-1}
+  .side{position:static;order:-1}
 }
 </style></head><body><div class="wrap">
 <div class="top">
@@ -122,7 +139,15 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>
-  <div class="bill" id="bill"></div>
+  <div>
+    <div class="side">
+      <div class="bill" id="bill"></div>
+      <div class="fill"><button type="button" id="fillLead">계산 결과를 문의 내용에 넣기</button><span class="done" id="fillDone" hidden>문의 내용에 넣었습니다</span></div>
+      <div class="cta"><a href="https://forms.gle/EiRWHjmEvjCPFYkt7">사건 검토 요청</a></div>
+      <div id="rel"></div>
+    </div>
+    <div class="ad ad-side"><span class="ad-label">광고</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1964223951103950" data-ad-slot="2040420457" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
+  </div>
 </div>
 <div class="lead-form">
 <h3>사건 검토 요청</h3>
@@ -133,13 +158,13 @@ footer .disc{max-width:74ch;margin-bottom:10px}
     <input type="text" name="entry.304915958" placeholder="성함" required>
     <input type="text" name="entry.1465445911" placeholder="연락처 또는 이메일" required>
   </div>
-  <textarea name="entry.1359651639" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>[관납료 문의] </textarea>
+  <textarea id="leadDetail" name="entry.1359651639" placeholder="비자 종류, 진행 단계, 확인하고 싶은 내용을 적어주십시오." required>[관납료 문의] </textarea>
   <button type="submit">검토 요청 보내기</button>
 </form>
 <div class="fine">보내주신 내용은 문의 처리와 수임 검토 목적으로만 사용합니다.
 회신까지 영업일 기준 1일에서 2일 걸립니다.</div>
 </div>
-
+<div class="ad"><span class="ad-label">광고</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1964223951103950" data-ad-slot="2040420457" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 <p class="note">주한미국대사관 및 USCIS 납부 기준입니다. 법무 수임료와 공증·번역 실비는 포함하지 않습니다.
 금액이 확인되지 않은 항목은 원장에서 채워야 합계에 반영됩니다.</p>
 <footer>
@@ -148,8 +173,34 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 <div>법무법인 한미 · alex@lawhanmi.com · <a href="privacy.html">개인정보처리방침</a> · <a href="https://feedbal.com/say/visacal">건의하기</a></div>
 </footer>
 </div><script>
-const FEES = {"DOS-MRV-PETITION": {"id": "DOS-MRV-PETITION", "amount": 205, "currency": "USD", "item": "비이민 신청 수수료, 청원 기반", "status": "시행중"}, "DOS-MRV-PETITION-DEP": {"id": "DOS-MRV-PETITION-DEP", "amount": 205, "currency": "USD", "item": "동반가족 신청 수수료, 1인당", "status": "시행중"}, "DOS-FRAUD-L-BLANKET": {"id": "DOS-FRAUD-L-BLANKET", "amount": 500, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "시행중"}, "PL-114-113-L": {"id": "PL-114-113-L", "amount": 4500, "currency": "USD", "item": "Covered employer 추가 수수료, 50인 이상 및 비자 비중 50% 초과", "status": "검토필요"}, "USCIS-9-11-BIOMETRIC-L": {"id": "USCIS-9-11-BIOMETRIC-L", "amount": null, "currency": "USD", "item": "9-11 Response & Biometric Entry-Exit Fee", "status": "검토필요"}, "DOS-MRV-E2": {"id": "DOS-MRV-E2", "amount": 315, "currency": "USD", "item": "비이민 신청 수수료, 상호주의 적용", "status": "시행중"}, "DOS-MRV-E2-DEP": {"id": "DOS-MRV-E2-DEP", "amount": 315, "currency": "USD", "item": "동반가족 신청 수수료, 1인당", "status": "시행중"}, "USCIS-I129-E-SMALL": {"id": "USCIS-I129-E-SMALL", "amount": 510, "currency": "USD", "item": "신분변경·연장 신청 수수료, 소형 사업장", "status": "시행중"}, "USCIS-I129-E-GENERAL": {"id": "USCIS-I129-E-GENERAL", "amount": 1015, "currency": "USD", "item": "신분변경·연장 신청 수수료, 일반 사업장", "status": "시행중"}, "USCIS-ASYLUM-SMALL": {"id": "USCIS-ASYLUM-SMALL", "amount": 300, "currency": "USD", "item": "Asylum Program Fee, 소형 사업장", "status": "시행중"}, "USCIS-ASYLUM-GENERAL": {"id": "USCIS-ASYLUM-GENERAL", "amount": 600, "currency": "USD", "item": "Asylum Program Fee, 일반 사업장", "status": "시행중"}, "USCIS-I539-DEP": {"id": "USCIS-I539-DEP", "amount": 470, "currency": "USD", "item": "동반가족 신분변경·연장, 가족 1그룹", "status": "시행중"}, "USCIS-I907-I129": {"id": "USCIS-I907-I129", "amount": 2965, "currency": "USD", "item": "Premium Processing, I-129", "status": "시행중"}, "USCIS-I907-I140": {"id": "USCIS-I907-I140", "amount": null, "currency": "USD", "item": "Premium Processing, I-140", "status": "검토필요"}, "DOS-MRV-B": {"id": "DOS-MRV-B", "amount": 185, "currency": "USD", "item": "비이민 신청 수수료, 비청원 카테고리", "status": "시행중"}, "SEVIS-I901-F": {"id": "SEVIS-I901-F", "amount": null, "currency": "USD", "item": "SEVIS 등록 수수료", "status": "검토필요"}, "USCIS-I129-H": {"id": "USCIS-I129-H", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "USCIS-ACWIA": {"id": "USCIS-ACWIA", "amount": null, "currency": "USD", "item": "ACWIA 교육·훈련 수수료", "status": "검토필요"}, "USCIS-FRAUD-I129-H": {"id": "USCIS-FRAUD-I129-H", "amount": null, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "검토필요"}, "USCIS-I129-L": {"id": "USCIS-I129-L", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "USCIS-FRAUD-I129-L": {"id": "USCIS-FRAUD-I129-L", "amount": null, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "검토필요"}, "USCIS-I129-O": {"id": "USCIS-I129-O", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "H1B-100K": {"id": "H1B-100K", "amount": 100000, "currency": "USD", "item": "$100,000 지급 요건", "status": "집행정지"}, "USCIS-I140": {"id": "USCIS-I140", "amount": null, "currency": "USD", "item": "이민청원 신청 수수료", "status": "검토필요"}, "USCIS-I526E": {"id": "USCIS-I526E", "amount": null, "currency": "USD", "item": "투자이민 청원 수수료", "status": "검토필요"}, "USCIS-I829": {"id": "USCIS-I829", "amount": null, "currency": "USD", "item": "조건해제 신청 수수료", "status": "검토필요"}, "USCIS-I130": {"id": "USCIS-I130", "amount": null, "currency": "USD", "item": "친족초청 청원 수수료", "status": "검토필요"}, "USCIS-I485": {"id": "USCIS-I485", "amount": null, "currency": "USD", "item": "신분조정 신청 수수료", "status": "검토필요"}, "DOS-IV-DS260": {"id": "DOS-IV-DS260", "amount": null, "currency": "USD", "item": "이민비자 신청 수수료, 1인당", "status": "검토필요"}, "DOS-AOS-REVIEW": {"id": "DOS-AOS-REVIEW", "amount": null, "currency": "USD", "item": "재정보증 심사 수수료", "status": "검토필요"}, "USCIS-IMMIGRANT-FEE": {"id": "USCIS-IMMIGRANT-FEE", "amount": null, "currency": "USD", "item": "USCIS Immigrant Fee, 입국 후 영주증 발급", "status": "검토필요"}, "KR-COURIER": {"id": "KR-COURIER", "amount": 22000, "currency": "KRW", "item": "여권 택배 수령", "status": "시행중"}}, VISAS = [{"id": "e2", "label": "E-2 투자", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-E2"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-E2-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}, {"id": "us_small", "label": "미국 내 신분변경·연장, 소형 사업장", "lines": ["USCIS-I129-E-SMALL", "USCIS-ASYLUM-SMALL"], "options": [{"id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP"}, {"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}, {"id": "us_general", "label": "미국 내 신분변경·연장, 일반 사업장", "lines": ["USCIS-I129-E-GENERAL", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP"}, {"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}]}, {"id": "l1_blanket", "label": "L-1 Blanket", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-PETITION", "DOS-FRAUD-L-BLANKET"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "l1_individual", "label": "L-1 개별청원", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-L", "USCIS-FRAUD-I129-L", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}, {"id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L"}, {"id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "b", "label": "B-1/B-2", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-B"], "options": [{"id": "dep", "label": "동반 신청자", "type": "per_person", "fee_id": "DOS-MRV-B"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "f1", "label": "F-1 학생", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["SEVIS-I901-F", "DOS-MRV-B"], "options": [{"id": "dep", "label": "동반가족 F-2", "type": "per_person", "fee_id": "DOS-MRV-B"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "h1b", "label": "H-1B", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-H", "USCIS-ACWIA", "USCIS-FRAUD-I129-H", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}, {"id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L"}, {"id": "h1b100k", "label": "$100,000 지급 요건", "type": "toggle", "fee_id": "H1B-100K"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "o1", "label": "O-1", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-O", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족 O-3", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "niw", "label": "NIW 취업이민", "routes": [{"id": "us_petition", "label": "I-140 청원", "lines": ["USCIS-I140"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I140"}]}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}, {"id": "aos_review", "label": "재정보증 심사 수수료", "type": "toggle", "fee_id": "DOS-AOS-REVIEW"}]}, {"id": "us_aos", "label": "미국 내 신분조정 I-485", "lines": ["USCIS-I485"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "USCIS-I485"}]}]}, {"id": "eb5", "label": "EB-5 투자이민", "routes": [{"id": "us_petition", "label": "I-526E 청원", "lines": ["USCIS-I526E"], "options": []}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}]}, {"id": "i829", "label": "조건해제 I-829", "lines": ["USCIS-I829"], "options": []}]}, {"id": "family", "label": "가족초청 이민", "routes": [{"id": "us_petition", "label": "I-130 청원", "lines": ["USCIS-I130"], "options": []}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "DOS-AOS-REVIEW", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}]}]}], CRATE = null;
+const FEES = {"DOS-MRV-PETITION": {"id": "DOS-MRV-PETITION", "amount": 205, "currency": "USD", "item": "비이민 신청 수수료, 청원 기반", "status": "시행중"}, "DOS-MRV-PETITION-DEP": {"id": "DOS-MRV-PETITION-DEP", "amount": 205, "currency": "USD", "item": "동반가족 신청 수수료, 1인당", "status": "시행중"}, "DOS-FRAUD-L-BLANKET": {"id": "DOS-FRAUD-L-BLANKET", "amount": 500, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "시행중"}, "PL-114-113-L": {"id": "PL-114-113-L", "amount": 4500, "currency": "USD", "item": "Covered employer 추가 수수료, 50인 이상 및 비자 비중 50% 초과", "status": "검토필요"}, "USCIS-9-11-BIOMETRIC-L": {"id": "USCIS-9-11-BIOMETRIC-L", "amount": null, "currency": "USD", "item": "9-11 Response & Biometric Entry-Exit Fee", "status": "검토필요"}, "DOS-MRV-E2": {"id": "DOS-MRV-E2", "amount": 315, "currency": "USD", "item": "비이민 신청 수수료, 상호주의 적용", "status": "시행중"}, "DOS-MRV-E2-DEP": {"id": "DOS-MRV-E2-DEP", "amount": 315, "currency": "USD", "item": "동반가족 신청 수수료, 1인당", "status": "시행중"}, "USCIS-I129-E-SMALL": {"id": "USCIS-I129-E-SMALL", "amount": 510, "currency": "USD", "item": "신분변경·연장 신청 수수료, 소형 사업장", "status": "시행중"}, "USCIS-I129-E-GENERAL": {"id": "USCIS-I129-E-GENERAL", "amount": 1015, "currency": "USD", "item": "신분변경·연장 신청 수수료, 일반 사업장", "status": "시행중"}, "USCIS-ASYLUM-SMALL": {"id": "USCIS-ASYLUM-SMALL", "amount": 300, "currency": "USD", "item": "Asylum Program Fee, 소형 사업장", "status": "시행중"}, "USCIS-ASYLUM-GENERAL": {"id": "USCIS-ASYLUM-GENERAL", "amount": 600, "currency": "USD", "item": "Asylum Program Fee, 일반 사업장", "status": "시행중"}, "USCIS-I539-DEP": {"id": "USCIS-I539-DEP", "amount": 470, "currency": "USD", "item": "동반가족 신분변경·연장, 가족 1그룹", "status": "시행중"}, "USCIS-I907-I129": {"id": "USCIS-I907-I129", "amount": 2965, "currency": "USD", "item": "Premium Processing, I-129", "status": "시행중"}, "USCIS-I907-I140": {"id": "USCIS-I907-I140", "amount": null, "currency": "USD", "item": "Premium Processing, I-140", "status": "검토필요"}, "DOS-MRV-B": {"id": "DOS-MRV-B", "amount": 185, "currency": "USD", "item": "비이민 신청 수수료, 비청원 카테고리", "status": "시행중"}, "SEVIS-I901-F": {"id": "SEVIS-I901-F", "amount": null, "currency": "USD", "item": "SEVIS 등록 수수료", "status": "검토필요"}, "USCIS-I129-H": {"id": "USCIS-I129-H", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "USCIS-ACWIA": {"id": "USCIS-ACWIA", "amount": null, "currency": "USD", "item": "ACWIA 교육·훈련 수수료", "status": "검토필요"}, "USCIS-FRAUD-I129-H": {"id": "USCIS-FRAUD-I129-H", "amount": null, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "검토필요"}, "USCIS-I129-L": {"id": "USCIS-I129-L", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "USCIS-FRAUD-I129-L": {"id": "USCIS-FRAUD-I129-L", "amount": null, "currency": "USD", "item": "Fraud Prevention and Detection Fee", "status": "검토필요"}, "USCIS-I129-O": {"id": "USCIS-I129-O", "amount": null, "currency": "USD", "item": "청원 신청 수수료", "status": "검토필요"}, "H1B-100K": {"id": "H1B-100K", "amount": 100000, "currency": "USD", "item": "$100,000 지급 요건", "status": "집행정지"}, "USCIS-I140": {"id": "USCIS-I140", "amount": null, "currency": "USD", "item": "이민청원 신청 수수료", "status": "검토필요"}, "USCIS-I526E": {"id": "USCIS-I526E", "amount": null, "currency": "USD", "item": "투자이민 청원 수수료", "status": "검토필요"}, "USCIS-I829": {"id": "USCIS-I829", "amount": null, "currency": "USD", "item": "조건해제 신청 수수료", "status": "검토필요"}, "USCIS-I130": {"id": "USCIS-I130", "amount": null, "currency": "USD", "item": "친족초청 청원 수수료", "status": "검토필요"}, "USCIS-I485": {"id": "USCIS-I485", "amount": null, "currency": "USD", "item": "신분조정 신청 수수료", "status": "검토필요"}, "DOS-IV-DS260": {"id": "DOS-IV-DS260", "amount": null, "currency": "USD", "item": "이민비자 신청 수수료, 1인당", "status": "검토필요"}, "DOS-AOS-REVIEW": {"id": "DOS-AOS-REVIEW", "amount": null, "currency": "USD", "item": "재정보증 심사 수수료", "status": "검토필요"}, "USCIS-IMMIGRANT-FEE": {"id": "USCIS-IMMIGRANT-FEE", "amount": null, "currency": "USD", "item": "USCIS Immigrant Fee, 입국 후 영주증 발급", "status": "검토필요"}, "KR-COURIER": {"id": "KR-COURIER", "amount": 22000, "currency": "KRW", "item": "여권 택배 수령", "status": "시행중"}}, VISAS = [{"id": "e2", "label": "E-2 투자", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-E2"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-E2-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}, {"id": "us_small", "label": "미국 내 신분변경·연장, 소형 사업장", "lines": ["USCIS-I129-E-SMALL", "USCIS-ASYLUM-SMALL"], "options": [{"id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP"}, {"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}, {"id": "us_general", "label": "미국 내 신분변경·연장, 일반 사업장", "lines": ["USCIS-I129-E-GENERAL", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "dep", "label": "동반가족 I-539, 가족 1그룹", "type": "toggle", "fee_id": "USCIS-I539-DEP"}, {"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}]}, {"id": "l1_blanket", "label": "L-1 Blanket", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-PETITION", "DOS-FRAUD-L-BLANKET"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "l1_individual", "label": "L-1 개별청원", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-L", "USCIS-FRAUD-I129-L", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}, {"id": "covered", "label": "Covered employer 추가 수수료", "type": "toggle", "fee_id": "PL-114-113-L"}, {"id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "b", "label": "B-1/B-2", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["DOS-MRV-B"], "options": [{"id": "dep", "label": "동반 신청자", "type": "per_person", "fee_id": "DOS-MRV-B"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "f1", "label": "F-1 학생", "routes": [{"id": "kr", "label": "한국, 주한미대사관", "lines": ["SEVIS-I901-F", "DOS-MRV-B"], "options": [{"id": "dep", "label": "동반가족 F-2", "type": "per_person", "fee_id": "DOS-MRV-B"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "h1b", "label": "H-1B", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-H", "USCIS-ACWIA", "USCIS-FRAUD-I129-H", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}, {"id": "biometric", "label": "9-11 Biometric Entry-Exit Fee", "type": "toggle", "fee_id": "USCIS-9-11-BIOMETRIC-L"}, {"id": "h1b100k", "label": "$100,000 지급 요건", "type": "toggle", "fee_id": "H1B-100K"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "o1", "label": "O-1", "routes": [{"id": "us_petition", "label": "미국 내 I-129 청원", "lines": ["USCIS-I129-O", "USCIS-ASYLUM-GENERAL"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I129"}]}, {"id": "kr", "label": "승인 후 한국, 주한미대사관", "lines": ["DOS-MRV-PETITION"], "options": [{"id": "dep", "label": "동반가족 O-3", "type": "per_person", "fee_id": "DOS-MRV-PETITION-DEP"}, {"id": "courier", "label": "비자 택배", "type": "toggle", "fee_id": "KR-COURIER"}]}]}, {"id": "niw", "label": "NIW 취업이민", "routes": [{"id": "us_petition", "label": "I-140 청원", "lines": ["USCIS-I140"], "options": [{"id": "pp", "label": "급행 처리", "type": "toggle", "fee_id": "USCIS-I907-I140"}]}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}, {"id": "aos_review", "label": "재정보증 심사 수수료", "type": "toggle", "fee_id": "DOS-AOS-REVIEW"}]}, {"id": "us_aos", "label": "미국 내 신분조정 I-485", "lines": ["USCIS-I485"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "USCIS-I485"}]}]}, {"id": "eb5", "label": "EB-5 투자이민", "routes": [{"id": "us_petition", "label": "I-526E 청원", "lines": ["USCIS-I526E"], "options": []}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}]}, {"id": "i829", "label": "조건해제 I-829", "lines": ["USCIS-I829"], "options": []}]}, {"id": "family", "label": "가족초청 이민", "routes": [{"id": "us_petition", "label": "I-130 청원", "lines": ["USCIS-I130"], "options": []}, {"id": "kr_cp", "label": "영사수속, 주한미대사관", "lines": ["DOS-IV-DS260", "DOS-AOS-REVIEW", "USCIS-IMMIGRANT-FEE"], "options": [{"id": "dep", "label": "동반가족", "type": "per_person", "fee_id": "DOS-IV-DS260"}]}]}], GUIDES = {"e2": [["news/2026-09-15-guide-e2-cost.html", "E-2 비자 관납료, 한국 진행과 미국 내 신분변경 비교"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "l1_blanket": [["news/2026-09-15-guide-l1-blanket-cost.html", "L-1 Blanket 비용 구조와 개별청원과의 차이"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "l1_individual": [["news/2026-09-15-guide-l1-blanket-cost.html", "L-1 Blanket 비용 구조와 개별청원과의 차이"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "niw": [["news/2026-09-15-guide-cspa.html", "CSPA 나이 계산, 무엇을 언제 기준으로 재는가"], ["news/2026-09-15-guide-charts.html", "접수가능일과 최종행동일, 어느 차트를 봐야 하는가"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "eb5": [["news/2026-09-15-guide-cspa.html", "CSPA 나이 계산, 무엇을 언제 기준으로 재는가"], ["news/2026-09-15-guide-charts.html", "접수가능일과 최종행동일, 어느 차트를 봐야 하는가"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "family": [["news/2026-09-15-guide-cspa.html", "CSPA 나이 계산, 무엇을 언제 기준으로 재는가"], ["news/2026-09-15-guide-charts.html", "접수가능일과 최종행동일, 어느 차트를 봐야 하는가"], ["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"]], "__default__": [["news/2026-09-15-guide-fee-faq.html", "미국 비자 수수료, 자주 나오는 질문"], ["news/2026-09-15-guide-cspa.html", "CSPA 나이 계산, 무엇을 언제 기준으로 재는가"]]}, CRATE = null;
 const S = {visa: VISAS[0].id, route: VISAS[0].routes[0].id, opts:{}, counts:{}, rate:''};
+
+// 주소에 담긴 선택을 복원합니다. 개인정보는 넣지 않고 비자와 경로, 선택 항목만 담습니다.
+(function restore(){
+  const q = new URLSearchParams(location.search);
+  const v = VISAS.find(x=>x.id===q.get('visa'));
+  if(!v) return;
+  S.visa = v.id;
+  const r = v.routes.find(x=>x.id===q.get('route'));
+  S.route = r ? r.id : v.routes[0].id;
+  (q.get('opts')||'').split(',').filter(Boolean).forEach(part=>{
+    const [id, n] = part.split(':');
+    S.opts[id] = true;
+    if(n) S.counts[id] = Math.min(10, Math.max(1, parseInt(n,10)||1));
+  });
+  if(q.get('rate')) S.rate = q.get('rate');
+})();
+
+function shareUrl(){
+  const q = new URLSearchParams();
+  q.set('visa', S.visa);
+  q.set('route', S.route);
+  const opts = Object.keys(S.opts).filter(k=>S.opts[k])
+    .map(k => S.counts[k] && S.counts[k] > 1 ? `${k}:${S.counts[k]}` : k);
+  if(opts.length) q.set('opts', opts.join(','));
+  return location.pathname + '?' + q.toString();
+}
 const fee = id => FEES[id];
 const money = (v,c) => (c==='KRW' ? v.toLocaleString('ko-KR')+'원' : '$'+v.toLocaleString('en-US'));
 const visa = () => VISAS.find(v=>v.id===S.visa);
@@ -157,6 +208,13 @@ const visa = () => VISAS.find(v=>v.id===S.visa);
 const isMrv = f => f.id && f.id.startsWith('DOS-MRV') && f.currency==='USD' && f.amount!=null;
 const mrvKrw = (f,qty) => Math.round(f.amount*(qty||1)*CRATE.rate).toLocaleString('ko-KR')+'원';
 const route = () => visa().routes.find(r=>r.id===S.route) || visa().routes[0];
+
+function relBlock(){
+  const list = GUIDES[S.visa] || GUIDES.__default__ || [];
+  if(!list.length) return '';
+  const links = list.map(g=>`<a href="${g[0]}">${g[1]}</a>`).join('');
+  return `<div class="rel"><h3>같이 보면 좋은 글</h3>${links}</div>`;
+}
 
 function chips(){
   return VISAS.map(v=>`<button class="chip" aria-pressed="${v.id===S.visa}" data-visa="${v.id}">${v.label}</button>`).join('');
@@ -241,10 +299,39 @@ function bill(){
     ${flags.length?`<div class="flag">${[...new Set(flags)].join('')}</div>`:''}`;
 }
 
+function summary(){
+  const items = lines();
+  const parts = [`${visa().label} · ${route().label}`];
+  let usd = 0, krw = 0, unknown = 0;
+  items.forEach(it=>{
+    const f = it.f;
+    if(f.amount==null){ unknown++; parts.push(`- ${it.label}: 금액 확인 필요`); return; }
+    const sub = f.amount*it.qty;
+    if(f.currency==='KRW') krw += sub; else usd += sub;
+    parts.push(`- ${it.label}: ${money(sub, f.currency)}${it.qty>1?` (${it.qty}건)`:''}`);
+  });
+  parts.push(`미화 합계 $${usd.toLocaleString('en-US')}`);
+  if(krw) parts.push(`원화 항목 ${krw.toLocaleString('ko-KR')}원`);
+  if(unknown) parts.push(`금액 미확인 ${unknown}건`);
+  return parts.join('\n');
+}
+
+function fillLead(){
+  const box = document.getElementById('leadDetail');
+  if(!box) return;
+  box.value = `[관납료 문의]\n${summary()}\n\n확인하고 싶은 내용: `;
+  box.focus();
+  box.setSelectionRange(box.value.length, box.value.length);
+  const done = document.getElementById('fillDone');
+  if(done) done.hidden = false;
+}
+
 function draw(keepFocus){
   document.getElementById('visas').innerHTML = chips();
   document.getElementById('controls').innerHTML = controls();
   document.getElementById('bill').innerHTML = bill();
+  document.getElementById('rel').innerHTML = relBlock();
+  history.replaceState(null, '', shareUrl());
   if(keepFocus){ const el=document.getElementById('rate'); if(el){ el.focus(); el.setSelectionRange(el.value.length,el.value.length); } }
 }
 
@@ -264,5 +351,6 @@ document.addEventListener('change', e=>{
   }
 });
 document.addEventListener('input', e=>{ if(e.target.id==='rate'){ S.rate=e.target.value; draw(true); } });
+document.addEventListener('click', e=>{ if(e.target.id==='fillLead') fillLead(); });
 draw();
 </script></body></html>

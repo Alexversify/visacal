@@ -7,9 +7,14 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>만 나이 계산기 · VisaCal</title>
 <meta name="description" content="출생일과 기준일로 만 나이를 계산합니다. 한국 나이, 연 나이, 띠, 태어난 날수, 다음 생일까지 함께 보여줍니다.">
+<meta name="theme-color" content="#14243c">
+<link rel="canonical" href="https://visacal.com/age.html">
+<meta property="og:type" content="website"><meta property="og:title" content="만 나이 계산기 · VisaCal"><meta property="og:description" content="출생일과 기준일로 만 나이를 계산합니다. 한국 나이, 연 나이, 띠, 태어난 날수, 다음 생일까지 함께 보여줍니다."><meta property="og:site_name" content="VisaCal"><meta property="og:locale" content="ko_KR"><meta property="og:url" content="https://visacal.com/age.html"><meta property="og:image" content="https://visacal.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1964223951103950" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-QZPDBPC4SN"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QZPDBPC4SN');</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "만 나이 계산기", "description": "출생일과 기준일로 만 나이와 한국 나이, 연 나이를 계산합니다.", "url": "https://visacal.com/age.html", "applicationCategory": "BusinessApplication", "operatingSystem": "All", "inLanguage": "ko", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "publisher": {"@type": "Organization", "name": "법무법인 한미", "url": "https://visacal.com/"}}</script>
+<meta name="google-adsense-account" content="ca-pub-1964223951103950"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1964223951103950" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-QZPDBPC4SN"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QZPDBPC4SN');</script>
 <style>
 :root{
   --ink:#14243c; --muted:#6b7688; --faint:#98a1b0;
@@ -35,6 +40,7 @@ nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
 .stamp{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums;margin-top:10px}
 .ad{margin:22px 0;min-height:1px}
+.ad-label{display:block;font-size:11px;color:var(--faint);letter-spacing:.06em;margin-bottom:4px}
 .ad-side{margin:18px 0 0}
 .cta{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
 .cta a{display:block;text-align:center;text-decoration:none;padding:11px 14px;
@@ -57,6 +63,16 @@ footer a{color:var(--muted)}
 .lead-form .fine{font-size:12px;color:var(--faint);margin-top:9px;line-height:1.5}
 @media (max-width:640px){.lead-form .g{grid-template-columns:1fr}}
 footer .disc{max-width:74ch;margin-bottom:10px}
+.rel{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;margin-top:16px;border-radius:2px}
+.rel h3{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px;letter-spacing:.02em}
+.rel a{display:block;padding:7px 0;border-top:1px solid var(--hair);text-decoration:none;font-size:13.5px;line-height:1.45}
+.rel a:first-of-type{border-top:0}
+.rel a:hover{color:var(--muted)}
+.fill{margin-top:10px}
+.fill button{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--rule);
+  padding:9px 12px;font:inherit;font-size:13px;border-radius:2px;cursor:pointer}
+.fill button:hover{border-color:var(--ink)}
+.fill .done{display:block;font-size:12px;color:var(--ok);margin-top:6px;text-align:center}
 
 .lede{margin:20px 0 24px;max-width:72ch;color:var(--muted);font-size:14px}
 .card{background:var(--paper);border:1px solid var(--rule);padding:18px 20px;border-radius:2px;max-width:640px}
@@ -140,7 +156,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 21세 전후라면 <a href="cspa.html">CSPA 나이 계산기</a>로 따로 확인하십시오.</p>
 </div>
 
-
+<div class="ad"><span class="ad-label">광고</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1964223951103950" data-ad-slot="2040420457" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div>
 <footer>
 <div class="disc">이 사이트의 계산 결과는 공개된 정부 자료를 근거로 한 참고용 추정이며 법률 자문이 아닙니다.
 실제 신청 전에는 반드시 담당 변호사의 검토를 받으십시오. 계산 결과로 발생한 손해에 대해 책임지지 않습니다.</div>

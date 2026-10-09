@@ -211,7 +211,15 @@ def render_age(cfg: dict[str, Any] | None = None) -> Path:
 {site.ad(cfg, "page_bottom")}
 """
     doc = (
-        site.head(cfg, "만 나이 계산기", CSS, "출생일과 기준일로 만 나이를 계산합니다. 한국 나이, 연 나이, 띠, 태어난 날수, 다음 생일까지 함께 보여줍니다.")
+        site.head(
+            cfg, "만 나이 계산기", CSS,
+            "출생일과 기준일로 만 나이를 계산합니다. 한국 나이, 연 나이, 띠, 태어난 날수, 다음 생일까지 함께 보여줍니다.",
+            path="age.html",
+            jsonld=site.jsonld_tool(
+                cfg, "만 나이 계산기",
+                "출생일과 기준일로 만 나이와 한국 나이, 연 나이를 계산합니다.", "age.html",
+            ),
+        )
         + site.header(cfg, "age.html")
         + body
         + site.footer(cfg)

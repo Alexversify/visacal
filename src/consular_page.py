@@ -299,7 +299,11 @@ def render_consular(cfg: dict[str, Any] | None = None) -> Path:
         .replace("__STALE__", str(STALE_DAYS))
     )
     doc = (
-        site.head(cfg, TITLE, CSS, "주한미국대사관 비자 수수료 원화 결제 환율. AIS 결제 화면 기준 영사환율과 비자별 원화 금액, 변동 이력.")
+        site.head(
+            cfg, TITLE, CSS,
+            "주한미국대사관 비자 수수료 원화 결제 환율. AIS 결제 화면 기준 영사환율과 비자별 원화 금액, 변동 이력.",
+            path="consular-rate/",
+        )
         + site.header(cfg, "")
         + body
         + site.footer(cfg)

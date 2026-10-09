@@ -3,6 +3,7 @@ title: "L-1 Blanket 비용 구조와 개별청원과의 차이"
 slug: "guide-l1-blanket-cost"
 date: 2026-09-15
 category: "가이드"
+order: 4
 summary: "Blanket 승인을 받은 기업은 개별 청원을 건너뛰고 대사관에서 바로 진행합니다. 비용 구조가 달라지는 지점을 짚습니다."
 cover: ""
 draft: false

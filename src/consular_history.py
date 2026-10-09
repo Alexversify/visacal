@@ -434,7 +434,7 @@ def render_history(cfg: dict[str, Any] | None = None) -> Path:
     )
     desc = "주한미국대사관 영사환율 변동 그래프, 기간별 최고·최저, 비자별 원화 수수료 추이, 달력 히트맵과 날짜별 조회."
     doc = (
-        site.head(cfg, TITLE, CSS, desc)
+        site.head(cfg, TITLE, CSS, desc, path="consular-rate/history/")
         + site.header(cfg, "")
         + body
         + site.footer(cfg)

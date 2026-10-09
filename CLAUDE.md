@@ -8,9 +8,13 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
   - sources.py 수수료 수집, ledger.py 변경 감지, analyze.py 요약, notify.py 메일
   - render.py 관납료·원장 페이지, cspa_page.py CSPA 계산기, articles.py 가이드 목록, posts.py 글 페이지, site.py 공통 레이아웃·광고·문의폼, static_pages.py 개인정보처리방침·sitemap·ads.txt·CNAME
   - consular_rate.py 주한미국대사관 영사환율 수집(AIS 결제창, Playwright 로그인). 결과는 data/consular_rate.json, data/consular_rate_history.csv(실패일은 rate 빈칸), data/consular_fee_history.csv. 페이지는 consular_page.py 가 /consular-rate/, consular_history.py 가 /consular-rate/history/ 로 생성
+  - fill.py 비어 있는 원장 금액을 수집 결과에서 채운다. 원장 항목의 match 규칙으로 원문 줄을 찾는다
 - content/posts/*.md 글. 관리자 화면(admin.visacal.com)이 여기에 커밋한다. 분류 "가이드"는 실무 가이드, 나머지는 최신 소식
+  - front matter의 order는 목록 고정 순서. 작은 수가 위로 가고, order가 없는 글은 날짜순으로 뒤에 붙는다
 - data/fees.json 수수료 원장, data/scenarios.json 비자별 계산 시나리오
+  - 금액이 비면 match 규칙으로 자동으로 채운다. 이미 있는 값은 덮지 않고, 한 줄에 금액이 여럿이면 채우지 않는다
 - config/site.yaml 도메인, 애드센스, GA4, 문의폼 설정
+  - adsense.slots가 비면 그 자리의 광고는 렌더링되지 않는다. 광고 단위를 만들어 slot 번호를 채워야 노출된다
 - auth-worker/ admin.visacal.com Cloudflare Worker. 이 폴더가 바뀌면 Cloudflare가 자동 배포
 - docs/ GitHub Pages 배포 폴더. 직접 고치지 말고 생성기를 고친 뒤 재생성
 
@@ -27,3 +31,5 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
 - 비밀값(토큰, API 키)을 코드나 커밋에 넣지 않는다. Cloudflare·GitHub Secrets에만 둔다
 - 디자인 토큰은 site.py 의 TOKENS를 따른다 (잉크 #14243c, Pretendard)
 - 애드센스 심사 중에는 URL 구조를 크게 바꾸지 않는다
+- 광고 태그를 innerHTML로 넣지 않는다. 스크립트가 실행되지 않아 광고가 비고, 재계산마다 다시 만들면 정책 위반 소지가 있다
+- CSPA 나이 산정 기준은 최종행동일 차트가 원칙. 2025-08-15 전 접수된 신분조정 신청만 경과규정으로 접수가능일 차트

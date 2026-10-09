@@ -3,6 +3,7 @@ title: "E-2 비자 관납료, 한국 진행과 미국 내 신분변경 비교"
 slug: "guide-e2-cost"
 date: 2026-09-15
 category: "가이드"
+order: 3
 summary: "같은 E-2인데 한국 대사관에서 받는 경우와 미국 안에서 신분을 바꾸는 경우 납부액이 크게 다릅니다. 항목별로 나눠 봅니다."
 cover: ""
 draft: false
