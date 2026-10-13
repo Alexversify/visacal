@@ -38,10 +38,13 @@ USCIS와 미국 국무부의 수수료 변경 정보를 받아 내부 공지를 
 def analyze(changes: list[dict[str, Any]], fees: dict[str, Any]) -> dict[str, Any] | None:
     if not changes:
         return None
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
+    try:
+        from . import llm
+    except ImportError:  # 스크립트로 직접 실행할 때
+        import llm  # type: ignore
+    if not llm.enabled():
         return {
-            "headline": "변경 감지됨. 자동 분석 미실행(API 키 없음)",
+            "headline": "변경 감지됨. 자동 분석 미실행(Claude 구독 토큰 없음)",
             "severity": "medium",
             "processing": "원문을 직접 확인하십시오.",
             "sales": "원문을 직접 확인하십시오.",
@@ -49,9 +52,6 @@ def analyze(changes: list[dict[str, Any]], fees: dict[str, Any]) -> dict[str, An
             "needs_human_review": True,
         }
 
-    import anthropic
-
-    client = anthropic.Anthropic(api_key=api_key)
     payload = {
         "detected_changes": changes,
         "current_ledger": [
@@ -59,13 +59,17 @@ def analyze(changes: list[dict[str, Any]], fees: dict[str, Any]) -> dict[str, An
             for f in fees.get("fees", [])
         ],
     }
-    msg = client.messages.create(
-        model=MODEL,
-        max_tokens=2000,
-        system=SYSTEM,
-        messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
-    )
-    text = "".join(b.text for b in msg.content if getattr(b, "type", "") == "text")
+    try:
+        text = llm.complete(SYSTEM, json.dumps(payload, ensure_ascii=False), MODEL)
+    except Exception as exc:  # noqa: BLE001
+        return {
+            "headline": f"변경 감지됨. 자동 분석 실패 ({str(exc)[:80]})",
+            "severity": "medium",
+            "processing": "원문을 직접 확인하십시오.",
+            "sales": "원문을 직접 확인하십시오.",
+            "ledger_updates": [],
+            "needs_human_review": True,
+        }
     text = text.replace("```json", "").replace("```", "").strip()
     try:
         return json.loads(text)

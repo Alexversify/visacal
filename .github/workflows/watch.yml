@@ -44,11 +44,12 @@ jobs:
       - name: 의존성 설치
         run: |
           pip install -r requirements.txt
+          if [ "$RUN_MODE" = "full" ]; then npm install -g @anthropic-ai/claude-code; fi
           if [ "$RUN_MODE" = "full" ]; then python -m playwright install --with-deps chromium; fi
 
       - name: 수집 및 분석
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
