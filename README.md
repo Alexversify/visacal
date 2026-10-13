@@ -25,7 +25,7 @@ USCIS G-1055, 연방관보, 국무부 수수료표를 하루 두 번 대조해 �
 
 | 종류 | 이름 | 값 |
 |---|---|---|
-| Secret | `ANTHROPIC_API_KEY` | 변경 내용 분석용. 없으면 원문만 전달됩니다 |
+| Secret | `ANTHROPIC_API_KEY` | 변경 내용 분석용 1순위 (API 크레딧). 부족하면 `CLAUDE_CODE_OAUTH_TOKEN`(Max 구독)으로 넘어가고, 둘 다 없거나 소진되면 원문만 전달됩니다 |
 | Secret | `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` `SMTP_FROM` | 메일 발송 계정 |
 | Secret | `MAIL_TO_PROCESSING` | 수속팀 수신 주소, 쉼표 구분 |
 | Secret | `MAIL_TO_SALES` | 영업팀 수신 주소, 쉼표 구분 |

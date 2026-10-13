@@ -30,8 +30,34 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Run Claude Code
-        id: claude
+      - name: 사용할 키 확인
+        id: keys
+        env:
+          A: ${{ secrets.ANTHROPIC_API_KEY }}
+          O: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          echo "api=$([ -n "$A" ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
+          echo "max=$([ -n "$O" ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
+
+      # 1순위: API 크레딧. 크레딧 부족 등으로 실패하면 다음 단계에서 Max 구독으로 다시 시도합니다.
+      - name: Claude (API 크레딧)
+        id: api
+        if: steps.keys.outputs.api == 'yes'
+        continue-on-error: true
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # 2순위: Max 구독. 여기서도 한도에 걸리면 작업이 실패로 끝나고 멈춥니다 (추가 과금 없음).
+      - name: Claude (Max 구독으로 대체)
+        id: max
+        if: steps.keys.outputs.max == 'yes' && steps.api.outcome != 'success'
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+      - name: 실행 불가 알림
+        if: steps.api.outcome != 'success' && steps.max.outcome != 'success'
+        run: |
+          echo "::error::API 크레딧과 Max 구독 모두 사용할 수 없어 중단합니다 (시크릿 없음 또는 소진)."
+          exit 1

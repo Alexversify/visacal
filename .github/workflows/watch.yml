@@ -49,6 +49,8 @@ jobs:
 
       - name: 수집 및 분석
         env:
+          # API 크레딧 먼저, 부족하면 Max 구독, 둘 다 소진되면 분석만 건너뜀 (src/llm.py)
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
