@@ -27,3 +27,4 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
 - 비밀값(토큰, API 키)을 코드나 커밋에 넣지 않는다. Cloudflare·GitHub Secrets에만 둔다
 - 디자인 토큰은 site.py 의 TOKENS를 따른다 (잉크 #14243c, Pretendard)
 - 애드센스 심사 중에는 URL 구조를 크게 바꾸지 않는다
+- 월 API 상한: src/llm.py가 API 사용액을 data/llm_spend/YYYY-MM/에 기록하고, 이번 달 합계가 `LLM_MONTHLY_CAP_USD`(저장소 변수, 없으면 10달러) 이상이면 그달은 API를 쓰지 않는다. 상한·빈도·실행당 한도(0.5달러)를 올리는 변경은 소유자 승인 없이 하지 않는다
