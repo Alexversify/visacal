@@ -2,7 +2,19 @@
   "federal_register": {
     "source": "federal_register",
     "error": null,
-    "items": []
+    "items": [
+      {
+        "key": "2026-21695",
+        "title": "Privacy Act of 1974; System of Records",
+        "doc_type": "Notice",
+        "published": "2026-10-23",
+        "effective_on": null,
+        "comments_close_on": null,
+        "upcoming": false,
+        "abstract": "This system maintains information that is used to establish the U.S. nationality and identity of persons for a variety of legal purposes including, but not limited to, the adjudication of passport applications and requests for related services, social security benefits, voter eligibility, employment applications, estate settlements, and Federal and state law enforcement and counterterrorism purposes.",
+        "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21695/privacy-act-of-1974-system-of-records"
+      }
+    ]
   },
   "uscis": {
     "source": "uscis_g1055",

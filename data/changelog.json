@@ -1,5 +1,21 @@
 [
   {
+    "date": "2026-10-23T15:20:52+00:00",
+    "changes": [
+      {
+        "kind": "연방관보 규칙안",
+        "severity": "medium",
+        "detail": "Privacy Act of 1974; System of Records / 시행일 미정 / 의견마감 -",
+        "abstract": "This system maintains information that is used to establish the U.S. nationality and identity of persons for a variety of legal purposes including, but not limited to, the adjudication of passport applications and requests for related services, social security benefits, voter eligibility, employment applications, estate settlements, and Federal and state law enforcement and counterterrorism purposes.",
+        "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21695/privacy-act-of-1974-system-of-records"
+      }
+    ],
+    "analysis": {
+      "headline": "국무부 여권 관련 개인정보 기록체계(SORN) 연방관보 공지, 수수료 변경 사항 없음",
+      "severity": "low"
+    }
+  },
+  {
     "date": "2026-10-16T14:59:13+00:00",
     "changes": [
       {
