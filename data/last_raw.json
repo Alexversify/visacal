@@ -1,20 +1,8 @@
 {
   "federal_register": {
     "source": "federal_register",
-    "error": null,
-    "items": [
-      {
-        "key": "2026-21695",
-        "title": "Privacy Act of 1974; System of Records",
-        "doc_type": "Notice",
-        "published": "2026-10-23",
-        "effective_on": null,
-        "comments_close_on": null,
-        "upcoming": false,
-        "abstract": "This system maintains information that is used to establish the U.S. nationality and identity of persons for a variety of legal purposes including, but not limited to, the adjudication of passport applications and requests for related services, social security benefits, voter eligibility, employment applications, estate settlements, and Federal and state law enforcement and counterterrorism purposes.",
-        "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21695/privacy-act-of-1974-system-of-records"
-      }
-    ]
+    "error": "403 Client Error: Forbidden for url: https://www.federalregister.gov/api/v1/documents.json?conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-10&conditions%5Bterm%5D=fee+OR+fee+schedule+OR+immigration+benefit+request+OR+visa+services&order=newest&per_page=50&conditions%5Bagencies%5D%5B%5D=u-s-citizenship-and-immigration-services&conditions%5Bagencies%5D%5B%5D=state-department&conditions%5Btype%5D%5B%5D=RULE&conditions%5Btype%5D%5B%5D=PRORULE&conditions%5Btype%5D%5B%5D=NOTICE&fields%5B%5D=document_number&fields%5B%5D=title&fields%5B%5D=type&fields%5B%5D=publication_date&fields%5B%5D=effective_on&fields%5B%5D=comments_close_on&fields%5B%5D=abstract&fields%5B%5D=html_url&fields%5B%5D=agencies",
+    "items": []
   },
   "uscis": {
     "source": "uscis_g1055",
