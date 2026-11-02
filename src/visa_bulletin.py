@@ -375,22 +375,30 @@ def from_mailbox(since_days: int = 60) -> list[tuple[str, str]]:
 
 
 def uscis_charts(y: int, m: int) -> dict[str, str | None]:
-    """USCIS가 그달 신분조정에 쓰라고 지정한 차트. 확실히 읽힐 때만 값을 넣습니다."""
+    """USCIS가 그달 신분조정에 쓰라고 지정한 차트.
+
+    USCIS 문장 형식 그대로일 때만 값을 넣습니다. 예:
+    "For all family-sponsored preference categories, you must use the Dates for Filing chart
+     in the Department of State Visa Bulletin for November 2026."
+    """
     res: dict[str, str | None] = {"family": None, "employment": None}
     try:
         text = _http_text(USCIS_CHART_URL)
     except Exception as exc:  # noqa: BLE001
         print(f"  - USCIS 차트 안내 수집 실패: {exc}")
         return res
-    name = f"{MONTHS[m - 1].title()} {y}"
-    pos = text.find(name)
-    if pos < 0:
-        return res
-    chunk = text[pos: pos + 2500]
-    for key, word in (("family", "Family"), ("employment", "Employment")):
-        mm = re.search(word + r"[^\n]{0,400}?(Final Action Dates|Dates for Filing)", chunk, re.I | re.S)
-        if mm:
-            res[key] = "final" if "final" in mm.group(1).lower() else "filing"
+    text = re.sub(r"\s+", " ", text)
+    want = f"{MONTHS[m - 1].title()} {y}"
+    rx = re.compile(
+        r"For all (family-sponsored|employment-based) preference categories, you must use the "
+        r"(Final Action Dates|Dates for Filing) chart in the Department of State Visa Bulletin for ([A-Za-z]+ \d{4})",
+        re.I,
+    )
+    for kind, chart, month in rx.findall(text):
+        if month.lower() != want.lower():
+            continue
+        key = "family" if kind.lower().startswith("family") else "employment"
+        res[key] = "final" if chart.lower().startswith("final") else "filing"
     return res
 
 
@@ -402,6 +410,9 @@ SUMMARY_SYSTEM = """당신은 미국 이민 법무법인의 실무 담당자입�
 - 입력에 있는 사실만 씁니다. 다음 달 전망, 추측, 권유를 쓰지 않습니다
 - 날짜와 범주 이름은 입력 그대로 씁니다
 - 한국어(ko)는 한국 출생 신청자 관점(전 세계 열)을 먼저 다룹니다. 줄표(—, –)를 쓰지 않고, "아울러"를 쓰지 않습니다
+- uscis_chart 값이 null인 항목은 USCIS 지정 차트를 언급하지 않습니다. 값이 있으면 그대로 씁니다 (final = 최종조치일 차트, filing = 접수가능일 차트)
+- 용어 고정: ko 최종조치일, 접수가능일 / en Final Action Dates, Dates for Filing / zh 最终裁决日期, 递件日期 / ja 最終処理日, 申請受付日 / vi Ngày hành động cuối cùng, Ngày nộp hồ sơ / es Fechas de acción final, Fechas de presentación
+- 한국어는 합니다체로 씁니다 (예: 전진했습니다)
 - 다른 언어도 같은 내용을 자연스럽게 옮깁니다. 기계 번역투를 피합니다
 - headline 40자 안팎(영어 90자 이내), summary 2~3문장, points 3~5개
 - 출력은 JSON 하나만: {"ko":{"headline":"","summary":"","points":[]},"en":{...},"zh":{...},"ja":{...},"vi":{...},"es":{...}}
@@ -468,6 +479,11 @@ def summarize(rec: dict[str, Any], changes: list[dict[str, Any]], has_prev: bool
 # ---------------------------------------------------------------- 소식 글, 메일
 
 
+def existing_post(key: str) -> Path | None:
+    found = sorted(POSTS.glob(f"*-visa-bulletin-{key}.md")) if POSTS.exists() else []
+    return found[0] if found else None
+
+
 def write_post(rec: dict[str, Any], changes: list[dict[str, Any]], today: dt.date) -> Path:
     key = month_key(rec["year"], rec["month"])
     s = rec["summary"]["ko"]
@@ -502,7 +518,9 @@ def write_post(rec: dict[str, Any], changes: list[dict[str, Any]], today: dt.dat
     import yaml
 
     POSTS.mkdir(parents=True, exist_ok=True)
-    path = POSTS / f"{today.isoformat()}-visa-bulletin-{key}.md"
+    path = existing_post(key) or POSTS / f"{today.isoformat()}-visa-bulletin-{key}.md"
+    if path.name[:10] != today.isoformat():
+        front["date"] = path.name[:10]
     path.write_text("---\n" + yaml.safe_dump(front, allow_unicode=True, sort_keys=False) + "---\n\n" + body,
                     encoding="utf-8")
     return path
@@ -605,8 +623,12 @@ def publish(rec: dict[str, Any], announce: bool) -> None:
     print(f"  - {rec['key']} 저장 (출처 {rec['source']}, 변동 {len(changes)}건)")
     if announce:
         today = dt.datetime.now(KST).date()
+        resend = existing_post(rec["key"]) is None
         print(f"  - 소식 글: {write_post(rec, changes, today).name}")
-        notify_new(rec, changes)
+        if resend:
+            notify_new(rec, changes)
+        else:
+            print("  - 같은 달 글이 이미 있어 갱신만 하고 메일은 다시 보내지 않음")
 
 
 def targets(now: dt.datetime) -> list[str]:
@@ -684,6 +706,19 @@ def main() -> int:
         announce = rec["key"] > latest_before and rec["key"] == added[-1]["key"]
         publish(rec, announce)
 
+    # USCIS는 문호 발표 뒤 1주 안에 차트를 지정합니다. 최신 달의 빈 값을 매번 다시 확인합니다.
+    recs = load_all()
+    if recs and not added:
+        last = recs[-1]
+        u = last.get("uscis") or {}
+        if not (u.get("family") and u.get("employment")):
+            nu = uscis_charts(last["year"], last["month"])
+            merged = {k: u.get(k) or nu.get(k) for k in ("family", "employment")}
+            if merged != u:
+                last["uscis"] = merged
+                save(last)
+                print(f"  - {last['key']} USCIS 지정 차트 갱신: {merged}")
+
     # 다음 달 문호는 전달 중순 이후에 나오므로 그 전에는 실패로 보지 않습니다.
     nxt = targets(now)[1]
     cur = targets(now)[0]
@@ -691,9 +726,10 @@ def main() -> int:
         notify_failure(cur, reasons[cur])
     elif nxt in missing and now.day >= 20:
         notify_failure(nxt, reasons[nxt])
-    if not missing:
-        st_path = DATA / "status.json"
-        if st_path.exists():
+    st_path = DATA / "status.json"
+    if st_path.exists():
+        pend = json.loads(st_path.read_text(encoding="utf-8")).get("pending")
+        if pend not in missing:
             st_path.unlink()
     for k in missing:
         print(f"[대기] {k}: " + " / ".join(reasons[k]))
