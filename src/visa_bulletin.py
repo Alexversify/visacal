@@ -424,7 +424,10 @@ def _fallback_summary(rec: dict[str, Any], changes: list[dict[str, Any]], has_pr
     out = {}
     for lang in I.LANGS:
         n = len(finals)
-        head = I.t(lang, "headline_auto" if n else "headline_none", y=rec["year"], m=rec["month"], n=n)
+        if not has_prev:
+            head = I.t(lang, "title", y=rec["year"], m=rec["month"])
+        else:
+            head = I.t(lang, "headline_auto" if n else "headline_none", y=rec["year"], m=rec["month"], n=n)
         pts = [change_line(lang, c) for c in finals if c["col"] == "row"][:5]
         if not has_prev:
             summ = I.t(lang, "changes_first")

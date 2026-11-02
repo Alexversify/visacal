@@ -37,11 +37,18 @@ CSS = """
 .sumbox ul{margin:6px 0 0;padding-left:20px;font-size:14px}
 .sumbox li{margin-bottom:4px}
 .sumbox .ai{font-size:12px;color:var(--faint);margin-top:8px}
+.legend{font-size:12.5px;color:var(--faint);max-width:90ch;margin:10px 0 0;line-height:1.5}
+.grp{margin-top:6px}
+.grp h2{margin:22px 0 4px;font-size:16px}
+.vb h3 .tag{font-style:normal;font-size:11px;font-weight:600;background:var(--ink);color:#fff;padding:2px 7px;border-radius:2px;margin-left:6px;vertical-align:1px}
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0 6px;background:var(--paper);border:1px solid var(--rule)}
-.vb table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
-.vb th{text-align:left;font-size:12px;color:var(--faint);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
-.vb td{padding:7px 10px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums;white-space:nowrap}
-.vb td.l{white-space:normal;min-width:200px}
+.vb table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px;table-layout:auto}
+.vb th{text-align:left;font-size:11.5px;color:var(--faint);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.vb td{padding:4px 8px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.45}
+.vb td.l{white-space:normal;min-width:170px;max-width:300px}
+.vb td.l b{font-weight:650;margin-right:2px}
+.vb td.l span{color:var(--muted);font-size:12px}
+.vb h3{margin:12px 0 4px}
 .vb td.k{font-weight:650}
 .vb .up{color:var(--ok)} .vb .dn{color:var(--warn)}
 .vb .ar{font-size:11px;margin-left:3px}
@@ -52,8 +59,20 @@ CSS = """
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:18px 0}
 .meta div{background:var(--paper);border:1px solid var(--rule);padding:12px 14px;font-size:13.5px}
 .meta span{display:block;font-size:12px;color:var(--faint);margin-bottom:3px}
-.arch{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.arch a{font-size:13.5px;padding:6px 12px;border:1px solid var(--rule);background:var(--paper);text-decoration:none;font-variant-numeric:tabular-nums}
+details.more{margin:6px 0 0;font-size:13.5px}
+details.more summary{cursor:pointer;color:var(--muted)}
+@media (max-width:640px){.vb td.l span{display:none}.vb td.l{min-width:0}.vb table{min-width:0}.vb td,.vb th{padding:4px 6px}}
+.pager{display:flex;justify-content:space-between;margin:4px 0 10px;font-size:14px}
+.pager a{text-decoration:none;font-weight:600}
+.monthly .yr{margin-bottom:14px}
+.monthly .yh{font-size:12.5px;font-weight:650;color:var(--muted);margin:10px 0 4px}
+.monthly a.mo{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:baseline;padding:10px 12px;
+  background:var(--paper);border:1px solid var(--rule);border-top:0;text-decoration:none;font-size:14px}
+.monthly .yh + a.mo{border-top:1px solid var(--rule)}
+.monthly a.mo[aria-current]{border-left:3px solid var(--ink)}
+.monthly .mk{font-weight:650;font-variant-numeric:tabular-nums}
+.monthly .mc{font-size:12.5px;color:var(--faint);white-space:nowrap}
+@media (max-width:640px){.monthly a.mo{grid-template-columns:1fr}.monthly .mc{white-space:normal}}
 .disc2{font-size:12.5px;color:var(--faint);margin-top:26px;max-width:80ch}
 .empty{padding:40px 0;color:var(--muted)}
 """
@@ -86,9 +105,17 @@ def _table(lang: str, rec: dict[str, Any], prev: dict[str, Any] | None, chart: s
     for r in rows:
         vals = rec["charts"][chart].get(r) or ["", "", "", "", ""]
         olds = pc.get(r) or [None] * 5
-        body += f'<tr><td class="l">{_e(I.t(lang, r))}</td>' + "".join(
-            _cell(lang, v, o) for v, o in zip(vals, olds)) + "</tr>"
-    return (f'<h3 id="{chart}">{_e(I.t(lang, chart))}</h3>'
+        name = I.t(lang, r)
+        short = I.SHORT[r]
+        rest = name[len(short):].strip() if name.startswith(short) else name
+        body += (f'<tr><td class="l"><b>{_e(short)}</b> <span>{_e(rest)}</span></td>'
+                 + "".join(_cell(lang, v, o) for v, o in zip(vals, olds)) + "</tr>")
+    u = rec.get("uscis") or {}
+    kind = "family" if chart.startswith("fam") else "employment"
+    tag = ""
+    if u.get(kind) and chart.endswith(u[kind]):
+        tag = f' <em class="tag">{_e(I.t(lang, "uscis_tag"))}</em>'
+    return (f'<h3 id="{chart}">{_e(I.t(lang, chart))}{tag}</h3>'
             f'<div class="tw"><table><thead><tr><th>{_e(I.t(lang, "cat"))}</th>{head}</tr></thead>'
             f"<tbody>{body}</tbody></table></div>")
 
@@ -149,9 +176,16 @@ def _changes_html(lang: str, rec: dict[str, Any]) -> str:
     out = ""
     for label, suffix in (("final_chg", "final"), ("filing_chg", "filing")):
         items = [c for c in ch if c["chart"].endswith(suffix)]
-        if items:
-            out += f'<h3>{_e(I.t(lang, label))}</h3><ul class="chg">' + "".join(
-                f"<li>{_e(change_line(lang, c))}</li>" for c in items) + "</ul>"
+        if not items:
+            continue
+        main = [c for c in items if c["col"] == "row"]
+        rest = [c for c in items if c["col"] != "row"]
+        out += f'<h3>{_e(I.t(lang, label))}</h3>'
+        if main:
+            out += '<ul class="chg">' + "".join(f"<li>{_e(change_line(lang, c))}</li>" for c in main) + "</ul>"
+        if rest:
+            out += (f'<details class="more"><summary>{_e(I.t(lang, "more_chg", n=len(rest)))}</summary><ul class="chg">'
+                    + "".join(f"<li>{_e(change_line(lang, c))}</li>" for c in rest) + "</ul></details>")
     return out
 
 
@@ -160,10 +194,39 @@ def _fix(doc: str, prefix: str, lang: str) -> str:
     return doc.replace('<html lang="ko">', f'<html lang="{I.HTML_LANG[lang]}">', 1)
 
 
+def _href(prefix: str, key: str | None, lang: str) -> str:
+    base = f"{prefix}visa-bulletin/" + (f"{key}/" if key else "")
+    return base + ("" if lang == "ko" else f"{lang}/")
+
+
+def _monthly(lang: str, recs: list[dict[str, Any]], prefix: str, current: str) -> str:
+    """월별 정리. 연도별로 묶고 달마다 요약 제목과 변동 건수를 보여 줍니다."""
+    out, year = "", None
+    for r in reversed(recs):
+        if r["year"] != year:
+            if year is not None:
+                out += "</div>"
+            year = r["year"]
+            out += f'<div class="yr"><div class="yh">{_e(I.t(lang, "year", y=year))}</div>'
+        s = (r.get("summary") or {}).get(lang) or {}
+        n = len([c for c in r.get("changes") or [] if c["chart"].endswith("final")])
+        cnt = I.t(lang, "nchg", n=n) if n else (I.t(lang, "nchg0") if r.get("prev_key") else "")
+        cur = ' aria-current="page"' if r["key"] == current else ""
+        out += (f'<a class="mo" href="{_href(prefix, r["key"], lang)}"{cur}>'
+                f'<span class="mk">{_e(I.t(lang, "month", y=r["year"], m=r["month"]))}</span>'
+                f'<span class="mh">{_e(s.get("headline") or I.t(lang, "title", y=r["year"], m=r["month"]))}</span>'
+                f'<span class="mc">{_e(cnt)}</span></a>')
+    return out + ("</div>" if year is not None else "")
+
+
 def _month_page(cfg: dict[str, Any], recs: list[dict[str, Any]], rec: dict[str, Any], lang: str,
                 prefix: str, is_index: bool = False) -> str:
     y, m, key = rec["year"], rec["month"], rec["key"]
     prev = next((r for r in recs if r["key"] == rec.get("prev_key")), None)
+    keys = [r["key"] for r in recs]
+    i = keys.index(key)
+    before = recs[i - 1] if i > 0 else None
+    after = recs[i + 1] if i + 1 < len(recs) else None
     s = (rec.get("summary") or {}).get(lang) or {}
     title = I.t(lang, "title_full", y=y, m=m)
     pts = "".join(f"<li>{_e(p)}</li>" for p in s.get("points") or [])
@@ -174,12 +237,13 @@ def _month_page(cfg: dict[str, Any], recs: list[dict[str, Any]], rec: dict[str, 
         + (f'<div class="ai">{_e(I.t(lang, "ai_note"))}</div>' if s.get("auto") else "")
         + "</div>"
     )
-    tables = "".join(_table(lang, rec, prev, c, rows) for c, rows in CHARTS)
-    arch = "".join(
-        f'<a href="{prefix}visa-bulletin/{r["key"]}/{"" if lang == "ko" else lang + "/"}">'
-        f'{_e(I.t(lang, "month", y=r["year"], m=r["month"]))}</a>'
-        for r in reversed(recs)
-    )
+    final_tables = _table(lang, rec, prev, "fam_final", I.FAMILY_ROWS) + _table(lang, rec, prev, "emp_final", I.EMP_ROWS)
+    filing_tables = _table(lang, rec, prev, "fam_filing", I.FAMILY_ROWS) + _table(lang, rec, prev, "emp_filing", I.EMP_ROWS)
+    pager = '<div class="pager">' + (
+        f'<a href="{_href(prefix, before["key"], lang)}">← {_e(I.t(lang, "month", y=before["year"], m=before["month"]))}</a>'
+        if before else "<span></span>") + (
+        f'<a href="{_href(prefix, after["key"], lang)}">{_e(I.t(lang, "month", y=after["year"], m=after["month"]))} →</a>'
+        if after else "<span></span>") + "</div>"
     checked = (rec.get("fetched_at") or "").replace("T", " ")[:16]
     contact = site.lead_form(cfg, f"비자 문호 {y}.{m:02d}") if lang == "ko" else (
         f'<p class="notes">{_e(I.t(lang, "contact"))}: '
@@ -190,22 +254,22 @@ def _month_page(cfg: dict[str, Any], recs: list[dict[str, Any]], rec: dict[str, 
 <article class="vb">
   <div class="kicker">{_e(I.t(lang, "latest") + " · " if is_index else "")}Visa Bulletin · {_e(key)}</div>
   <h1>{_e(title)}</h1>
-  <p class="lede">{_e(I.t(lang, "desc", y=y, m=m))}</p>
   {_langs(key, lang, prefix)}
-  {summ}
+  <p class="legend">{_e(I.t(lang, "legend"))} {_e(I.t(lang, "col_note"))}</p>
+  <div class="grp"><h2>{_e(I.t(lang, "final"))}</h2>{final_tables}</div>
+  <div class="grp"><h2>{_e(I.t(lang, "filing"))}</h2>{filing_tables}</div>
   <div class="meta">
     {_uscis(lang, rec)}
     <div><span>{_e(I.t(lang, "source"))}</span><a href="{_e(rec['source_url'])}" rel="nofollow">{_e(I.t(lang, "source_text"))}</a><br>{_e(I.t(lang, "checked", t=checked))}</div>
   </div>
   {site.ad(cfg, "result_side", "ad")}
+  {summ}
   <h2>{_e(I.t(lang, "changes"))}</h2>
   {_changes_html(lang, rec)}
-  <h2>{_e(I.t(lang, "charts"))}</h2>
-  <p class="notes">{_e(I.t(lang, "legend"))} {_e(I.t(lang, "col_note"))}</p>
-  {tables}
   {_trend(lang, recs, key)}
-  <h2>{_e(I.t(lang, "archive"))}</h2>
-  <div class="arch">{arch}</div>
+  <h2 id="monthly">{_e(I.t(lang, "monthly"))}</h2>
+  {pager}
+  <div class="monthly">{_monthly(lang, recs, prefix, key)}</div>
   <p class="disc2">{_e(I.t(lang, "disclaimer"))}</p>
 </article>
 {contact}
@@ -215,14 +279,14 @@ def _month_page(cfg: dict[str, Any], recs: list[dict[str, Any]], rec: dict[str, 
     canonical = f'https://{domain}/visa-bulletin/{key}/{"" if lang == "ko" else lang + "/"}'
     head = site.head(cfg, I.t(lang, "title", y=y, m=m), CSS, I.t(lang, "desc", y=y, m=m)).replace(
         "</head>", f'<link rel="canonical" href="{canonical}">{_alternates(domain, key)}</head>', 1)
-    doc = head + site.header(cfg, "") + body + site.footer(cfg)
+    doc = head + site.header(cfg, "/visa-bulletin/") + body + site.footer(cfg)
     return _fix(doc, prefix, lang)
 
 
 def _empty_page(cfg: dict[str, Any]) -> str:
     body = f"""<article class="vb"><h1>{_e(I.t("ko", "index_title"))}</h1>
 <p class="lede">{_e(I.t("ko", "index_desc"))}</p><p class="empty">{_e(I.t("ko", "empty"))}</p></article>"""
-    doc = site.head(cfg, I.t("ko", "index_title"), CSS, I.t("ko", "index_desc")) + site.header(cfg, "") + body + site.footer(cfg)
+    doc = site.head(cfg, I.t("ko", "index_title"), CSS, I.t("ko", "index_desc")) + site.header(cfg, "/visa-bulletin/") + body + site.footer(cfg)
     return _fix(doc, "../", "ko")
 
 
@@ -238,7 +302,7 @@ def badge(prefix: str = "") -> str:
 def paths() -> list[str]:
     """sitemap 용 경로."""
     recs = load_all()
-    out = ["visa-bulletin/"] if recs else []
+    out = (["visa-bulletin/"] + [f"visa-bulletin/{lg}/" for lg in I.LANGS if lg != "ko"]) if recs else []
     for r in recs:
         out += [f"visa-bulletin/{r['key']}/"] + [f"visa-bulletin/{r['key']}/{lg}/" for lg in I.LANGS if lg != "ko"]
     return out
@@ -252,11 +316,15 @@ def render(cfg: dict[str, Any]) -> list[Path]:
         p = OUT / "index.html"
         p.write_text(_empty_page(cfg), encoding="utf-8")
         return [p]
+    # 상단 메뉴 '비자 문호'는 최신 달로 바로 들어갑니다. 언어별 최신 주소도 따로 둡니다.
     latest = recs[-1]
-    p = OUT / "index.html"
-    doc = _month_page(cfg, recs, latest, "ko", "../", is_index=True)
-    p.write_text(doc, encoding="utf-8")
-    written.append(p)
+    for lang in I.LANGS:
+        d = OUT if lang == "ko" else OUT / lang
+        d.mkdir(parents=True, exist_ok=True)
+        p = d / "index.html"
+        p.write_text(_month_page(cfg, recs, latest, lang, "../" if lang == "ko" else "../../", is_index=True),
+                     encoding="utf-8")
+        written.append(p)
     for rec in recs:
         for lang in I.LANGS:
             d = OUT / rec["key"] / ("" if lang == "ko" else lang)

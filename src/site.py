@@ -17,6 +17,7 @@ SITE_CFG = ROOT / "config" / "site.yaml"
 
 NAV = [
     ("index.html", "관납료"),
+    ("/visa-bulletin/", "비자 문호"),
     ("cspa.html", "CSPA 나이"),
     ("age.html", "만 나이"),
     ("guides.html", "가이드"),
@@ -52,7 +53,8 @@ a{color:var(--ink)}
 .brand svg{flex:none;display:block}
 .brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:1px;letter-spacing:0}
 @media (max-width:480px){.brand span{display:none}}
-nav{display:flex;gap:16px;font-size:14px}
+nav{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}
+@media (max-width:480px){nav{gap:6px 12px;font-size:13.5px}}
 nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
 nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}

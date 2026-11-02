@@ -29,7 +29,8 @@ a{color:var(--ink)}
 .brand svg{flex:none;display:block}
 .brand span{color:var(--faint);font-weight:400;font-size:13px;margin-left:1px;letter-spacing:0}
 @media (max-width:480px){.brand span{display:none}}
-nav{display:flex;gap:16px;font-size:14px}
+nav{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}
+@media (max-width:480px){nav{gap:6px 12px;font-size:13.5px}}
 nav a{color:var(--muted);text-decoration:none;padding-bottom:2px}
 nav a:hover{color:var(--ink)}
 nav a[aria-current="page"]{color:var(--ink);font-weight:650;border-bottom:2px solid var(--ink)}
@@ -107,7 +108,7 @@ footer .disc{max-width:74ch;margin-bottom:10px}
 </style></head><body><div class="wrap">
 <div class="top">
   <a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="23" rx="5" fill="currentColor"/><rect x="9" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/><rect x="19.8" y="2.5" width="3.2" height="7" rx="1.6" fill="currentColor"/><path d="M10 14.5l6 8.5 6-8.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>VisaCal<span>미국 비자 관납료와 CSPA 나이 계산</span></a>
-  <nav><a href="index.html">관납료</a><a href="cspa.html">CSPA 나이</a><a href="age.html" aria-current="page">만 나이</a><a href="guides.html">가이드</a><a href="changes.html">원장과 이력</a></nav>
+  <nav><a href="index.html">관납료</a><a href="/visa-bulletin/">비자 문호</a><a href="cspa.html">CSPA 나이</a><a href="age.html" aria-current="page">만 나이</a><a href="guides.html">가이드</a><a href="changes.html">원장과 이력</a></nav>
 </div>
 
 <p class="lede">출생일과 기준일을 넣으면 만 나이, 한국 나이, 연 나이와 띠를 계산합니다. 기준일은 오늘로 채워져 있습니다.

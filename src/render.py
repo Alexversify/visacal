@@ -272,7 +272,7 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     )
     cfg = site.load_cfg()
     body = f"""
-{consular_page.rate_badge(rate)}{vb_badge()}
+{consular_page.rate_badge(rate)}
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>

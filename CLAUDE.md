@@ -9,7 +9,7 @@ visacal.com: 미국 비자 관납료 계산기, CSPA 나이 계산기, 이민 �
   - render.py 관납료·원장 페이지, cspa_page.py CSPA 계산기, articles.py 가이드 목록, posts.py 글 페이지, site.py 공통 레이아웃·광고·문의폼, static_pages.py 개인정보처리방침·sitemap·ads.txt·CNAME
   - consular_rate.py 주한미국대사관 영사환율 수집(AIS 결제창, Playwright 로그인). 결과는 data/consular_rate.json, data/consular_rate_history.csv(실패일은 rate 빈칸), data/consular_fee_history.csv. 페이지는 consular_page.py 가 /consular-rate/, consular_history.py 가 /consular-rate/history/ 로 생성
   - visa_bulletin.py 미 국무부 비자 문호(Visa Bulletin) 수집. 순서: 수동 투입함(content/visa-bulletin/inbox/) → 국무부 원문(travel.state.gov, Cloudflare 보안 확인으로 GitHub 서버에서는 보통 막힘, 우회 금지) → 국무부 메일링을 받는 메일함(IMAP). 표 4개 × 행 전부가 읽혀야 저장하고, 하나라도 빠지면 게시하지 않는다. 결과 data/visa_bulletin/YYYY-MM.json, 원문 data/visa_bulletin/raw/. 새 달이면 6개 언어 요약(LLM, 월 1회), content/posts 소식 글, 팀 메일
-  - vb_page.py 가 /visa-bulletin/ (최신), /visa-bulletin/YYYY-MM/ (한국어), /visa-bulletin/YYYY-MM/<en|zh|ja|vi|es>/ 생성. 고정 문구는 vb_i18n.py
+  - vb_page.py 가 /visa-bulletin/ (최신, 상단 메뉴 "비자 문호"), /visa-bulletin/<en|zh|ja|vi|es>/ (언어별 최신), /visa-bulletin/YYYY-MM/ (한국어), /visa-bulletin/YYYY-MM/<lang>/ 생성. 화면 순서: 표(최종조치일, 접수가능일) → USCIS·출처 → 요약 → 지난달 대비 변동 → 추이 → 월별 정리. 고정 문구는 vb_i18n.py
 - content/posts/*.md 글. 관리자 화면(admin.visacal.com)이 여기에 커밋한다. 분류 "가이드"는 실무 가이드, 나머지는 최신 소식
 - data/fees.json 수수료 원장, data/scenarios.json 비자별 계산 시나리오
 - config/site.yaml 도메인, 애드센스, GA4, 문의폼 설정
