@@ -1,0 +1,493 @@
+{
+  "year": 2022,
+  "month": 1,
+  "key": "2022-01",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2014-12-01",
+        "2014-12-01",
+        "2014-12-01",
+        "1999-09-08",
+        "2012-03-01"
+      ],
+      "F2A": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "F2B": [
+        "2015-09-22",
+        "2015-09-22",
+        "2015-09-22",
+        "2000-09-01",
+        "2011-10-22"
+      ],
+      "F3": [
+        "2008-11-22",
+        "2008-11-22",
+        "2008-11-22",
+        "1997-09-15",
+        "2002-06-08"
+      ],
+      "F4": [
+        "2007-03-22",
+        "2007-03-22",
+        "2005-09-15",
+        "1999-04-22",
+        "2002-08-22"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2019-01-22",
+        "2012-07-08",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "C",
+        "2018-03-22",
+        "2012-01-15",
+        "C",
+        "C"
+      ],
+      "EW": [
+        "C",
+        "2012-03-01",
+        "2012-01-15",
+        "C",
+        "C"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "2020-04-01",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "2020-04-01",
+        "C"
+      ],
+      "EB5NRC": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5RC": [
+        "U",
+        "U",
+        "U",
+        "U",
+        "U"
+      ]
+    },
+    "fam_filing": {
+      "F1": [
+        "2016-05-15",
+        "2016-05-15",
+        "2016-05-15",
+        "2001-02-01",
+        "2015-04-22"
+      ],
+      "F2A": [
+        "2021-10-01",
+        "2021-10-01",
+        "2021-10-01",
+        "2021-10-01",
+        "2021-10-01"
+      ],
+      "F2B": [
+        "2016-09-22",
+        "2016-09-22",
+        "2016-09-22",
+        "2001-03-01",
+        "2013-10-01"
+      ],
+      "F3": [
+        "2009-08-22",
+        "2009-08-22",
+        "2009-08-22",
+        "2000-10-08",
+        "2003-10-01"
+      ],
+      "F4": [
+        "2007-10-01",
+        "2007-10-01",
+        "2006-01-01",
+        "1999-08-22",
+        "2004-02-01"
+      ]
+    },
+    "emp_filing": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2019-04-01",
+        "2013-07-08",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "C",
+        "2018-04-01",
+        "2012-01-22",
+        "C",
+        "C"
+      ],
+      "EW": [
+        "C",
+        "2015-05-01",
+        "2012-01-22",
+        "C",
+        "C"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5NRC": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5RC": [
+        "C",
+        "2015-12-15",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5NRC",
+      "EB5RC"
+    ],
+    "fam_filing": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_filing": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5NRC",
+      "EB5RC"
+    ]
+  },
+  "extra": {
+    "emp_final": {
+      "cols": [
+        "ESGH"
+      ],
+      "rows": {
+        "EB1": {
+          "ESGH": "C"
+        },
+        "EB2": {
+          "ESGH": "C"
+        },
+        "EB3": {
+          "ESGH": "C"
+        },
+        "EW": {
+          "ESGH": "C"
+        },
+        "EB4": {
+          "ESGH": "2019-03-15"
+        },
+        "RW": {
+          "ESGH": "2019-03-15"
+        },
+        "EB5NRC": {
+          "ESGH": "C"
+        },
+        "EB5RC": {
+          "ESGH": "U"
+        }
+      }
+    },
+    "emp_filing": {
+      "cols": [
+        "ESGH"
+      ],
+      "rows": {
+        "EB1": {
+          "ESGH": "C"
+        },
+        "EB2": {
+          "ESGH": "C"
+        },
+        "EB3": {
+          "ESGH": "C"
+        },
+        "EW": {
+          "ESGH": "C"
+        },
+        "EB4": {
+          "ESGH": "2019-05-15"
+        },
+        "RW": {
+          "ESGH": "2019-05-15"
+        },
+        "EB5NRC": {
+          "ESGH": "C"
+        },
+        "EB5RC": {
+          "ESGH": "C"
+        }
+      }
+    }
+  },
+  "labels": {
+    "F1": "F1",
+    "F2A": "F2A",
+    "F2B": "F2B",
+    "F3": "F3",
+    "F4": "F4",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5NRC": "5th Non-Regional Center (C5 and T5)",
+    "EB5RC": "5th Regional Center (I5 and R5)"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2022/visa-bulletin-for-january-2022.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin For January 2022",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "mexico",
+      "a": "1999-05-08",
+      "b": "1999-09-08",
+      "kind": "adv",
+      "d": 123
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "mexico",
+      "a": "2000-07-01",
+      "b": "2000-09-01",
+      "kind": "adv",
+      "d": 62
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "mexico",
+      "a": "1997-07-15",
+      "b": "1997-09-15",
+      "kind": "adv",
+      "d": 62
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "mexico",
+      "a": "1999-03-15",
+      "b": "1999-04-22",
+      "kind": "adv",
+      "d": 38
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "china",
+      "a": "2019-01-01",
+      "b": "2019-01-22",
+      "kind": "adv",
+      "d": 21
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "india",
+      "a": "2012-05-01",
+      "b": "2012-07-08",
+      "kind": "adv",
+      "d": 68
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F1",
+      "col": "mexico",
+      "a": "2000-12-01",
+      "b": "2001-02-01",
+      "kind": "adv",
+      "d": 62
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2A",
+      "col": "row",
+      "a": "2021-09-01",
+      "b": "2021-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2A",
+      "col": "china",
+      "a": "2021-09-01",
+      "b": "2021-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2A",
+      "col": "india",
+      "a": "2021-09-01",
+      "b": "2021-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2A",
+      "col": "mexico",
+      "a": "2021-09-01",
+      "b": "2021-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2A",
+      "col": "philippines",
+      "a": "2021-09-01",
+      "b": "2021-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2B",
+      "col": "mexico",
+      "a": "2001-01-01",
+      "b": "2001-03-01",
+      "kind": "adv",
+      "d": 59
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F3",
+      "col": "mexico",
+      "a": "2000-09-08",
+      "b": "2000-10-08",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F4",
+      "col": "mexico",
+      "a": "1999-08-01",
+      "b": "1999-08-22",
+      "kind": "adv",
+      "d": 21
+    }
+  ],
+  "prev_key": "2021-12",
+  "summary": {
+    "ko": {
+      "headline": "전 세계 열 변동 없음, 국가별 열 6건 변동",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 0건, 후퇴 0건, 대기 없음 전환 0건, 배정 중단 0건입니다.",
+      "points": [],
+      "auto": false
+    },
+    "en": {
+      "headline": "No change in All Chargeability; 6 changes in country columns",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 0 categories, retrogressed in 0, became current in 0 and became unavailable in 0.",
+      "points": [],
+      "auto": false
+    },
+    "zh": {
+      "headline": "“其他所有国家/地区”栏无变化，国家栏 6 项变化",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 0 项，倒退 0 项，转为无需排期 0 项，暂停分配 0 项。",
+      "points": [],
+      "auto": false
+    },
+    "ja": {
+      "headline": "その他全地域の列は変動なし、国別の列で6件変動",
+      "summary": "その他全地域の列の最終処理日は、前進 0件、後退 0件、カレント移行 0件、割り当て停止 0件です。",
+      "points": [],
+      "auto": false
+    },
+    "vi": {
+      "headline": "Cột Các nước còn lại không đổi; 6 thay đổi ở cột quốc gia",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 0 diện, lùi ở 0 diện, chuyển sang hiện hành 0 diện và tạm ngưng 0 diện.",
+      "points": [],
+      "auto": false
+    },
+    "es": {
+      "headline": "Sin cambios en Resto del mundo; 6 cambios en columnas de países",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 0 categorías, retrocedieron en 0, pasaron a vigente en 0 y quedaron sin cupo en 0.",
+      "points": [],
+      "auto": false
+    }
+  }
+}

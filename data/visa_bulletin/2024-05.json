@@ -1,0 +1,681 @@
+{
+  "year": 2024,
+  "month": 5,
+  "key": "2024-05",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2015-07-08",
+        "2015-07-08",
+        "2015-07-08",
+        "2001-10-15",
+        "2012-03-01"
+      ],
+      "F2A": [
+        "2021-06-01",
+        "2021-06-01",
+        "2021-06-01",
+        "2020-11-08",
+        "2021-06-01"
+      ],
+      "F2B": [
+        "2016-04-01",
+        "2016-04-01",
+        "2016-04-01",
+        "2004-03-01",
+        "2011-10-22"
+      ],
+      "F3": [
+        "2010-01-01",
+        "2010-01-01",
+        "2010-01-01",
+        "1999-07-22",
+        "2002-08-01"
+      ],
+      "F4": [
+        "2007-07-22",
+        "2007-07-22",
+        "2006-01-15",
+        "2001-01-22",
+        "2003-09-08"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "2022-09-01",
+        "2021-03-01",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "2023-01-15",
+        "2020-02-01",
+        "2012-04-15",
+        "2023-01-15",
+        "2023-01-15"
+      ],
+      "EB3": [
+        "2022-11-22",
+        "2020-09-01",
+        "2012-08-15",
+        "2022-11-22",
+        "2022-11-22"
+      ],
+      "EW": [
+        "2020-10-08",
+        "2017-01-01",
+        "2012-08-15",
+        "2020-10-08",
+        "2020-05-01"
+      ],
+      "EB4": [
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01"
+      ],
+      "RW": [
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01",
+        "2020-11-01"
+      ],
+      "EB5U": [
+        "C",
+        "2015-12-15",
+        "2020-12-01",
+        "C",
+        "C"
+      ],
+      "EB5R": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5H": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5I": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    },
+    "fam_filing": {
+      "F1": [
+        "2017-09-01",
+        "2017-09-01",
+        "2017-09-01",
+        "2005-04-01",
+        "2015-04-22"
+      ],
+      "F2A": [
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01"
+      ],
+      "F2B": [
+        "2017-01-01",
+        "2017-01-01",
+        "2017-01-01",
+        "2004-09-01",
+        "2013-10-01"
+      ],
+      "F3": [
+        "2010-06-01",
+        "2010-06-01",
+        "2010-06-01",
+        "2001-06-15",
+        "2003-11-08"
+      ],
+      "F4": [
+        "2008-03-01",
+        "2008-03-01",
+        "2006-06-15",
+        "2001-04-22",
+        "2005-06-01"
+      ]
+    },
+    "emp_filing": {
+      "EB1": [
+        "C",
+        "2023-01-01",
+        "2021-04-01",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "2023-02-15",
+        "2020-06-01",
+        "2012-05-15",
+        "2023-02-15",
+        "2023-02-15"
+      ],
+      "EB3": [
+        "2023-02-01",
+        "2021-07-01",
+        "2012-09-15",
+        "2023-02-01",
+        "2023-01-01"
+      ],
+      "EW": [
+        "2020-12-15",
+        "2017-06-01",
+        "2012-09-15",
+        "2020-12-15",
+        "2020-05-15"
+      ],
+      "EB4": [
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01"
+      ],
+      "RW": [
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01",
+        "2020-12-01"
+      ],
+      "EB5U": [
+        "C",
+        "2017-01-01",
+        "2022-04-01",
+        "C",
+        "C"
+      ],
+      "EB5R": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5H": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5I": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5U",
+      "EB5R",
+      "EB5H",
+      "EB5I"
+    ],
+    "fam_filing": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_filing": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5U",
+      "EB5R",
+      "EB5H",
+      "EB5I"
+    ]
+  },
+  "extra": {},
+  "labels": {
+    "F1": "F1",
+    "F2A": "F2A",
+    "F2B": "F2B",
+    "F3": "F3",
+    "F4": "F4",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5U": "5th Unreserved (including C5, T5, I5, R5)",
+    "EB5R": "5th Set Aside: (Rural - 20%)",
+    "EB5H": "5th Set Aside: (High Unemployment - 10%)",
+    "EB5I": "5th Set Aside: (Infrastructure - 2%)"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2024/visa-bulletin-for-may-2024.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin For May 2024",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "row",
+      "a": "2015-02-08",
+      "b": "2015-07-08",
+      "kind": "adv",
+      "d": 150
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "china",
+      "a": "2015-02-08",
+      "b": "2015-07-08",
+      "kind": "adv",
+      "d": 150
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "india",
+      "a": "2015-02-08",
+      "b": "2015-07-08",
+      "kind": "adv",
+      "d": 150
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "mexico",
+      "a": "2001-05-01",
+      "b": "2001-10-15",
+      "kind": "adv",
+      "d": 167
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "row",
+      "a": "2020-09-08",
+      "b": "2021-06-01",
+      "kind": "adv",
+      "d": 266
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "china",
+      "a": "2020-09-08",
+      "b": "2021-06-01",
+      "kind": "adv",
+      "d": 266
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "india",
+      "a": "2020-09-08",
+      "b": "2021-06-01",
+      "kind": "adv",
+      "d": 266
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "mexico",
+      "a": "2020-08-15",
+      "b": "2020-11-08",
+      "kind": "adv",
+      "d": 85
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "philippines",
+      "a": "2020-09-08",
+      "b": "2021-06-01",
+      "kind": "adv",
+      "d": 266
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "row",
+      "a": "2015-11-22",
+      "b": "2016-04-01",
+      "kind": "adv",
+      "d": 131
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "china",
+      "a": "2015-11-22",
+      "b": "2016-04-01",
+      "kind": "adv",
+      "d": 131
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "india",
+      "a": "2015-11-22",
+      "b": "2016-04-01",
+      "kind": "adv",
+      "d": 131
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "mexico",
+      "a": "2003-10-22",
+      "b": "2004-03-01",
+      "kind": "adv",
+      "d": 131
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "row",
+      "a": "2009-10-01",
+      "b": "2010-01-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "china",
+      "a": "2009-10-01",
+      "b": "2010-01-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "india",
+      "a": "2009-10-01",
+      "b": "2010-01-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "mexico",
+      "a": "1998-09-08",
+      "b": "1999-07-22",
+      "kind": "adv",
+      "d": 317
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "philippines",
+      "a": "2002-06-08",
+      "b": "2002-08-01",
+      "kind": "adv",
+      "d": 54
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "row",
+      "a": "2007-06-08",
+      "b": "2007-07-22",
+      "kind": "adv",
+      "d": 44
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "china",
+      "a": "2007-06-08",
+      "b": "2007-07-22",
+      "kind": "adv",
+      "d": 44
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "india",
+      "a": "2005-12-15",
+      "b": "2006-01-15",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "mexico",
+      "a": "2000-10-15",
+      "b": "2001-01-22",
+      "kind": "adv",
+      "d": 99
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "philippines",
+      "a": "2003-06-15",
+      "b": "2003-09-08",
+      "kind": "adv",
+      "d": 85
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "row",
+      "a": "U",
+      "b": "2020-11-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "china",
+      "a": "U",
+      "b": "2020-11-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "india",
+      "a": "U",
+      "b": "2020-11-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "mexico",
+      "a": "U",
+      "b": "2020-11-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "philippines",
+      "a": "U",
+      "b": "2020-11-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F2B",
+      "col": "mexico",
+      "a": "2004-08-01",
+      "b": "2004-09-01",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F3",
+      "col": "row",
+      "a": "2010-03-01",
+      "b": "2010-06-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F3",
+      "col": "china",
+      "a": "2010-03-01",
+      "b": "2010-06-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F3",
+      "col": "india",
+      "a": "2010-03-01",
+      "b": "2010-06-01",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F4",
+      "col": "india",
+      "a": "2006-04-08",
+      "b": "2006-06-15",
+      "kind": "adv",
+      "d": 68
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F4",
+      "col": "mexico",
+      "a": "2001-04-15",
+      "b": "2001-04-22",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "fam_filing",
+      "row": "F4",
+      "col": "philippines",
+      "a": "2005-04-22",
+      "b": "2005-06-01",
+      "kind": "adv",
+      "d": 40
+    }
+  ],
+  "prev_key": "2024-04",
+  "summary": {
+    "ko": {
+      "headline": "F2A 등 5건 전진",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 5건, 후퇴 0건, 대기 없음 전환 1건, 배정 중단 0건입니다. 가장 크게 움직인 항목은 F2A(266일 진전)입니다.",
+      "points": [
+        "F2A · 전 세계 (한국 포함): 2020-09-08 → 2021-06-01 (266일 진전)",
+        "F1 · 전 세계 (한국 포함): 2015-02-08 → 2015-07-08 (150일 진전)",
+        "F2B · 전 세계 (한국 포함): 2015-11-22 → 2016-04-01 (131일 진전)",
+        "F3 · 전 세계 (한국 포함): 2009-10-01 → 2010-01-01 (92일 진전)",
+        "F4 · 전 세계 (한국 포함): 2007-06-08 → 2007-07-22 (44일 진전)",
+        "EB-4 RW · 전 세계 (한국 포함): U → 2020-11-01 (배정 재개)"
+      ],
+      "auto": false
+    },
+    "en": {
+      "headline": "F2A and 4 more advance",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 5 categories, retrogressed in 0, became current in 1 and became unavailable in 0. The largest move was F2A (266 days forward).",
+      "points": [
+        "F2A · All Chargeability Areas: 2020-09-08 → 2021-06-01 (advanced 266 days)",
+        "F1 · All Chargeability Areas: 2015-02-08 → 2015-07-08 (advanced 150 days)",
+        "F2B · All Chargeability Areas: 2015-11-22 → 2016-04-01 (advanced 131 days)",
+        "F3 · All Chargeability Areas: 2009-10-01 → 2010-01-01 (advanced 92 days)",
+        "F4 · All Chargeability Areas: 2007-06-08 → 2007-07-22 (advanced 44 days)",
+        "EB-4 RW · All Chargeability Areas: U → 2020-11-01 (available again)"
+      ],
+      "auto": false
+    },
+    "zh": {
+      "headline": "F2A 等 5 项前进",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 5 项，倒退 0 项，转为无需排期 1 项，暂停分配 0 项。 变动最大的是 F2A（前进 266 天）。",
+      "points": [
+        "F2A · 其他所有国家/地区：2020-09-08 → 2021-06-01（前进 266 天）",
+        "F1 · 其他所有国家/地区：2015-02-08 → 2015-07-08（前进 150 天）",
+        "F2B · 其他所有国家/地区：2015-11-22 → 2016-04-01（前进 131 天）",
+        "F3 · 其他所有国家/地区：2009-10-01 → 2010-01-01（前进 92 天）",
+        "F4 · 其他所有国家/地区：2007-06-08 → 2007-07-22（前进 44 天）",
+        "EB-4 RW · 其他所有国家/地区：U → 2020-11-01（恢复分配）"
+      ],
+      "auto": false
+    },
+    "ja": {
+      "headline": "F2A など 5件前進",
+      "summary": "その他全地域の列の最終処理日は、前進 5件、後退 0件、カレント移行 1件、割り当て停止 0件です。 最も大きく動いたのは F2A（266日前進）です。",
+      "points": [
+        "F2A · その他全地域：2020-09-08 → 2021-06-01（266日前進）",
+        "F1 · その他全地域：2015-02-08 → 2015-07-08（150日前進）",
+        "F2B · その他全地域：2015-11-22 → 2016-04-01（131日前進）",
+        "F3 · その他全地域：2009-10-01 → 2010-01-01（92日前進）",
+        "F4 · その他全地域：2007-06-08 → 2007-07-22（44日前進）",
+        "EB-4 RW · その他全地域：U → 2020-11-01（割り当て再開）"
+      ],
+      "auto": false
+    },
+    "vi": {
+      "headline": "F2A và 4 diện khác tiến",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 5 diện, lùi ở 0 diện, chuyển sang hiện hành 1 diện và tạm ngưng 0 diện. Biến động lớn nhất là F2A (tiến 266 ngày).",
+      "points": [
+        "F2A · Các nước còn lại: 2020-09-08 → 2021-06-01 (tiến 266 ngày)",
+        "F1 · Các nước còn lại: 2015-02-08 → 2015-07-08 (tiến 150 ngày)",
+        "F2B · Các nước còn lại: 2015-11-22 → 2016-04-01 (tiến 131 ngày)",
+        "F3 · Các nước còn lại: 2009-10-01 → 2010-01-01 (tiến 92 ngày)",
+        "F4 · Các nước còn lại: 2007-06-08 → 2007-07-22 (tiến 44 ngày)",
+        "EB-4 RW · Các nước còn lại: U → 2020-11-01 (mở lại)"
+      ],
+      "auto": false
+    },
+    "es": {
+      "headline": "F2A y 4 más avanzan",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 5 categorías, retrocedieron en 0, pasaron a vigente en 1 y quedaron sin cupo en 0. El mayor movimiento fue F2A (266 días de avance).",
+      "points": [
+        "F2A · Resto del mundo: 2020-09-08 → 2021-06-01 (avanzó 266 días)",
+        "F1 · Resto del mundo: 2015-02-08 → 2015-07-08 (avanzó 150 días)",
+        "F2B · Resto del mundo: 2015-11-22 → 2016-04-01 (avanzó 131 días)",
+        "F3 · Resto del mundo: 2009-10-01 → 2010-01-01 (avanzó 92 días)",
+        "F4 · Resto del mundo: 2007-06-08 → 2007-07-22 (avanzó 44 días)",
+        "EB-4 RW · Resto del mundo: U → 2020-11-01 (vuelve a haber cupo)"
+      ],
+      "auto": false
+    }
+  }
+}

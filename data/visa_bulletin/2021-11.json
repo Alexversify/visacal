@@ -1,0 +1,518 @@
+{
+  "year": 2021,
+  "month": 11,
+  "key": "2021-11",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2014-12-01",
+        "2014-12-01",
+        "2014-12-01",
+        "1999-01-15",
+        "2012-03-01"
+      ],
+      "F2A": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "F2B": [
+        "2015-09-22",
+        "2015-09-22",
+        "2015-09-22",
+        "2000-03-15",
+        "2011-10-22"
+      ],
+      "F3": [
+        "2008-11-22",
+        "2008-11-22",
+        "2008-11-22",
+        "1997-05-15",
+        "2002-06-08"
+      ],
+      "F4": [
+        "2007-03-22",
+        "2007-03-22",
+        "2005-09-15",
+        "1999-02-08",
+        "2002-08-22"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2018-11-15",
+        "2011-12-01",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "C",
+        "2018-03-22",
+        "2012-01-15",
+        "C",
+        "C"
+      ],
+      "EW": [
+        "C",
+        "2010-03-01",
+        "2012-01-15",
+        "C",
+        "C"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "2020-04-01",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "2020-04-01",
+        "C"
+      ],
+      "EB5NRC": [
+        "C",
+        "2015-11-22",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5RC": [
+        "U",
+        "U",
+        "U",
+        "U",
+        "U"
+      ]
+    },
+    "fam_filing": {
+      "F1": [
+        "2016-05-15",
+        "2016-05-15",
+        "2016-05-15",
+        "2000-08-01",
+        "2015-04-22"
+      ],
+      "F2A": [
+        "2021-06-01",
+        "2021-06-01",
+        "2021-06-01",
+        "2021-06-01",
+        "2021-06-01"
+      ],
+      "F2B": [
+        "2016-09-22",
+        "2016-09-22",
+        "2016-09-22",
+        "2000-10-01",
+        "2013-10-01"
+      ],
+      "F3": [
+        "2009-08-22",
+        "2009-08-22",
+        "2009-08-22",
+        "2000-09-08",
+        "2003-10-01"
+      ],
+      "F4": [
+        "2007-10-01",
+        "2007-10-01",
+        "2006-01-01",
+        "1999-06-01",
+        "2004-02-01"
+      ]
+    },
+    "emp_filing": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2019-02-01",
+        "2013-01-08",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "C",
+        "2018-04-01",
+        "2012-01-22",
+        "C",
+        "C"
+      ],
+      "EW": [
+        "C",
+        "2010-05-01",
+        "2012-01-22",
+        "C",
+        "C"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5NRC": [
+        "C",
+        "2015-12-15",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5RC": [
+        "C",
+        "2015-12-15",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5NRC",
+      "EB5RC"
+    ],
+    "fam_filing": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_filing": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5NRC",
+      "EB5RC"
+    ]
+  },
+  "extra": {
+    "emp_final": {
+      "cols": [
+        "ESGH"
+      ],
+      "rows": {
+        "EB1": {
+          "ESGH": "C"
+        },
+        "EB2": {
+          "ESGH": "C"
+        },
+        "EB3": {
+          "ESGH": "C"
+        },
+        "EW": {
+          "ESGH": "C"
+        },
+        "EB4": {
+          "ESGH": "2019-03-15"
+        },
+        "RW": {
+          "ESGH": "2019-03-15"
+        },
+        "EB5NRC": {
+          "ESGH": "C"
+        },
+        "EB5RC": {
+          "ESGH": "U"
+        }
+      }
+    },
+    "emp_filing": {
+      "cols": [
+        "ESGH"
+      ],
+      "rows": {
+        "EB1": {
+          "ESGH": "C"
+        },
+        "EB2": {
+          "ESGH": "C"
+        },
+        "EB3": {
+          "ESGH": "C"
+        },
+        "EW": {
+          "ESGH": "C"
+        },
+        "EB4": {
+          "ESGH": "2019-05-15"
+        },
+        "RW": {
+          "ESGH": "2019-05-15"
+        },
+        "EB5NRC": {
+          "ESGH": "C"
+        },
+        "EB5RC": {
+          "ESGH": "C"
+        }
+      }
+    }
+  },
+  "labels": {
+    "F1": "F1",
+    "F2A": "F2A",
+    "F2B": "F2B",
+    "F3": "F3",
+    "F4": "F4",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5NRC": "5th Non-Regional Center (C5 and T5)",
+    "EB5RC": "5th Regional Center (I5 and R5)"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2022/visa-bulletin-for-november-2021.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin For November 2021",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "china",
+      "a": "2018-07-01",
+      "b": "2018-11-15",
+      "kind": "adv",
+      "d": 137
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "india",
+      "a": "2011-09-01",
+      "b": "2011-12-01",
+      "kind": "adv",
+      "d": 91
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "china",
+      "a": "2019-01-08",
+      "b": "2018-03-22",
+      "kind": "ret",
+      "d": 292
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "india",
+      "a": "2014-01-01",
+      "b": "2012-01-15",
+      "kind": "ret",
+      "d": 717
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "china",
+      "a": "2010-02-01",
+      "b": "2010-03-01",
+      "kind": "adv",
+      "d": 28
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "india",
+      "a": "2014-01-01",
+      "b": "2012-01-15",
+      "kind": "ret",
+      "d": 717
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "mexico",
+      "a": "2020-03-01",
+      "b": "2020-04-01",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "row",
+      "a": "U",
+      "b": "C",
+      "kind": "to_c"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "china",
+      "a": "U",
+      "b": "C",
+      "kind": "to_c"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "india",
+      "a": "U",
+      "b": "C",
+      "kind": "to_c"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "mexico",
+      "a": "U",
+      "b": "2020-04-01",
+      "kind": "from_u"
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "philippines",
+      "a": "U",
+      "b": "C",
+      "kind": "to_c"
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB2",
+      "col": "china",
+      "a": "2018-09-01",
+      "b": "2019-02-01",
+      "kind": "adv",
+      "d": 153
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB2",
+      "col": "india",
+      "a": "2012-07-08",
+      "b": "2013-01-08",
+      "kind": "adv",
+      "d": 184
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB3",
+      "col": "china",
+      "a": "2019-01-15",
+      "b": "2018-04-01",
+      "kind": "ret",
+      "d": 289
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB3",
+      "col": "india",
+      "a": "2014-01-08",
+      "b": "2012-01-22",
+      "kind": "ret",
+      "d": 717
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EW",
+      "col": "india",
+      "a": "2014-01-08",
+      "b": "2012-01-22",
+      "kind": "ret",
+      "d": 717
+    }
+  ],
+  "prev_key": "2021-10",
+  "summary": {
+    "ko": {
+      "headline": "EB-4 RW 상태 변동",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 0건, 후퇴 0건, 대기 없음 전환 1건, 배정 중단 0건입니다.",
+      "points": [
+        "EB-4 RW · 전 세계 (한국 포함): U → C (대기 없음으로 전환)"
+      ],
+      "auto": false
+    },
+    "en": {
+      "headline": "EB-4 RW changes status",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 0 categories, retrogressed in 0, became current in 1 and became unavailable in 0.",
+      "points": [
+        "EB-4 RW · All Chargeability Areas: U → C (now current)"
+      ],
+      "auto": false
+    },
+    "zh": {
+      "headline": "EB-4 RW 状态变化",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 0 项，倒退 0 项，转为无需排期 1 项，暂停分配 0 项。",
+      "points": [
+        "EB-4 RW · 其他所有国家/地区：U → C（转为无需排期）"
+      ],
+      "auto": false
+    },
+    "ja": {
+      "headline": "EB-4 RW 状態変化",
+      "summary": "その他全地域の列の最終処理日は、前進 0件、後退 0件、カレント移行 1件、割り当て停止 0件です。",
+      "points": [
+        "EB-4 RW · その他全地域：U → C（カレントに移行）"
+      ],
+      "auto": false
+    },
+    "vi": {
+      "headline": "EB-4 RW đổi trạng thái",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 0 diện, lùi ở 0 diện, chuyển sang hiện hành 1 diện và tạm ngưng 0 diện.",
+      "points": [
+        "EB-4 RW · Các nước còn lại: U → C (chuyển sang hiện hành)"
+      ],
+      "auto": false
+    },
+    "es": {
+      "headline": "EB-4 RW cambia de estado",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 0 categorías, retrocedieron en 0, pasaron a vigente en 1 y quedaron sin cupo en 0.",
+      "points": [
+        "EB-4 RW · Resto del mundo: U → C (pasa a vigente)"
+      ],
+      "auto": false
+    }
+  }
+}

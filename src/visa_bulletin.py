@@ -140,9 +140,13 @@ class ParseError(ValueError):
 
 
 def norm_value(tok: str, bulletin_year: int) -> str:
-    if tok in ("C", "U"):
-        return tok
-    d, mon, yy = int(tok[:2]), MON3.get(tok[2:5]), int(tok[5:])
+    tok = tok.strip().upper().replace("*", "").replace(" ", "")
+    if tok in ("C", "U", "CURRENT", "UNAV", "UNAVAILABLE"):
+        return tok[0]
+    m = re.match(r"^(\d{1,2})([A-Z]{3})(\d{2})$", tok)
+    if not m:
+        raise ParseError(f"날짜 표기를 읽을 수 없음: {tok}")
+    d, mon, yy = int(m.group(1)), MON3.get(m.group(2)), int(m.group(3))
     if not mon:
         raise ParseError(f"알 수 없는 월 표기: {tok}")
     year = 2000 + yy if 2000 + yy <= bulletin_year + 1 else 1900 + yy
@@ -231,6 +235,7 @@ def _days(a: str, b: str) -> int:
 
 
 def diff(prev: dict[str, Any] | None, cur: dict[str, Any]) -> list[dict[str, Any]]:
+    """같은 표, 같은 행, 같은 열끼리만 비교합니다. 한쪽이 비어 있으면(열이 없던 시기) 건너뜁니다."""
     if not prev:
         return []
     out = []
@@ -240,7 +245,7 @@ def diff(prev: dict[str, Any] | None, cur: dict[str, Any]) -> list[dict[str, Any
             if not old:
                 continue
             for i, (a, b) in enumerate(zip(old, vals)):
-                if a == b:
+                if a == b or a is None or b is None:
                     continue
                 if b == "C":
                     kind = "to_c"
@@ -260,8 +265,50 @@ def diff(prev: dict[str, Any] | None, cur: dict[str, Any]) -> list[dict[str, Any
 
 
 def change_line(lang: str, c: dict[str, Any]) -> str:
-    return I.t(lang, c["kind"], cat=I.SHORT[c["row"]], col=I.t(lang, c["col"]),
+    return I.t(lang, c["kind"], cat=I.SHORT.get(c["row"], c["row"]), col=I.t(lang, c["col"]),
                a=c["a"], b=c["b"], d=c.get("d", 0))
+
+
+def analysis(rec: dict[str, Any], changes: list[dict[str, Any]], has_prev: bool) -> dict[str, Any]:
+    """표 변동만으로 만드는 6개 언어 분석. 추정이나 전망은 넣지 않습니다.
+
+    기준은 전 세계(한국 포함) 열의 최종조치일입니다.
+    """
+    row = [c for c in changes if c["chart"].endswith("final") and c["col"] == "row"]
+    adv = sorted([c for c in row if c["kind"] == "adv"], key=lambda c: -c["d"])
+    ret = sorted([c for c in row if c["kind"] == "ret"], key=lambda c: -c["d"])
+    tc = [c for c in row if c["kind"] in ("to_c", "from_u")]
+    tu = [c for c in row if c["kind"] in ("to_u", "from_c")]
+    sh = lambda c: I.SHORT.get(c["row"], c["row"])  # noqa: E731
+    out = {}
+    for lang in I.LANGS:
+        if not has_prev:
+            head = I.t(lang, "title", y=rec["year"], m=rec["month"])
+            summ = I.t(lang, "changes_first")
+        else:
+            parts = []
+            if adv:
+                parts.append(I.part(lang, "adv", sh(adv[0]), len(adv)))
+            if ret:
+                parts.append(I.part(lang, "ret", sh(ret[0]), len(ret)))
+            if not parts and (tc or tu):
+                first = (tc or tu)[0]
+                parts.append(I.part(lang, "cu", sh(first), len(tc) + len(tu)))
+            other = [c for c in changes if c["chart"].endswith("final") and c["col"] != "row"]
+            if parts:
+                head = I.PARTS[lang]["sep"].join(parts)
+            elif other:
+                head = I.t(lang, "h_other", n=len(other))
+            else:
+                head = I.t(lang, "h_none")
+            summ = I.t(lang, "sum_auto", a=len(adv), r=len(ret), c=len(tc), u=len(tu))
+            big = max(adv + ret, key=lambda c: c["d"], default=None)
+            if big:
+                summ += " " + I.t(lang, "sum_big", cat=sh(big), d=big["d"],
+                                  dir=I.t(lang, "dir_adv" if big["kind"] == "adv" else "dir_ret"))
+        pts = [change_line(lang, c) for c in (ret + adv + tc + tu)][:6]
+        out[lang] = {"headline": head, "summary": summ, "points": pts, "auto": False}
+    return out
 
 
 # ---------------------------------------------------------------- 저장소
@@ -420,23 +467,7 @@ SUMMARY_SYSTEM = """당신은 미국 이민 법무법인의 실무 담당자입�
 
 
 def _fallback_summary(rec: dict[str, Any], changes: list[dict[str, Any]], has_prev: bool) -> dict[str, Any]:
-    finals = [c for c in changes if c["chart"].endswith("final")]
-    out = {}
-    for lang in I.LANGS:
-        n = len(finals)
-        if not has_prev:
-            head = I.t(lang, "title", y=rec["year"], m=rec["month"])
-        else:
-            head = I.t(lang, "headline_auto" if n else "headline_none", y=rec["year"], m=rec["month"], n=n)
-        pts = [change_line(lang, c) for c in finals if c["col"] == "row"][:5]
-        if not has_prev:
-            summ = I.t(lang, "changes_first")
-        elif not changes:
-            summ = I.t(lang, "changes_none")
-        else:
-            summ = ""
-        out[lang] = {"headline": head, "summary": summ, "points": pts, "auto": False}
-    return out
+    return analysis(rec, changes, has_prev)
 
 
 def summarize(rec: dict[str, Any], changes: list[dict[str, Any]], has_prev: bool) -> dict[str, Any]:

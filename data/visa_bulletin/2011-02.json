@@ -1,0 +1,453 @@
+{
+  "year": 2011,
+  "month": 2,
+  "key": "2011-02",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2005-01-01",
+        "2005-01-01",
+        "2005-01-01",
+        "1993-01-22",
+        "1994-08-01"
+      ],
+      "F2A": [
+        "2008-01-01",
+        "2008-01-01",
+        "2008-01-01",
+        "2005-04-01",
+        "2008-01-01"
+      ],
+      "F2B": [
+        "2003-04-15",
+        "2003-04-15",
+        "2003-04-15",
+        "1992-07-01",
+        "1999-06-01"
+      ],
+      "F3": [
+        "2001-01-01",
+        "2001-01-01",
+        "2001-01-01",
+        "1992-11-22",
+        "1991-10-22"
+      ],
+      "F4": [
+        "2000-01-01",
+        "2000-01-01",
+        "2000-01-01",
+        "1996-01-01",
+        "1988-01-15"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2006-07-01",
+        "2006-05-08",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "2005-04-01",
+        "2004-01-01",
+        "2002-02-22",
+        "2003-07-08",
+        "2005-04-01"
+      ],
+      "EW": [
+        "2003-05-01",
+        "2003-04-22",
+        "2002-02-22",
+        "2003-05-01",
+        "2003-05-01"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5TEA": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5PP": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5",
+      "EB5TEA",
+      "EB5PP"
+    ]
+  },
+  "extra": {
+    "fam_final": {
+      "cols": [
+        "DR"
+      ],
+      "rows": {
+        "F1": {
+          "DR": "2005-01-01"
+        },
+        "F2A": {
+          "DR": "2008-01-01"
+        },
+        "F2B": {
+          "DR": "1997-01-01"
+        },
+        "F3": {
+          "DR": "2001-01-01"
+        },
+        "F4": {
+          "DR": "2000-01-01"
+        }
+      }
+    },
+    "emp_final": {
+      "cols": [
+        "DR"
+      ],
+      "rows": {
+        "EB1": {
+          "DR": "C"
+        },
+        "EB2": {
+          "DR": "C"
+        },
+        "EB3": {
+          "DR": "2005-04-01"
+        },
+        "EW": {
+          "DR": "2003-05-01"
+        },
+        "EB4": {
+          "DR": "C"
+        },
+        "RW": {
+          "DR": "C"
+        },
+        "EB5": {
+          "DR": "C"
+        },
+        "EB5TEA": {
+          "DR": "C"
+        },
+        "EB5PP": {
+          "DR": "C"
+        }
+      }
+    }
+  },
+  "labels": {
+    "F1": "1st",
+    "F2A": "2A",
+    "F2B": "2B",
+    "F3": "3rd",
+    "F4": "4th",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5": "5th",
+    "EB5TEA": "Targeted Employment Areas/ Regional Centers",
+    "EB5PP": "5th Pilot Programs"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2011/visa-bulletin-for-february-2011.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin for February 2011",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "mexico",
+      "a": "1993-01-08",
+      "b": "1993-01-22",
+      "kind": "adv",
+      "d": 14
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "philippines",
+      "a": "1994-06-01",
+      "b": "1994-08-01",
+      "kind": "adv",
+      "d": 61
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "mexico",
+      "a": "1992-06-22",
+      "b": "1992-07-01",
+      "kind": "adv",
+      "d": 9
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "philippines",
+      "a": "1999-05-15",
+      "b": "1999-06-01",
+      "kind": "adv",
+      "d": 17
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "mexico",
+      "a": "1992-10-22",
+      "b": "1992-11-22",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "row",
+      "a": "2002-01-01",
+      "b": "2000-01-01",
+      "kind": "ret",
+      "d": 731
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "china",
+      "a": "2002-01-01",
+      "b": "2000-01-01",
+      "kind": "ret",
+      "d": 731
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "india",
+      "a": "2002-01-01",
+      "b": "2000-01-01",
+      "kind": "ret",
+      "d": 731
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "mexico",
+      "a": "1995-12-22",
+      "b": "1996-01-01",
+      "kind": "adv",
+      "d": 10
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "philippines",
+      "a": "1988-01-01",
+      "b": "1988-01-15",
+      "kind": "adv",
+      "d": 14
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "china",
+      "a": "2006-06-22",
+      "b": "2006-07-01",
+      "kind": "adv",
+      "d": 9
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "row",
+      "a": "2005-03-22",
+      "b": "2005-04-01",
+      "kind": "adv",
+      "d": 10
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "china",
+      "a": "2003-12-15",
+      "b": "2004-01-01",
+      "kind": "adv",
+      "d": 17
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "india",
+      "a": "2002-02-01",
+      "b": "2002-02-22",
+      "kind": "adv",
+      "d": 21
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "mexico",
+      "a": "2003-04-15",
+      "b": "2003-07-08",
+      "kind": "adv",
+      "d": 84
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "philippines",
+      "a": "2005-03-22",
+      "b": "2005-04-01",
+      "kind": "adv",
+      "d": 10
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "row",
+      "a": "2003-04-22",
+      "b": "2003-05-01",
+      "kind": "adv",
+      "d": 9
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "india",
+      "a": "2002-02-01",
+      "b": "2002-02-22",
+      "kind": "adv",
+      "d": 21
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "mexico",
+      "a": "2003-04-15",
+      "b": "2003-05-01",
+      "kind": "adv",
+      "d": 16
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "philippines",
+      "a": "2003-04-22",
+      "b": "2003-05-01",
+      "kind": "adv",
+      "d": 9
+    }
+  ],
+  "prev_key": "2011-01",
+  "summary": {
+    "ko": {
+      "headline": "EB-3 등 2건 전진, F4 후퇴",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 2건, 후퇴 1건, 대기 없음 전환 0건, 배정 중단 0건입니다. 가장 크게 움직인 항목은 F4(731일 후퇴)입니다.",
+      "points": [
+        "F4 · 전 세계 (한국 포함): 2002-01-01 → 2000-01-01 (731일 후퇴)",
+        "EB-3 · 전 세계 (한국 포함): 2005-03-22 → 2005-04-01 (10일 진전)",
+        "EB-3 OW · 전 세계 (한국 포함): 2003-04-22 → 2003-05-01 (9일 진전)"
+      ],
+      "auto": false
+    },
+    "en": {
+      "headline": "EB-3 and 1 more advance; F4 retrogresses",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 2 categories, retrogressed in 1, became current in 0 and became unavailable in 0. The largest move was F4 (731 days back).",
+      "points": [
+        "F4 · All Chargeability Areas: 2002-01-01 → 2000-01-01 (retrogressed 731 days)",
+        "EB-3 · All Chargeability Areas: 2005-03-22 → 2005-04-01 (advanced 10 days)",
+        "EB-3 OW · All Chargeability Areas: 2003-04-22 → 2003-05-01 (advanced 9 days)"
+      ],
+      "auto": false
+    },
+    "zh": {
+      "headline": "EB-3 等 2 项前进，F4 倒退",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 2 项，倒退 1 项，转为无需排期 0 项，暂停分配 0 项。 变动最大的是 F4（倒退 731 天）。",
+      "points": [
+        "F4 · 其他所有国家/地区：2002-01-01 → 2000-01-01（倒退 731 天）",
+        "EB-3 · 其他所有国家/地区：2005-03-22 → 2005-04-01（前进 10 天）",
+        "EB-3 OW · 其他所有国家/地区：2003-04-22 → 2003-05-01（前进 9 天）"
+      ],
+      "auto": false
+    },
+    "ja": {
+      "headline": "EB-3 など 2件前進、F4 後退",
+      "summary": "その他全地域の列の最終処理日は、前進 2件、後退 1件、カレント移行 0件、割り当て停止 0件です。 最も大きく動いたのは F4（731日後退）です。",
+      "points": [
+        "F4 · その他全地域：2002-01-01 → 2000-01-01（731日後退）",
+        "EB-3 · その他全地域：2005-03-22 → 2005-04-01（10日前進）",
+        "EB-3 OW · その他全地域：2003-04-22 → 2003-05-01（9日前進）"
+      ],
+      "auto": false
+    },
+    "vi": {
+      "headline": "EB-3 và 1 diện khác tiến; F4 lùi",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 2 diện, lùi ở 1 diện, chuyển sang hiện hành 0 diện và tạm ngưng 0 diện. Biến động lớn nhất là F4 (lùi 731 ngày).",
+      "points": [
+        "F4 · Các nước còn lại: 2002-01-01 → 2000-01-01 (lùi 731 ngày)",
+        "EB-3 · Các nước còn lại: 2005-03-22 → 2005-04-01 (tiến 10 ngày)",
+        "EB-3 OW · Các nước còn lại: 2003-04-22 → 2003-05-01 (tiến 9 ngày)"
+      ],
+      "auto": false
+    },
+    "es": {
+      "headline": "EB-3 y 1 más avanzan; F4 retrocede",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 2 categorías, retrocedieron en 1, pasaron a vigente en 0 y quedaron sin cupo en 0. El mayor movimiento fue F4 (731 días de retroceso).",
+      "points": [
+        "F4 · Resto del mundo: 2002-01-01 → 2000-01-01 (retrocedió 731 días)",
+        "EB-3 · Resto del mundo: 2005-03-22 → 2005-04-01 (avanzó 10 días)",
+        "EB-3 OW · Resto del mundo: 2003-04-22 → 2003-05-01 (avanzó 9 días)"
+      ],
+      "auto": false
+    }
+  }
+}

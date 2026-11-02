@@ -1,0 +1,812 @@
+{
+  "year": 2024,
+  "month": 3,
+  "key": "2024-03",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2015-02-08",
+        "2015-02-08",
+        "2015-02-08",
+        "2001-05-01",
+        "2012-03-01"
+      ],
+      "F2A": [
+        "2020-06-22",
+        "2020-06-22",
+        "2020-06-22",
+        "2020-06-15",
+        "2020-06-22"
+      ],
+      "F2B": [
+        "2015-11-22",
+        "2015-11-22",
+        "2015-11-22",
+        "2003-10-22",
+        "2011-10-22"
+      ],
+      "F3": [
+        "2009-10-01",
+        "2009-10-01",
+        "2009-10-01",
+        "1998-09-08",
+        "2002-06-08"
+      ],
+      "F4": [
+        "2007-06-08",
+        "2007-06-08",
+        "2005-12-15",
+        "2000-10-15",
+        "2003-06-15"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "2022-07-15",
+        "2020-10-01",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "2022-11-22",
+        "2020-01-01",
+        "2012-03-01",
+        "2022-11-22",
+        "2022-11-22"
+      ],
+      "EB3": [
+        "2022-09-08",
+        "2020-09-01",
+        "2012-07-01",
+        "2022-09-08",
+        "2022-09-08"
+      ],
+      "EW": [
+        "2020-09-08",
+        "2017-01-01",
+        "2012-07-01",
+        "2020-09-08",
+        "2020-05-01"
+      ],
+      "EB4": [
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01"
+      ],
+      "RW": [
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01",
+        "2019-12-01"
+      ],
+      "EB5U": [
+        "C",
+        "2015-12-15",
+        "2020-12-01",
+        "C",
+        "C"
+      ],
+      "EB5R": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5H": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5I": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    },
+    "fam_filing": {
+      "F1": [
+        "2017-09-01",
+        "2017-09-01",
+        "2017-09-01",
+        "2005-04-01",
+        "2015-04-22"
+      ],
+      "F2A": [
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01",
+        "2023-09-01"
+      ],
+      "F2B": [
+        "2017-01-01",
+        "2017-01-01",
+        "2017-01-01",
+        "2004-08-01",
+        "2013-10-01"
+      ],
+      "F3": [
+        "2010-03-01",
+        "2010-03-01",
+        "2010-03-01",
+        "2001-06-15",
+        "2003-11-08"
+      ],
+      "F4": [
+        "2008-03-01",
+        "2008-03-01",
+        "2006-02-22",
+        "2001-04-15",
+        "2004-04-22"
+      ]
+    },
+    "emp_filing": {
+      "EB1": [
+        "C",
+        "2023-01-01",
+        "2021-01-01",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "2023-02-15",
+        "2020-06-01",
+        "2012-05-15",
+        "2023-02-15",
+        "2023-02-15"
+      ],
+      "EB3": [
+        "2023-02-01",
+        "2021-07-01",
+        "2012-08-01",
+        "2023-02-01",
+        "2023-01-01"
+      ],
+      "EW": [
+        "2020-12-15",
+        "2017-06-01",
+        "2012-08-01",
+        "2020-12-15",
+        "2020-05-15"
+      ],
+      "EB4": [
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01"
+      ],
+      "RW": [
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01",
+        "2020-01-01"
+      ],
+      "EB5U": [
+        "C",
+        "2017-01-01",
+        "2022-04-01",
+        "C",
+        "C"
+      ],
+      "EB5R": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5H": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5I": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5U",
+      "EB5R",
+      "EB5H",
+      "EB5I"
+    ],
+    "fam_filing": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_filing": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5U",
+      "EB5R",
+      "EB5H",
+      "EB5I"
+    ]
+  },
+  "extra": {},
+  "labels": {
+    "F1": "F1",
+    "F2A": "F2A",
+    "F2B": "F2B",
+    "F3": "F3",
+    "F4": "F4",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5U": "5th Unreserved (including C5, T5, I5, R5)",
+    "EB5R": "5th Set Aside: (Rural - 20%)",
+    "EB5H": "5th Set Aside: (High Unemployment - 10%)",
+    "EB5I": "5th Set Aside: (Infrastructure - 2%)"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2024/visa-bulletin-for-march-2024.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin For March 2024",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "row",
+      "a": "2015-01-01",
+      "b": "2015-02-08",
+      "kind": "adv",
+      "d": 38
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "china",
+      "a": "2015-01-01",
+      "b": "2015-02-08",
+      "kind": "adv",
+      "d": 38
+    },
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "india",
+      "a": "2015-01-01",
+      "b": "2015-02-08",
+      "kind": "adv",
+      "d": 38
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "row",
+      "a": "2020-02-08",
+      "b": "2020-06-22",
+      "kind": "adv",
+      "d": 135
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "china",
+      "a": "2020-02-08",
+      "b": "2020-06-22",
+      "kind": "adv",
+      "d": 135
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "india",
+      "a": "2020-02-08",
+      "b": "2020-06-22",
+      "kind": "adv",
+      "d": 135
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "mexico",
+      "a": "2020-02-01",
+      "b": "2020-06-15",
+      "kind": "adv",
+      "d": 135
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "philippines",
+      "a": "2020-02-08",
+      "b": "2020-06-22",
+      "kind": "adv",
+      "d": 135
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "row",
+      "a": "2015-10-01",
+      "b": "2015-11-22",
+      "kind": "adv",
+      "d": 52
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "china",
+      "a": "2015-10-01",
+      "b": "2015-11-22",
+      "kind": "adv",
+      "d": 52
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "india",
+      "a": "2015-10-01",
+      "b": "2015-11-22",
+      "kind": "adv",
+      "d": 52
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "row",
+      "a": "2009-04-22",
+      "b": "2009-10-01",
+      "kind": "adv",
+      "d": 162
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "china",
+      "a": "2009-04-22",
+      "b": "2009-10-01",
+      "kind": "adv",
+      "d": 162
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "india",
+      "a": "2009-04-22",
+      "b": "2009-10-01",
+      "kind": "adv",
+      "d": 162
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "row",
+      "a": "2007-05-22",
+      "b": "2007-06-08",
+      "kind": "adv",
+      "d": 17
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "china",
+      "a": "2007-05-22",
+      "b": "2007-06-08",
+      "kind": "adv",
+      "d": 17
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "india",
+      "a": "2005-11-15",
+      "b": "2005-12-15",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "mexico",
+      "a": "2000-09-15",
+      "b": "2000-10-15",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "philippines",
+      "a": "2002-10-15",
+      "b": "2003-06-15",
+      "kind": "adv",
+      "d": 243
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB1",
+      "col": "china",
+      "a": "2022-07-01",
+      "b": "2022-07-15",
+      "kind": "adv",
+      "d": 14
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB1",
+      "col": "india",
+      "a": "2020-09-01",
+      "b": "2020-10-01",
+      "kind": "adv",
+      "d": 30
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "row",
+      "a": "2022-11-15",
+      "b": "2022-11-22",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "mexico",
+      "a": "2022-11-15",
+      "b": "2022-11-22",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB2",
+      "col": "philippines",
+      "a": "2022-11-15",
+      "b": "2022-11-22",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "row",
+      "a": "2022-09-01",
+      "b": "2022-09-08",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "mexico",
+      "a": "2022-09-01",
+      "b": "2022-09-08",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB3",
+      "col": "philippines",
+      "a": "2022-09-01",
+      "b": "2022-09-08",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "row",
+      "a": "2020-09-01",
+      "b": "2020-09-08",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EW",
+      "col": "mexico",
+      "a": "2020-09-01",
+      "b": "2020-09-08",
+      "kind": "adv",
+      "d": 7
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "row",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "china",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "india",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "mexico",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "EB4",
+      "col": "philippines",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "row",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "china",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "india",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "mexico",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_final",
+      "row": "RW",
+      "col": "philippines",
+      "a": "2019-05-15",
+      "b": "2019-12-01",
+      "kind": "adv",
+      "d": 200
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB4",
+      "col": "row",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB4",
+      "col": "china",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB4",
+      "col": "india",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB4",
+      "col": "mexico",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "EB4",
+      "col": "philippines",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "RW",
+      "col": "row",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "RW",
+      "col": "china",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "RW",
+      "col": "india",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "RW",
+      "col": "mexico",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    },
+    {
+      "chart": "emp_filing",
+      "row": "RW",
+      "col": "philippines",
+      "a": "2019-09-01",
+      "b": "2020-01-01",
+      "kind": "adv",
+      "d": 122
+    }
+  ],
+  "prev_key": "2024-02",
+  "summary": {
+    "ko": {
+      "headline": "EB-4 등 10건 전진",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 10건, 후퇴 0건, 대기 없음 전환 0건, 배정 중단 0건입니다. 가장 크게 움직인 항목은 EB-4(200일 진전)입니다.",
+      "points": [
+        "EB-4 · 전 세계 (한국 포함): 2019-05-15 → 2019-12-01 (200일 진전)",
+        "EB-4 RW · 전 세계 (한국 포함): 2019-05-15 → 2019-12-01 (200일 진전)",
+        "F3 · 전 세계 (한국 포함): 2009-04-22 → 2009-10-01 (162일 진전)",
+        "F2A · 전 세계 (한국 포함): 2020-02-08 → 2020-06-22 (135일 진전)",
+        "F2B · 전 세계 (한국 포함): 2015-10-01 → 2015-11-22 (52일 진전)",
+        "F1 · 전 세계 (한국 포함): 2015-01-01 → 2015-02-08 (38일 진전)"
+      ],
+      "auto": false
+    },
+    "en": {
+      "headline": "EB-4 and 9 more advance",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 10 categories, retrogressed in 0, became current in 0 and became unavailable in 0. The largest move was EB-4 (200 days forward).",
+      "points": [
+        "EB-4 · All Chargeability Areas: 2019-05-15 → 2019-12-01 (advanced 200 days)",
+        "EB-4 RW · All Chargeability Areas: 2019-05-15 → 2019-12-01 (advanced 200 days)",
+        "F3 · All Chargeability Areas: 2009-04-22 → 2009-10-01 (advanced 162 days)",
+        "F2A · All Chargeability Areas: 2020-02-08 → 2020-06-22 (advanced 135 days)",
+        "F2B · All Chargeability Areas: 2015-10-01 → 2015-11-22 (advanced 52 days)",
+        "F1 · All Chargeability Areas: 2015-01-01 → 2015-02-08 (advanced 38 days)"
+      ],
+      "auto": false
+    },
+    "zh": {
+      "headline": "EB-4 等 10 项前进",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 10 项，倒退 0 项，转为无需排期 0 项，暂停分配 0 项。 变动最大的是 EB-4（前进 200 天）。",
+      "points": [
+        "EB-4 · 其他所有国家/地区：2019-05-15 → 2019-12-01（前进 200 天）",
+        "EB-4 RW · 其他所有国家/地区：2019-05-15 → 2019-12-01（前进 200 天）",
+        "F3 · 其他所有国家/地区：2009-04-22 → 2009-10-01（前进 162 天）",
+        "F2A · 其他所有国家/地区：2020-02-08 → 2020-06-22（前进 135 天）",
+        "F2B · 其他所有国家/地区：2015-10-01 → 2015-11-22（前进 52 天）",
+        "F1 · 其他所有国家/地区：2015-01-01 → 2015-02-08（前进 38 天）"
+      ],
+      "auto": false
+    },
+    "ja": {
+      "headline": "EB-4 など 10件前進",
+      "summary": "その他全地域の列の最終処理日は、前進 10件、後退 0件、カレント移行 0件、割り当て停止 0件です。 最も大きく動いたのは EB-4（200日前進）です。",
+      "points": [
+        "EB-4 · その他全地域：2019-05-15 → 2019-12-01（200日前進）",
+        "EB-4 RW · その他全地域：2019-05-15 → 2019-12-01（200日前進）",
+        "F3 · その他全地域：2009-04-22 → 2009-10-01（162日前進）",
+        "F2A · その他全地域：2020-02-08 → 2020-06-22（135日前進）",
+        "F2B · その他全地域：2015-10-01 → 2015-11-22（52日前進）",
+        "F1 · その他全地域：2015-01-01 → 2015-02-08（38日前進）"
+      ],
+      "auto": false
+    },
+    "vi": {
+      "headline": "EB-4 và 9 diện khác tiến",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 10 diện, lùi ở 0 diện, chuyển sang hiện hành 0 diện và tạm ngưng 0 diện. Biến động lớn nhất là EB-4 (tiến 200 ngày).",
+      "points": [
+        "EB-4 · Các nước còn lại: 2019-05-15 → 2019-12-01 (tiến 200 ngày)",
+        "EB-4 RW · Các nước còn lại: 2019-05-15 → 2019-12-01 (tiến 200 ngày)",
+        "F3 · Các nước còn lại: 2009-04-22 → 2009-10-01 (tiến 162 ngày)",
+        "F2A · Các nước còn lại: 2020-02-08 → 2020-06-22 (tiến 135 ngày)",
+        "F2B · Các nước còn lại: 2015-10-01 → 2015-11-22 (tiến 52 ngày)",
+        "F1 · Các nước còn lại: 2015-01-01 → 2015-02-08 (tiến 38 ngày)"
+      ],
+      "auto": false
+    },
+    "es": {
+      "headline": "EB-4 y 9 más avanzan",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 10 categorías, retrocedieron en 0, pasaron a vigente en 0 y quedaron sin cupo en 0. El mayor movimiento fue EB-4 (200 días de avance).",
+      "points": [
+        "EB-4 · Resto del mundo: 2019-05-15 → 2019-12-01 (avanzó 200 días)",
+        "EB-4 RW · Resto del mundo: 2019-05-15 → 2019-12-01 (avanzó 200 días)",
+        "F3 · Resto del mundo: 2009-04-22 → 2009-10-01 (avanzó 162 días)",
+        "F2A · Resto del mundo: 2020-02-08 → 2020-06-22 (avanzó 135 días)",
+        "F2B · Resto del mundo: 2015-10-01 → 2015-11-22 (avanzó 52 días)",
+        "F1 · Resto del mundo: 2015-01-01 → 2015-02-08 (avanzó 38 días)"
+      ],
+      "auto": false
+    }
+  }
+}

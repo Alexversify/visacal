@@ -1,0 +1,351 @@
+{
+  "year": 2007,
+  "month": 3,
+  "key": "2007-03",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "2001-05-01",
+        "2001-05-01",
+        "2001-05-01",
+        "1994-01-01",
+        "1992-01-22"
+      ],
+      "F2A": [
+        "2002-03-22",
+        "2002-03-22",
+        "2002-03-22",
+        "2000-08-15",
+        "2002-03-22"
+      ],
+      "F2B": [
+        "1997-07-01",
+        "1997-07-01",
+        "1997-07-01",
+        "1992-03-01",
+        "1996-10-01"
+      ],
+      "F3": [
+        "1999-03-01",
+        "1999-03-01",
+        "1999-03-01",
+        "1994-08-01",
+        "1990-09-01"
+      ],
+      "F4": [
+        "1996-03-22",
+        "1995-08-22",
+        "1995-11-08",
+        "1994-05-01",
+        "1984-09-01"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        "2005-04-22",
+        "2003-01-08",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "2002-08-01",
+        "2002-08-01",
+        "2001-05-08",
+        "2001-05-15",
+        "2002-08-01"
+      ],
+      "EW": [
+        "2001-10-01",
+        "2001-10-01",
+        "2001-10-01",
+        "2001-10-01",
+        "2001-10-01"
+      ],
+      "EB4": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "RW": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "SI": [
+        "2006-09-18",
+        "2006-09-18",
+        "2006-09-18",
+        "2006-09-18",
+        "2006-09-18"
+      ],
+      "EB5": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5TEA": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "SI",
+      "EB5",
+      "EB5TEA"
+    ]
+  },
+  "extra": {},
+  "labels": {
+    "F1": "1st",
+    "F2A": "2A",
+    "F2B": "2B",
+    "F3": "3rd",
+    "F4": "4th",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "SI": "Iraqi & Afghani Translators",
+    "EB5": "5th",
+    "EB5TEA": "Targeted Employment Areas/Regional Centers"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2007/visa-bulletin-for-march-2007.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin for March 2007",
+  "fixes": [],
+  "changes": [
+    {
+      "chart": "fam_final",
+      "row": "F1",
+      "col": "philippines",
+      "a": "1992-01-01",
+      "b": "1992-01-22",
+      "kind": "adv",
+      "d": 21
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2A",
+      "col": "mexico",
+      "a": "2000-05-15",
+      "b": "2000-08-15",
+      "kind": "adv",
+      "d": 92
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "row",
+      "a": "1997-05-15",
+      "b": "1997-07-01",
+      "kind": "adv",
+      "d": 47
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "china",
+      "a": "1997-05-15",
+      "b": "1997-07-01",
+      "kind": "adv",
+      "d": 47
+    },
+    {
+      "chart": "fam_final",
+      "row": "F2B",
+      "col": "india",
+      "a": "1997-05-15",
+      "b": "1997-07-01",
+      "kind": "adv",
+      "d": 47
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "row",
+      "a": "1999-02-01",
+      "b": "1999-03-01",
+      "kind": "adv",
+      "d": 28
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "china",
+      "a": "1999-02-01",
+      "b": "1999-03-01",
+      "kind": "adv",
+      "d": 28
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "india",
+      "a": "1999-02-01",
+      "b": "1999-03-01",
+      "kind": "adv",
+      "d": 28
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "mexico",
+      "a": "1995-01-01",
+      "b": "1994-08-01",
+      "kind": "ret",
+      "d": 153
+    },
+    {
+      "chart": "fam_final",
+      "row": "F3",
+      "col": "philippines",
+      "a": "1991-02-08",
+      "b": "1990-09-01",
+      "kind": "ret",
+      "d": 160
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "row",
+      "a": "1996-02-15",
+      "b": "1996-03-22",
+      "kind": "adv",
+      "d": 36
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "china",
+      "a": "1995-07-22",
+      "b": "1995-08-22",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "india",
+      "a": "1995-10-08",
+      "b": "1995-11-08",
+      "kind": "adv",
+      "d": 31
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "mexico",
+      "a": "1994-03-15",
+      "b": "1994-05-01",
+      "kind": "adv",
+      "d": 47
+    },
+    {
+      "chart": "fam_final",
+      "row": "F4",
+      "col": "philippines",
+      "a": "1984-08-01",
+      "b": "1984-09-01",
+      "kind": "adv",
+      "d": 31
+    }
+  ],
+  "prev_key": "2007-02",
+  "summary": {
+    "ko": {
+      "headline": "F2B 등 3건 전진",
+      "summary": "전 세계(한국 포함) 열 최종조치일 기준 전진 3건, 후퇴 0건, 대기 없음 전환 0건, 배정 중단 0건입니다. 가장 크게 움직인 항목은 F2B(47일 진전)입니다.",
+      "points": [
+        "F2B · 전 세계 (한국 포함): 1997-05-15 → 1997-07-01 (47일 진전)",
+        "F4 · 전 세계 (한국 포함): 1996-02-15 → 1996-03-22 (36일 진전)",
+        "F3 · 전 세계 (한국 포함): 1999-02-01 → 1999-03-01 (28일 진전)"
+      ],
+      "auto": false
+    },
+    "en": {
+      "headline": "F2B and 2 more advance",
+      "summary": "In the All Chargeability column, Final Action Dates advanced in 3 categories, retrogressed in 0, became current in 0 and became unavailable in 0. The largest move was F2B (47 days forward).",
+      "points": [
+        "F2B · All Chargeability Areas: 1997-05-15 → 1997-07-01 (advanced 47 days)",
+        "F4 · All Chargeability Areas: 1996-02-15 → 1996-03-22 (advanced 36 days)",
+        "F3 · All Chargeability Areas: 1999-02-01 → 1999-03-01 (advanced 28 days)"
+      ],
+      "auto": false
+    },
+    "zh": {
+      "headline": "F2B 等 3 项前进",
+      "summary": "按“其他所有国家/地区”一栏的最终裁决日期，前进 3 项，倒退 0 项，转为无需排期 0 项，暂停分配 0 项。 变动最大的是 F2B（前进 47 天）。",
+      "points": [
+        "F2B · 其他所有国家/地区：1997-05-15 → 1997-07-01（前进 47 天）",
+        "F4 · 其他所有国家/地区：1996-02-15 → 1996-03-22（前进 36 天）",
+        "F3 · 其他所有国家/地区：1999-02-01 → 1999-03-01（前进 28 天）"
+      ],
+      "auto": false
+    },
+    "ja": {
+      "headline": "F2B など 3件前進",
+      "summary": "その他全地域の列の最終処理日は、前進 3件、後退 0件、カレント移行 0件、割り当て停止 0件です。 最も大きく動いたのは F2B（47日前進）です。",
+      "points": [
+        "F2B · その他全地域：1997-05-15 → 1997-07-01（47日前進）",
+        "F4 · その他全地域：1996-02-15 → 1996-03-22（36日前進）",
+        "F3 · その他全地域：1999-02-01 → 1999-03-01（28日前進）"
+      ],
+      "auto": false
+    },
+    "vi": {
+      "headline": "F2B và 2 diện khác tiến",
+      "summary": "Ở cột Các nước còn lại, ngày hành động cuối cùng tiến ở 3 diện, lùi ở 0 diện, chuyển sang hiện hành 0 diện và tạm ngưng 0 diện. Biến động lớn nhất là F2B (tiến 47 ngày).",
+      "points": [
+        "F2B · Các nước còn lại: 1997-05-15 → 1997-07-01 (tiến 47 ngày)",
+        "F4 · Các nước còn lại: 1996-02-15 → 1996-03-22 (tiến 36 ngày)",
+        "F3 · Các nước còn lại: 1999-02-01 → 1999-03-01 (tiến 28 ngày)"
+      ],
+      "auto": false
+    },
+    "es": {
+      "headline": "F2B y 2 más avanzan",
+      "summary": "En la columna Resto del mundo, las fechas de acción final avanzaron en 3 categorías, retrocedieron en 0, pasaron a vigente en 0 y quedaron sin cupo en 0. El mayor movimiento fue F2B (47 días de avance).",
+      "points": [
+        "F2B · Resto del mundo: 1997-05-15 → 1997-07-01 (avanzó 47 días)",
+        "F4 · Resto del mundo: 1996-02-15 → 1996-03-22 (avanzó 36 días)",
+        "F3 · Resto del mundo: 1999-02-01 → 1999-03-01 (avanzó 28 días)"
+      ],
+      "auto": false
+    }
+  }
+}

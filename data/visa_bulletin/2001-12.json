@@ -1,0 +1,182 @@
+{
+  "year": 2001,
+  "month": 12,
+  "key": "2001-12",
+  "charts": {
+    "fam_final": {
+      "F1": [
+        "1999-03-01",
+        null,
+        "1999-03-01",
+        "1994-04-22",
+        "1988-07-08"
+      ],
+      "F2A": [
+        "1996-09-22",
+        null,
+        "1996-09-22",
+        "1994-10-22",
+        "1996-09-22"
+      ],
+      "F2B": [
+        "1993-06-22",
+        null,
+        "1993-06-22",
+        "1991-10-22",
+        "1993-06-22"
+      ],
+      "F3": [
+        "1996-05-08",
+        null,
+        "1996-05-08",
+        "1992-07-01",
+        "1988-02-01"
+      ],
+      "F4": [
+        "1989-11-08",
+        null,
+        "1988-09-22",
+        "1989-11-08",
+        "1979-11-01"
+      ]
+    },
+    "emp_final": {
+      "EB1": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EB2": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EB3": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EW": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EB4": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "RW": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ],
+      "EB5TEA": [
+        "C",
+        null,
+        "C",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "order": {
+    "fam_final": [
+      "F1",
+      "F2A",
+      "F2B",
+      "F3",
+      "F4"
+    ],
+    "emp_final": [
+      "EB1",
+      "EB2",
+      "EB3",
+      "EW",
+      "EB4",
+      "RW",
+      "EB5",
+      "EB5TEA"
+    ]
+  },
+  "extra": {},
+  "labels": {
+    "F1": "1st",
+    "F2A": "2A*",
+    "F2B": "2B",
+    "F3": "3rd",
+    "F4": "4th",
+    "EB1": "1st",
+    "EB2": "2nd",
+    "EB3": "3rd",
+    "EW": "Other Workers",
+    "EB4": "4th",
+    "RW": "Certain Religious Workers",
+    "EB5": "5th",
+    "EB5TEA": "Targeted Employment Areas/Regional Centers"
+  },
+  "source": "travel.state.gov",
+  "source_url": "https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2002/visa-bulletin-for-december-2001.html",
+  "fetched_at": "2026-11-02T20:07+09:00",
+  "title": "Visa Bulletin for December 2001",
+  "fixes": [],
+  "changes": [],
+  "prev_key": null,
+  "summary": {
+    "ko": {
+      "headline": "2001년 12월 비자 문호",
+      "summary": "비교할 지난달 기록이 아직 없습니다.",
+      "points": [],
+      "auto": false
+    },
+    "en": {
+      "headline": "Visa Bulletin December 2001",
+      "summary": "No previous month on record to compare yet.",
+      "points": [],
+      "auto": false
+    },
+    "zh": {
+      "headline": "2001年12月移民排期",
+      "summary": "暂无上月记录可供比较。",
+      "points": [],
+      "auto": false
+    },
+    "ja": {
+      "headline": "2001年12月 ビザ・ブレティン",
+      "summary": "比較できる前月の記録がまだありません。",
+      "points": [],
+      "auto": false
+    },
+    "vi": {
+      "headline": "Lịch chiếu khán tháng 12/2001",
+      "summary": "Chưa có dữ liệu tháng trước để so sánh.",
+      "points": [],
+      "auto": false
+    },
+    "es": {
+      "headline": "Boletín de Visas de diciembre de 2001",
+      "summary": "Aún no hay un mes anterior registrado para comparar.",
+      "points": [],
+      "auto": false
+    }
+  }
+}
