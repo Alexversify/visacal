@@ -101,6 +101,9 @@ def render_all(cfg: dict[str, Any]) -> None:
         pages = ["", "cspa.html", "age.html", "consular-rate/", "consular-rate/history/", "guides.html", "changes.html", "privacy.html"]
         pages += [a["slug"] for a in ARTICLES]
         pages += [f"news/{p['slug']}.html" for p in load_posts()]
+        from src.vb_page import paths as vb_paths
+
+        pages += vb_paths()
         urls = "".join(
             f"<url><loc>https://{domain}/{page}</loc><lastmod>{today}</lastmod></url>"
             for page in pages

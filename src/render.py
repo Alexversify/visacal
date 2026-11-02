@@ -77,6 +77,7 @@ INDEX_CSS = """
   font-size:13px;font-weight:600;text-decoration:none;font-variant-numeric:tabular-nums;background:var(--paper)}
 .rate-badge span{color:var(--faint);font-weight:400;margin-left:4px}
 .rate-badge:hover{background:var(--ink);color:#fff}
+.rate-badge + .rate-badge{margin-left:8px}
 .li-krw{font-size:12px;color:var(--faint);text-align:right;margin:-5px 0 3px;font-variant-numeric:tabular-nums}
 .note{margin-top:30px;color:var(--faint);font-size:12.5px;max-width:70ch}
 @media (max-width:860px){
@@ -236,6 +237,12 @@ def _checked_kst(state: dict[str, Any]) -> str:
     )
 
 
+def vb_badge() -> str:
+    from src import vb_page
+
+    return vb_page.badge()
+
+
 def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     scenarios = json.loads(SCENARIOS.read_text(encoding="utf-8"))
     index = {
@@ -265,7 +272,7 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     )
     cfg = site.load_cfg()
     body = f"""
-{consular_page.rate_badge(rate)}
+{consular_page.rate_badge(rate)}{vb_badge()}
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>
@@ -367,6 +374,9 @@ def render_static(cfg: dict[str, Any]) -> None:
     age_page.render_age(cfg)
     consular_page.render_consular(cfg)
     consular_history.render_history(cfg)
+    from src import vb_page
+
+    vb_page.render(cfg)
     articles.render_articles(cfg)
     static_pages.render_all(cfg)
 

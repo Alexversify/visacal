@@ -1,0 +1,80 @@
+name: visa-bulletin
+
+# 미 국무부 비자 문호(Visa Bulletin) 수집. 새 달 문호가 들어왔을 때만 글을 올리고 메일을 보냅니다.
+# 국무부는 보통 전달 중순에 다음 달 문호를 냅니다. 매일 확인해도 평소에는 아무 일도 하지 않습니다.
+on:
+  schedule:
+    - cron: "40 0 * * *"    # KST 09:40
+    - cron: "40 9 * * *"    # KST 18:40
+  workflow_dispatch:
+  # 원문을 수동 투입함에 넣으면 바로 처리
+  push:
+    branches: [main]
+    paths:
+      - "content/visa-bulletin/inbox/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fee-watch
+  cancel-in-progress: false
+
+jobs:
+  bulletin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 의존성 설치
+        run: |
+          pip install -r requirements.txt
+          npm install -g @anthropic-ai/claude-code
+
+      - name: 수집, 요약, 게시
+        env:
+          # 요약은 한 달에 한 번만 호출. API 크레딧 먼저, 부족하면 Max 구독 (src/llm.py 월 상한 적용)
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          LLM_MONTHLY_CAP_USD: ${{ vars.LLM_MONTHLY_CAP_USD }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          MAIL_TO_PROCESSING: ${{ secrets.MAIL_TO_PROCESSING }}
+          MAIL_TO_SALES: ${{ secrets.MAIL_TO_SALES }}
+          # 국무부 메일링을 받는 메일함. 비우면 발송용 Gmail(SMTP_USER)을 그대로 씁니다
+          VB_IMAP_HOST: ${{ secrets.VB_IMAP_HOST }}
+          VB_IMAP_USER: ${{ secrets.VB_IMAP_USER }}
+          VB_IMAP_PASS: ${{ secrets.VB_IMAP_PASS }}
+          PAGES_URL: ${{ vars.PAGES_URL }}
+        run: python -m src.visa_bulletin
+
+      # GITHUB_TOKEN 푸시는 fee-watch 를 깨우지 않으므로 여기서 페이지까지 다시 만듭니다.
+      - name: 페이지 재생성
+        env:
+          RUN_MODE: render
+        run: python -m src.main
+
+      - name: 결과 커밋
+        run: |
+          git config user.name "visa-bulletin"
+          git config user.email "actions@users.noreply.github.com"
+          git add data content docs
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git commit -m "chore: 비자 문호 갱신 $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          exit 1
