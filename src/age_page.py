@@ -195,7 +195,7 @@ def render_age(cfg: dict[str, Any] | None = None) -> Path:
 입력한 내용은 이 브라우저 안에서만 계산되며 서버로 전송되지 않습니다.</p>
 
 <div class="card">
-  <h2>생년월일을 입력하십시오</h2>
+  <h2 class="ctitle">만 나이 계산기</h2>
   <div class="f"><label for="dob">출생일</label><input type="date" id="dob"><span class="spacer"></span></div>
   <div class="f"><label for="on">기준일</label><input type="date" id="on">
     <button type="button" class="btn today" id="todayBtn">오늘</button></div>

@@ -29,6 +29,7 @@ STATUS_COLOR = {
 }
 
 INDEX_CSS = """
+.lede{margin:8px 0 0;max-width:72ch;color:var(--muted);font-size:14px}
 .visas{display:flex;flex-wrap:wrap;gap:7px;margin:22px 0 26px}
 .chip{border:1px solid var(--rule);background:var(--paper);padding:7px 14px;
   font:inherit;font-size:14px;cursor:pointer;color:var(--muted);border-radius:2px}
@@ -79,6 +80,17 @@ INDEX_CSS = """
 .rate-badge:hover{background:var(--ink);color:#fff}
 .rate-badge + .rate-badge{margin-left:8px}
 .li-krw{font-size:12px;color:var(--faint);text-align:right;margin:-5px 0 3px;font-variant-numeric:tabular-nums}
+.li-meta{font-size:12px;color:var(--faint);margin:-4px 0 4px;line-height:1.5}
+.li-meta .up{color:var(--warn);font-weight:600}
+.total-next{display:flex;justify-content:space-between;font-size:13px;color:var(--warn);margin-top:6px;font-variant-numeric:tabular-nums}
+.chg{background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--warn);padding:14px 18px;margin:18px 0 0;border-radius:2px}
+.chg h2{font-size:14px;margin:0 0 8px;font-weight:700}
+.chg table{width:100%;border-collapse:collapse;font-size:13px}
+.chg th{text-align:left;font-weight:600;color:var(--faint);font-size:12px;padding:5px 8px 5px 0;border-bottom:1px solid var(--rule)}
+.chg td{padding:7px 8px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+.chg td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.chg .soon{color:var(--warn);font-weight:700}
+.chg .r{color:var(--muted);font-size:12px}
 .note{margin-top:30px;color:var(--faint);font-size:12.5px;max-width:70ch}
 @media (max-width:860px){
   .cols{grid-template-columns:1fr;gap:22px}
@@ -160,9 +172,18 @@ function lines(){
   return out;
 }
 
+function meta(f){
+  const m = [];
+  if(f.prev!=null && f.prev!==f.amount) m.push(`이전 ${money(f.prev,f.currency)}`);
+  if(f.eff) m.push(`${f.eff} 시행`);
+  if(f.online!=null) m.push(`온라인 접수 ${money(f.online,f.currency)}`);
+  if(f.next && f.next.amount!=null) m.push(`<span class="up">${f.next.effective_date} 소인분부터 ${money(f.next.amount,f.currency)}</span>`);
+  return m.length ? `<div class="li-meta">${m.join(' · ')}</div>` : '';
+}
+
 function bill(){
   const items = lines();
-  let usd=0, krw=0, unknown=0;
+  let usd=0, krw=0, unknown=0, usdNext=0, hasNext=false;
   const rows = items.map(it=>{
     const f = it.f, qty = it.qty;
     if(f.amount==null){ unknown++;
@@ -172,7 +193,8 @@ function bill(){
     if(f.currency==='KRW') krw+=sub; else usd+=sub;
     const q = qty>1 ? `<span class="tag">${money(f.amount,f.currency)} × ${qty}</span>` : '';
     const k = (CRATE && isMrv(f)) ? `<div class="li-krw">영사환율 ${CRATE.label} 기준 ${mrvKrw(f,qty)} · ${CRATE.checked} 확인</div>` : '';
-    return `<div class="li"><span class="nm">${it.label}</span>${q}<span class="dots"></span><span class="v">${money(sub,f.currency)}</span></div>${k}`;
+    if(f.next && f.next.amount!=null){ usdNext += (f.next.amount-f.amount)*qty; hasNext=true; }
+    return `<div class="li"><span class="nm">${it.label}</span>${q}<span class="dots"></span><span class="v">${money(sub,f.currency)}</span></div>${k}${meta(f)}`;
   }).join('');
 
   const sub = [];
@@ -185,7 +207,8 @@ function bill(){
   const flags = [];
   items.forEach(it=>{
     if(it.f.status==='집행정지') flags.push(`<div class="stop">${it.label}: 법원 명령으로 집행이 정지된 항목입니다. 현재 납부 대상이 아닙니다.</div>`);
-    else if(it.f.status==='검토필요') flags.push(`<div>${it.label}: 금액 또는 적용 여부가 확인되지 않았습니다. 견적 전 원문 대조가 필요합니다.</div>`);
+    if(it.f.next && it.f.next.rule) flags.push(`<div class="stop">${it.label}: ${it.f.next.rule}</div>`);
+    if(it.f.status==='검토필요') flags.push(`<div>${it.label}: 금액 또는 적용 여부가 확인되지 않았습니다. 견적 전 원문 대조가 필요합니다.</div>`);
   });
 
   return `<h2>${visa().label}</h2>
@@ -193,6 +216,7 @@ function bill(){
     ${rows || '<div class="li"><span class="nm">항목 없음</span></div>'}
     ${sub.length?`<div class="sum">${sub.join('')}</div>`:''}
     <div class="total"><span class="l">미화 합계</span><span class="v">$${usd.toLocaleString('en-US')}</span></div>
+    ${hasNext?`<div class="total-next"><span>인상 후 소인 접수 시</span><span>$${(usd+usdNext).toLocaleString('en-US')}</span></div>`:''}
     <div class="krw"><label for="rate">환율</label>
       <input id="rate" inputmode="decimal" value="${S.rate}" placeholder="1,400">
       <span class="out">${conv!=null ? conv.toLocaleString('ko-KR')+'원' : '원화 환산'}</span></div>
@@ -243,6 +267,58 @@ def vb_badge() -> str:
     return vb_page.badge()
 
 
+def _money(v: Any, cur: str = "USD") -> str:
+    if v is None:
+        return "-"
+    return f"{v:,.0f}원" if cur == "KRW" else f"${v:,.0f}"
+
+
+def change_panel(fees: dict[str, Any], today: dt.date | None = None) -> str:
+    """인상 예정과 최근 12개월 안에 바뀐 금액을 계산기 위에 보여줍니다."""
+    today = today or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
+    rows: list[tuple[str, str]] = []
+    for f in fees.get("fees", []):
+        cur = f.get("currency", "USD")
+        label = html.escape(f'{f.get("form", "")} {f.get("item", "")}'.strip())
+        nx = f.get("next") or {}
+        if nx.get("effective_date") and nx.get("amount") is not None:
+            try:
+                d = dt.date.fromisoformat(nx["effective_date"])
+            except ValueError:
+                d = None
+            if d and d >= today:
+                rows.append((nx["effective_date"], (
+                    f'<tr><td class="n"><span class="soon">{d.isoformat()} 인상</span><br>D-{(d - today).days}</td>'
+                    f'<td>{label}<div class="r">{html.escape(nx.get("rule", ""))}</div></td>'
+                    f'<td class="n">{_money(f.get("amount"), cur)} → <b>{_money(nx["amount"], cur)}</b></td></tr>'
+                )))
+        eff = f.get("effective_date") or ""
+        if len(eff) == 10 and f.get("prev_amount") is not None:
+            try:
+                d = dt.date.fromisoformat(eff)
+            except ValueError:
+                continue
+            if 0 <= (today - d).days <= 365:
+                rows.append((eff, (
+                    f'<tr><td class="n">{d.isoformat()} 시행</td>'
+                    f'<td>{label}<div class="r">{html.escape(f.get("transition", "") or "")}</div></td>'
+                    + (
+                        f'<td class="n">{_money(f.get("prev_amount"), cur)} → <b>{_money(f.get("amount"), cur)}</b></td></tr>'
+                        if f.get("prev_amount") != f.get("amount")
+                        else f'<td class="n"><b>{_money(f.get("amount"), cur)}</b><br>적용 범위 확대</td></tr>'
+                    )
+                )))
+    if not rows:
+        return ""
+    rows.sort(key=lambda x: x[0], reverse=True)
+    return (
+        '<section class="chg"><h2>인상 예정과 최근 변경</h2><table><thead><tr><th>시점</th>'
+        '<th>항목과 적용 기준</th><th>이전 → 이후</th></tr></thead><tbody>'
+        + "".join(r for _, r in rows)
+        + "</tbody></table></section>"
+    )
+
+
 def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     scenarios = json.loads(SCENARIOS.read_text(encoding="utf-8"))
     index = {
@@ -252,6 +328,11 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
             "currency": f.get("currency", "USD"),
             "item": f.get("item", ""),
             "status": f.get("status", ""),
+            "online": f.get("online_amount"),
+            "prev": f.get("prev_amount"),
+            "eff": f.get("effective_date"),
+            "trans": f.get("transition"),
+            "next": f.get("next"),
         }
         for f in fees.get("fees", [])
     }
@@ -272,7 +353,11 @@ def render_index(fees: dict[str, Any], state: dict[str, Any]) -> Path:
     )
     cfg = site.load_cfg()
     body = f"""
+<h1 class="ptitle">비자별 관납료 계산기</h1>
+<p class="lede">비자와 진행 경로를 고르면 USCIS와 주한미국대사관에 내는 관납료를 항목별로 합산합니다.
+항목마다 직전 금액, 시행일, 온라인 접수 금액, 인상 예정을 함께 표시합니다.</p>
 {consular_page.rate_badge(rate)}
+{change_panel(fees)}
 <div class="visas" id="visas"></div>
 <div class="cols">
   <div class="pick" id="controls"></div>
@@ -307,6 +392,22 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
             shown = f"{amount:,.0f}원"
         else:
             shown = f"${amount:,.0f}"
+        prev = fee.get("prev_amount")
+        hist = []
+        if prev is not None and prev != amount:
+            hist.append(f"이전 {_money(prev, currency)}")
+        if fee.get("effective_date"):
+            hist.append(f'{html.escape(str(fee["effective_date"]))} 시행')
+        if fee.get("online_amount") is not None:
+            hist.append(f'온라인 {_money(fee["online_amount"], currency)}')
+        nx = fee.get("next") or {}
+        if nx.get("amount") is not None:
+            hist.append(
+                f'<b style="color:var(--warn)">{html.escape(str(nx.get("effective_date")))} 소인분부터 '
+                f'{_money(nx["amount"], currency)}</b>'
+            )
+        hist_html = " · ".join(hist)
+        trans = html.escape(fee.get("transition", "") or "")
         pending = fee.get("pending_update")
         pend = ""
         if pending:
@@ -323,7 +424,8 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
             f'<td class="who">{html.escape(fee.get("fee_id", ""))}</td>'
             f'<td>{html.escape(fee.get("visa", ""))}</td>'
             f'<td class="who">{html.escape(fee.get("authority", ""))} · {html.escape(fee.get("form", "") or "")}</td>'
-            f"<td>{item_html}{pend}</td>"
+            f'<td>{item_html}{pend}<div class="who">{trans}</div></td>'
+            f'<td class="who">{hist_html}</td>'
             f'<td class="amt">{shown}</td>'
             f'<td class="st"><b style="background:{color}"></b>{html.escape(fee.get("status", ""))}</td>'
             "</tr>"
@@ -350,7 +452,7 @@ def render_changes(fees: dict[str, Any], changelog: list[dict[str, Any]], state:
     body = f"""
 <h3>원장</h3>
 <table><thead><tr><th>ID</th><th>비자</th><th>납부처</th><th>항목</th>
-<th style="text-align:right">금액</th><th>상태</th></tr></thead>
+<th>이력·예정</th><th style="text-align:right">금액</th><th>상태</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
 <h3>변경 이력</h3>
 <div class="log">{''.join(log_html) or '<div class="entry"><div class="d">기록 없음</div><p>감시 시작 이후 감지된 변경이 없습니다.</p></div>'}</div>

@@ -257,7 +257,7 @@ def render_cspa(cfg: dict[str, Any] | None = None) -> Path:
 <div class="cols">
   <div>
     <div class="card">
-      <h2>사건 정보</h2>
+      <h2 class="ctitle">CSPA 나이 계산기</h2>
       <div class="f wide"><label for="cat">카테고리</label>
         <select id="cat">
           <option value="F2A">F-2A 영주권자의 미성년 자녀</option>
