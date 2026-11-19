@@ -8,11 +8,11 @@
     "source": "uscis_g1055",
     "error": null,
     "alerts": [
-      "Alert Type info ALERT: On Oct. 28, 2026, we published a new edition of Form G-1055, Fee Schedule. The new edition, 10/26/26, adds the filing fee exemption for Form I-290B, Notice of Appeal or Motion, for Sileiri Doe v. DHS class members.",
+      "Alert Type info ALERT: On Nov. 19, 2026, we published a new edition of Form G-1055, Fee Schedule. The new edition, 11/19/26, reflects the latest edition of Form I-131, Application for Travel Documents, Parole Documents, Parole Documents, and Arrival/Departure Records, which removed the option to request an Employment Authorization Document (EAD) upon approval of a new period of parole, also known as re-parole, when filing Form I-131. Aliens who wish to request employment authorization based upon approval of a new period of parole must file Form I-765, Application for Employment Authorization, after re-parole is approved.",
       "Alert Type info ALERT: On June 8, 2026, the U.S. District Court for the District of Massachusetts issued an order that vacated agency guidance implementing the $100,000 payment requirement for certain H-1B petitions. See State of California v. Mullin, 1:25-cv-13829 (D. Mass.). DHS strongly disagrees with the court’s order and filed a motion to stay pending appeal with the United States Court of Appeals for the First Circuit (First Circuit). The District Court order was administratively stayed while the government pursued its motion to stay pending appeal with the First Circuit. On July 24, 2026, the First Circuit denied the government’s motion. DHS strongly disagrees with the First Circuit’s order denying the stay request but will comply with the court’s order while DHS considers next steps. If this order is later lifted, DHS still plans to collect the payment.",
       "Alert Type info Alert: Litigation Update on Ms. L. v. ICE and Applicability of Certain HR-1 Fees"
     ],
-    "edition": "10/26/26",
+    "edition": "11/19/26",
     "pdf_url": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf"
   },
   "pdf": {
@@ -2379,7 +2379,7 @@
           630,
           580
         ],
-        "line": "If you are applying under another program or process. Select Part 1., Item Number 10.I. | Paper Filing: $630 Online Filing: $580"
+        "line": "If you are applying under another program or process (you must specify the program or process). Select Part 1., Item Number 10.I. | Paper Filing: $630 Online Filing: $580"
       },
       {
         "form": null,
@@ -2388,38 +2388,6 @@
           580
         ],
         "line": "If you or someone else was initially paroled into the U.S. or granted parole in place under INA 212(d)((5)(A), and you are requesting a new period of parole for yourself or someone else, but not under a specific program or process. Select Part 1., Item Number 11. | Paper Filing: $630 Online Filing: "
-      },
-      {
-        "form": "I-131",
-        "amounts": [
-          1150,
-          1050,
-          280
-        ],
-        "line": "If you are selecting Part 9., Item Number 1. to request an Employment Authorization Document (EAD) upon approval of your new period of parole (re-parole), unless you fall under one of the categories listed below. Fee listed is for both Form I-131 and EAD fee. Additional EAD Fee Due at Filing: Pub. L"
-      },
-      {
-        "form": null,
-        "amounts": [
-          0,
-          280
-        ],
-        "line": "If you are selecting Part 9., Item Number 1. to request an EAD upon approval of re-parole and you are applying under: • IMMVI as a current or former service member (Part 1., Item Number 10.E.(1)); or • Military Parole in Place for a current or former service member (Part 1., Item Number 10.H.(1)). A"
-      },
-      {
-        "form": null,
-        "amounts": [
-          0
-        ],
-        "line": "If you are selecting Part 9., Item Number 1. to request an EAD upon approval of re-parole and you are applying under the Family Reunification Task Force (FRTF)/Ms. L. Settlement Agreement Process in Ms. L. v. ICE, 18-cv-00428 (S.D. Cal.) (Part 1., Item Number 10.G.) | $0"
-      },
-      {
-        "form": "I-131",
-        "amounts": [
-          520,
-          280
-        ],
-        "line": "I-131 Arrival/Departure Records for Re-parole for Individuals Who Are Requesting a New Period of Parole (from inside the United States) (continued) | If you are selecting Part 9., Item Number 1. to request an EAD upon approval of re-parole and you are applying for Military Parole in Place for the sp"
       },
       {
         "form": "I-912",
